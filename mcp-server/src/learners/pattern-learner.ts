@@ -33,6 +33,26 @@ export interface LearnedPattern {
   lastSeen: Date;
 }
 
+interface CommandPatternRow {
+  id: string;
+  tool: string;
+  params: string;
+  context: string;
+  outcome: "success" | "failure";
+  duration: number;
+  timestamp: string;
+  error?: string;
+}
+
+interface LearnedPatternRow {
+  pattern_id: string;
+  pattern_type: "sequence" | "failure" | "success" | "timing";
+  pattern_data: string;
+  confidence: number;
+  occurrence_count: number;
+  last_seen: string;
+}
+
 export class PatternLearner {
   private db: Database.Database;
   private learningBatchSize = 10;
@@ -130,19 +150,19 @@ export class PatternLearner {
         LIMIT ?
       `);
 
-      const rows = stmt.all(tool, limit * 2); // Get more to filter
+      const rows = stmt.all(tool, limit * 2) as CommandPatternRow[]; // Get more to filter
 
       // Filter by similarity
       const patterns = rows
         .map(row => ({
-          id: row.id as string,
-          tool: row.tool as string,
-          params: JSON.parse(row.params as string),
-          context: row.context ? JSON.parse(row.context as string) : {},
-          outcome: row.outcome as "success" | "failure",
-          duration: row.duration as number,
-          timestamp: new Date(row.timestamp as string),
-          error: row.error as string | undefined,
+          id: row.id,
+          tool: row.tool,
+          params: JSON.parse(row.params),
+          context: row.context ? JSON.parse(row.context) : {},
+          outcome: row.outcome,
+          duration: row.duration,
+          timestamp: new Date(row.timestamp),
+          error: row.error,
         }))
         .filter(pattern => this.isSimilar(params, pattern.params))
         .slice(0, limit);
@@ -298,15 +318,15 @@ export class PatternLearner {
       : "SELECT * FROM learned_patterns ORDER BY confidence DESC";
 
     const stmt = this.db.prepare(query);
-    const rows = type ? stmt.all(type) : stmt.all();
+    const rows = (type ? stmt.all(type) : stmt.all()) as LearnedPatternRow[];
 
     return rows.map(row => ({
-      patternId: row.pattern_id as string,
-      patternType: row.pattern_type as string,
-      patternData: JSON.parse(row.pattern_data as string),
-      confidence: row.confidence as number,
-      occurrenceCount: row.occurrence_count as number,
-      lastSeen: new Date(row.last_seen as string),
+      patternId: row.pattern_id,
+      patternType: row.pattern_type,
+      patternData: JSON.parse(row.pattern_data),
+      confidence: row.confidence,
+      occurrenceCount: row.occurrence_count,
+      lastSeen: new Date(row.last_seen),
     }));
   }
 

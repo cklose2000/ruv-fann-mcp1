@@ -17,13 +17,13 @@ struct ApiError {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct SpawnAgentRequest {
+struct SpawnAgentRequest {
     agent_type: String,
     problem: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
-pub struct SolveRequest {
+struct SolveRequest {
     problem: String,
 }
 
@@ -39,11 +39,11 @@ pub fn create_router(coordinator: Arc<SwarmCoordinator>) -> Router {
         .with_state(coordinator)
 }
 
-pub async fn health() -> impl IntoResponse {
+async fn health() -> impl IntoResponse {
     "OK"
 }
 
-pub async fn spawn_agent(
+async fn spawn_agent(
     State(coordinator): State<Arc<SwarmCoordinator>>,
     Json(req): Json<SpawnAgentRequest>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -78,14 +78,14 @@ pub async fn spawn_agent(
     })))
 }
 
-pub async fn list_agents(
+async fn list_agents(
     State(coordinator): State<Arc<SwarmCoordinator>>,
 ) -> Result<impl IntoResponse, StatusCode> {
     let status = coordinator.get_status().await;
     Ok(Json(serde_json::json!({ "agents": status })))
 }
 
-pub async fn get_agent(
+async fn get_agent(
     State(_coordinator): State<Arc<SwarmCoordinator>>,
     Path(agent_id): Path<Uuid>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -95,7 +95,7 @@ pub async fn get_agent(
     })))
 }
 
-pub async fn solve_problem(
+async fn solve_problem(
     State(coordinator): State<Arc<SwarmCoordinator>>,
     Json(req): Json<SolveRequest>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -115,7 +115,7 @@ pub async fn solve_problem(
     })))
 }
 
-pub async fn solve_batch(
+async fn solve_batch(
     State(coordinator): State<Arc<SwarmCoordinator>>,
     Json(problems): Json<Vec<String>>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -138,14 +138,14 @@ pub async fn solve_batch(
     })))
 }
 
-pub async fn get_stats(
+async fn get_stats(
     State(coordinator): State<Arc<SwarmCoordinator>>,
 ) -> Result<impl IntoResponse, StatusCode> {
     let status = coordinator.get_status().await;
     Ok(Json(status))
 }
 
-pub async fn performance_test(
+async fn performance_test(
     State(coordinator): State<Arc<SwarmCoordinator>>,
     Query(params): Query<std::collections::HashMap<String, String>>,
 ) -> Result<impl IntoResponse, StatusCode> {
@@ -186,55 +186,5 @@ pub async fn performance_test(
         "problems_solved": results.len(),
         "duration_ms": start.elapsed().as_millis() as u64,
         "status": status
-    })))
-}
-
-pub async fn agent_status(
-    State(_coordinator): State<Arc<SwarmCoordinator>>,
-    Path(agent_id): Path<Uuid>,
-) -> Result<impl IntoResponse, StatusCode> {
-    Ok(Json(serde_json::json!({
-        "id": agent_id,
-        "status": "active"
-    })))
-}
-
-pub async fn get_agent_result(
-    State(_coordinator): State<Arc<SwarmCoordinator>>,
-    Path(agent_id): Path<Uuid>,
-) -> Result<impl IntoResponse, StatusCode> {
-    Ok(Json(serde_json::json!({
-        "id": agent_id,
-        "result": "Result not available in minimal mode"
-    })))
-}
-
-pub async fn swarm_stats(
-    State(coordinator): State<Arc<SwarmCoordinator>>,
-) -> Result<impl IntoResponse, StatusCode> {
-    let status = coordinator.get_status().await;
-    Ok(Json(serde_json::json!({
-        "stats": status,
-        "agents_active": 0,
-        "tasks_completed": 0
-    })))
-}
-
-pub async fn demo_ephemeral_solve(
-    State(coordinator): State<Arc<SwarmCoordinator>>,
-) -> Result<impl IntoResponse, StatusCode> {
-    let task = serde_json::json!({
-        "tool": "demo",
-        "params": { "problem": "Demo problem" }
-    }).to_string();
-    
-    let solution = coordinator
-        .process_task(task)
-        .await
-        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
-    
-    Ok(Json(serde_json::json!({
-        "demo": "ephemeral solve",
-        "solution": solution
     })))
 }

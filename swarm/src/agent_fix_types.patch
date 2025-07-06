@@ -1,0 +1,39 @@
+--- a/swarm/src/agent.rs
++++ b/swarm/src/agent.rs
+@@ -29,6 +29,8 @@ pub enum AgentType {
+     PatternMatcher,
+     OutcomePredictor,
+     ErrorAnalyzer,
+     PerformanceAnalyzer,
++    AlternativeGen,
++    ContextAnalyzer,
+ }
+ 
+@@ -107,6 +109,8 @@ impl EphemeralAgent {
+             AgentType::OutcomePredictor => self.predict_outcomes(problem).await,
+             AgentType::ErrorAnalyzer => self.analyze_errors(problem).await,
+             AgentType::PerformanceAnalyzer => self.analyze_performance(problem).await,
++            AgentType::AlternativeGen => self.generate_alternatives(problem).await,
++            AgentType::ContextAnalyzer => self.analyze_context(problem).await,
+         }
+     }
+ 
+@@ -133,6 +137,18 @@ impl EphemeralAgent {
+         Ok(format!("Optimized approach: Reduced complexity by 30% for '{}'", problem))
+     }
+ 
++    async fn generate_alternatives(&self, problem: &str) -> anyhow::Result<String> {
++        sleep(Duration::from_millis(180)).await;
++        
++        Ok(format!("Generated 3 alternative approaches for '{}'", problem))
++    }
++
++    async fn analyze_context(&self, problem: &str) -> anyhow::Result<String> {
++        sleep(Duration::from_millis(160)).await;
++        
++        Ok(format!("Context analysis complete for '{}': high complexity detected", problem))
++    }
++
+     async fn match_patterns(&self, problem: &str) -> anyhow::Result<String> {
+         let pool = self.db_pool.as_ref()
+             .ok_or_else(|| anyhow::anyhow!("No database pool available"))?;

@@ -52,9 +52,9 @@ class RuvFannMCPServer {
 
     // Initialize components
     this.ruvFannClient = new RuvFannClient({
-      coreUrl: process.env.RUV_FANN_CORE_URL || "http://localhost:8090",
-      swarmUrl: process.env.RUV_FANN_SWARM_URL || "http://localhost:8081",
-      modelUrl: process.env.RUV_FANN_MODEL_URL || "http://localhost:8082",
+      coreUrl: process.env.RUV_FANN_CORE_URL || "http://127.0.0.1:8090",
+      swarmUrl: process.env.RUV_FANN_SWARM_URL || "http://127.0.0.1:3001",
+      modelUrl: process.env.RUV_FANN_MODEL_URL || "http://127.0.0.1:8082",
     });
 
     this.patternLearner = new PatternLearner();

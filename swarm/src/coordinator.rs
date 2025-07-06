@@ -1,210 +1,169 @@
-use crate::agent::{AgentType, EphemeralAgent, AgentStatus};
+use crate::agent::{AgentType, EphemeralAgent};
+use anyhow::Result;
 use sqlx::SqlitePool;
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use uuid::Uuid;
 
-#[derive(Clone)]
 pub struct SwarmCoordinator {
+    pub id: Uuid,
     pool: SqlitePool,
-    agents: Arc<RwLock<HashMap<Uuid, EphemeralAgent>>>,
-    max_agents: Arc<RwLock<usize>>,
-    total_spawned: Arc<RwLock<usize>>,
-    total_dissolved: Arc<RwLock<usize>>,
+    agent_pool: Arc<RwLock<HashMap<AgentType, VecDeque<EphemeralAgent>>>>,
+    max_concurrent_agents: usize,
 }
 
 impl SwarmCoordinator {
-    /// Create a new swarm coordinator
-    pub async fn new(pool: SqlitePool) -> anyhow::Result<Self> {
-        Ok(Self {
+    pub fn new(pool: SqlitePool) -> Self {
+        Self {
+            id: Uuid::new_v4(),
             pool,
-            agents: Arc::new(RwLock::new(HashMap::new())),
-            max_agents: Arc::new(RwLock::new(3)),
-            total_spawned: Arc::new(RwLock::new(0)),
-            total_dissolved: Arc::new(RwLock::new(0)),
-        })
-    }
-
-    /// Set maximum number of agents
-    pub async fn set_max_agents(&self, max: usize) {
-        let mut max_agents = self.max_agents.write().await;
-        *max_agents = max;
-    }
-
-    /// Spawn a new ephemeral agent
-    pub async fn spawn_agent(&self, agent_type: AgentType) -> anyhow::Result<Uuid> {
-        // Check if we're at capacity
-        let agents = self.agents.read().await;
-        let active_count = agents.values()
-            .filter(|a| a.status != AgentStatus::Dissolving)
-            .count();
-        
-        let max_agents = *self.max_agents.read().await;
-        if active_count >= max_agents {
-            anyhow::bail!("Maximum agent capacity reached ({}/{})", active_count, max_agents);
+            agent_pool: Arc::new(RwLock::new(HashMap::new())),
+            max_concurrent_agents: 10,
         }
-        drop(agents);
+    }
 
-        // Create and spawn agent
-        let mut agent = EphemeralAgent::new(agent_type);
-        agent.spawn().await?;
-        
-        let agent_id = agent.id;
-        
-        // Store agent
-        let mut agents = self.agents.write().await;
-        agents.insert(agent_id, agent);
-        
-        // Update counter
-        let mut total = self.total_spawned.write().await;
-        *total += 1;
-        
-        // Store in database
+    pub async fn initialize(&self) -> Result<()> {
+        // Create the command_patterns table if it doesn't exist
         sqlx::query(
             r#"
-            INSERT INTO agents (id, agent_type, status, created_at)
-            VALUES (?1, ?2, ?3, ?4)
+            CREATE TABLE IF NOT EXISTS command_patterns (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                tool TEXT NOT NULL,
+                params TEXT NOT NULL,
+                params_hash TEXT NOT NULL,
+                success BOOLEAN NOT NULL,
+                duration REAL NOT NULL,
+                error TEXT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                hour_of_day INTEGER,
+                day_of_week INTEGER
+            )
             "#
         )
-        .bind(agent_id.to_string())
-        .bind(format!("{:?}", agent_type))
-        .bind("Active")
-        .bind(chrono::Utc::now().to_rfc3339())
         .execute(&self.pool)
         .await?;
         
-        Ok(agent_id)
+        // Initialize agent pools
+        self.initialize_agent_pools(3).await?;
+        
+        Ok(())
     }
 
-    /// Solve a problem using an ephemeral agent
-    pub async fn solve_problem(&self, problem: String) -> anyhow::Result<String> {
-        // Determine best agent type for the problem
-        let agent_type = if problem.contains("analyze") {
-            AgentType::Analyzer
-        } else if problem.contains("optimize") {
-            AgentType::Optimizer
-        } else {
-            AgentType::Solver
-        };
+    async fn initialize_agent_pools(&self, pool_size: usize) -> Result<()> {
+        let mut agent_pool = self.agent_pool.write().await;
         
-        // Spawn agent
-        let agent_id = self.spawn_agent(agent_type).await?;
+        let agent_types = vec![
+            AgentType::Solver,
+            AgentType::Analyzer,
+            AgentType::Optimizer,
+            AgentType::PatternMatcher,
+            AgentType::OutcomePredictor,
+            AgentType::AlternativeGen,
+            AgentType::ContextAnalyzer,
+            AgentType::ErrorAnalyzer,
+            AgentType::PerformanceAnalyzer,
+        ];
         
-        // Solve problem
-        let solution = {
-            let mut agents = self.agents.write().await;
-            let agent = agents.get_mut(&agent_id)
-                .ok_or_else(|| anyhow::anyhow!("Agent not found"))?;
+        for agent_type in agent_types {
+            let mut pool = VecDeque::new();
             
-            agent.solve(problem).await?
-        };
-        
-        // Dissolve agent
-        self.dissolve_agent(agent_id).await?;
-        
-        Ok(solution)
-    }
-
-    /// Solve a problem with a specific agent
-    pub async fn solve_with_agent(&self, agent_id: Uuid, problem: String) -> anyhow::Result<String> {
-        // Solve problem
-        let solution = {
-            let mut agents = self.agents.write().await;
-            let agent = agents.get_mut(&agent_id)
-                .ok_or_else(|| anyhow::anyhow!("Agent not found"))?;
+            for _ in 0..pool_size {
+                // Create agent with standard lifespan (5 seconds)
+                let agent = EphemeralAgent::with_db_pool(agent_type, self.pool.clone());
+                pool.push_back(agent);
+            }
             
-            agent.solve(problem).await?
-        };
-        
-        // Note: We don't automatically dissolve the agent here
-        // The MCP server can query the result and then dissolve manually
-        
-        Ok(solution)
-    }
-
-    /// Dissolve an agent
-    pub async fn dissolve_agent(&self, agent_id: Uuid) -> anyhow::Result<()> {
-        let mut agents = self.agents.write().await;
-        
-        if let Some(agent) = agents.get_mut(&agent_id) {
-            agent.dissolve().await?;
-            
-            // Update database
-            sqlx::query(
-                r#"
-                UPDATE agents 
-                SET status = ?1, completed_at = ?2, lifespan_ms = ?3
-                WHERE id = ?4
-                "#
-            )
-            .bind("Dissolved")
-            .bind(chrono::Utc::now().to_rfc3339())
-            .bind(agent.lifespan_ms as i64)
-            .bind(agent_id.to_string())
-            .execute(&self.pool)
-            .await?;
-            
-            // Remove from active agents
-            agents.remove(&agent_id);
-            
-            // Update counter
-            let mut total = self.total_dissolved.write().await;
-            *total += 1;
+            agent_pool.insert(agent_type, pool);
         }
         
         Ok(())
     }
 
-    /// Get all active agents
-    pub async fn list_agents(&self) -> Vec<EphemeralAgent> {
-        let agents = self.agents.read().await;
-        agents.values().cloned().collect()
+    pub async fn process_task(&self, task: String) -> Result<String> {
+        // First try to get an agent from the pool
+        let agent_type = self.determine_agent_type(&task);
+        
+        let mut agent = {
+            let mut pool = self.agent_pool.write().await;
+            pool.get_mut(&agent_type)
+                .and_then(|type_pool| type_pool.pop_front())
+        };
+        
+        if agent.is_none() {
+            // Create a new agent if pool is empty
+            agent = Some(
+                EphemeralAgent::with_db_pool(agent_type, self.pool.clone())
+            );
+        }
+        
+        let mut agent = agent.unwrap();
+        let result = agent.solve(task).await;
+        
+        // Return agent to pool if successful
+        if result.is_ok() {
+            let mut pool = self.agent_pool.write().await;
+            if let Some(type_pool) = pool.get_mut(&agent_type) {
+                // Reset agent state before returning to pool
+                agent.status = crate::agent::AgentStatus::Active;
+                agent.problem = None;
+                agent.solution = None;
+                agent.started_at = None;
+                agent.completed_at = None;
+                type_pool.push_back(agent);
+            }
+        }
+        
+        result
     }
 
-    /// Get agent by ID
-    pub async fn get_agent(&self, agent_id: Uuid) -> Option<EphemeralAgent> {
-        let agents = self.agents.read().await;
-        agents.get(&agent_id).cloned()
-    }
-
-    /// Get swarm statistics
-    pub async fn get_stats(&self) -> SwarmStats {
-        let agents = self.agents.read().await;
-        let active_count = agents.len();
+    fn determine_agent_type(&self, task: &str) -> AgentType {
+        // Simple heuristic for determining agent type
+        let task_lower = task.to_lowercase();
         
-        let total_spawned = *self.total_spawned.read().await;
-        let total_dissolved = *self.total_dissolved.read().await;
-        
-        // Calculate average lifespan from database
-        let avg_lifespan: Option<f64> = sqlx::query_scalar(
-            r#"
-            SELECT AVG(lifespan_ms)
-            FROM agents
-            WHERE lifespan_ms IS NOT NULL
-            "#
-        )
-        .fetch_one(&self.pool)
-        .await
-        .unwrap_or(None);
-        
-        let avg_lifespan = avg_lifespan.unwrap_or(0.0);
-        
-        SwarmStats {
-            active_agents: active_count,
-            total_spawned,
-            total_dissolved,
-            average_lifespan_ms: avg_lifespan as u64,
-            max_agents: *self.max_agents.read().await,
+        if task_lower.contains("optimize") {
+            AgentType::Optimizer
+        } else if task_lower.contains("analyze") {
+            AgentType::Analyzer
+        } else if task_lower.contains("pattern") {
+            AgentType::PatternMatcher
+        } else if task_lower.contains("predict") {
+            AgentType::OutcomePredictor
+        } else if task_lower.contains("alternative") {
+            AgentType::AlternativeGen
+        } else if task_lower.contains("context") {
+            AgentType::ContextAnalyzer
+        } else if task_lower.contains("error") {
+            AgentType::ErrorAnalyzer
+        } else if task_lower.contains("performance") {
+            AgentType::PerformanceAnalyzer
+        } else {
+            AgentType::Solver
         }
     }
+
+    pub async fn get_status(&self) -> HashMap<String, serde_json::Value> {
+        let pool = self.agent_pool.read().await;
+        let mut status = HashMap::new();
+        
+        for (agent_type, agents) in pool.iter() {
+            status.insert(
+                format!("{:?}", agent_type),
+                serde_json::json!({
+                    "available": agents.len(),
+                    "type": format!("{:?}", agent_type)
+                })
+            );
+        }
+        
+        status.insert(
+            "coordinator_id".to_string(),
+            serde_json::json!(self.id.to_string())
+        );
+        
+        status
+    }
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-pub struct SwarmStats {
-    pub active_agents: usize,
-    pub total_spawned: usize,
-    pub total_dissolved: usize,
-    pub average_lifespan_ms: u64,
-    pub max_agents: usize,
-}
+// Legacy support for SwarmStats
+pub type SwarmStats = HashMap<String, serde_json::Value>;

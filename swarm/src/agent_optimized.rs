@@ -4,121 +4,6 @@ use sqlx::{SqlitePool, Row};
 use std::time::Duration;
 use tokio::time::sleep;
 use uuid::Uuid;
-use ndarray::{Array1, Array2};
-use std::sync::{Arc, Mutex};
-
-// Simple feedforward neural network for prediction
-#[derive(Debug, Clone)]
-pub struct NeuralNetwork {
-    pub layers: Vec<usize>,
-    pub weights: Vec<Array2<f32>>,
-    pub biases: Vec<Array1<f32>>,
-    pub learning_rate: f32,
-}
-
-// Global network storage
-lazy_static::lazy_static! {
-    static ref NETWORK: Arc<Mutex<Option<NeuralNetwork>>> = Arc::new(Mutex::new(None));
-}
-
-impl NeuralNetwork {
-    pub fn new(layers: Vec<usize>, learning_rate: f32) -> Self {
-        let mut rng = rand::thread_rng();
-        let mut weights = Vec::new();
-        let mut biases = Vec::new();
-
-        for i in 0..layers.len() - 1 {
-            use rand::Rng;
-            // Xavier initialization
-            let scale = (2.0 / layers[i] as f32).sqrt();
-            let w = Array2::from_shape_fn((layers[i + 1], layers[i]), |_| {
-                rng.gen_range(-scale..scale)
-            });
-            let b = Array1::zeros(layers[i + 1]);
-            
-            weights.push(w);
-            biases.push(b);
-        }
-
-        Self {
-            layers,
-            weights,
-            biases,
-            learning_rate,
-        }
-    }
-
-    fn sigmoid(x: f32) -> f32 {
-        1.0 / (1.0 + (-x).exp())
-    }
-
-    pub fn predict(&self, input: &Array1<f32>) -> Array1<f32> {
-        let mut current = input.clone();
-
-        for (weight, bias) in self.weights.iter().zip(&self.biases) {
-            let z = weight.dot(&current) + bias;
-            current = z.mapv(Self::sigmoid);
-        }
-
-        current
-    }
-
-    pub fn train(&mut self, inputs: &[Array1<f32>], targets: &[Array1<f32>], epochs: usize) -> Vec<f32> {
-        let mut losses = Vec::new();
-
-        for _epoch in 0..epochs {
-            let mut epoch_loss = 0.0;
-
-            for (input, target) in inputs.iter().zip(targets) {
-                // Forward pass
-                let mut activations = vec![input.clone()];
-                let mut current = input.clone();
-
-                for (weight, bias) in self.weights.iter().zip(&self.biases) {
-                    let z = weight.dot(&current) + bias;
-                    current = z.mapv(Self::sigmoid);
-                    activations.push(current.clone());
-                }
-
-                let output = activations.last().unwrap();
-
-                // Calculate loss (MSE)
-                let error = output - target;
-                let loss = error.mapv(|x| x * x).sum() / error.len() as f32;
-                epoch_loss += loss;
-
-                // Backward pass (simplified for speed)
-                let mut delta = error.clone();
-                
-                for i in (0..self.weights.len()).rev() {
-                    let prev_activation = &activations[i];
-                    
-                    // Calculate gradients
-                    let weight_gradient = delta
-                        .clone()
-                        .insert_axis(ndarray::Axis(1))
-                        .dot(&prev_activation.clone().insert_axis(ndarray::Axis(0)));
-                    
-                    let bias_gradient = delta.clone();
-
-                    // Update weights and biases
-                    self.weights[i] = &self.weights[i] - &(weight_gradient * self.learning_rate);
-                    self.biases[i] = &self.biases[i] - &(bias_gradient * self.learning_rate);
-
-                    // Propagate error backward
-                    if i > 0 {
-                        delta = self.weights[i].t().dot(&delta);
-                    }
-                }
-            }
-
-            epoch_loss /= inputs.len() as f32;
-            losses.push(epoch_loss);
-        }
-
-        losses
-    }
-}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EphemeralAgent {
@@ -286,12 +171,6 @@ impl EphemeralAgent {
         // Store the execution pattern for learning
         if let Some(pool) = &self.db_pool {
             let _ = self.store_execution_pattern(&problem, &solution, true, pool).await;
-            
-            // Train neural network with this execution outcome
-            let task_data: serde_json::Value = serde_json::from_str(&problem)
-                .unwrap_or_else(|_| serde_json::json!({"tool": "unknown", "params": {}}));
-            let tool = task_data["tool"].as_str().unwrap_or("unknown");
-            self.train_neural_network(tool, &task_data["params"], true).await;
         }
         
         Ok(solution)
@@ -493,44 +372,14 @@ impl EphemeralAgent {
             0.5 // Neutral probability for unknown commands
         };
 
-        // Get neural network prediction
-        let neural_prediction = self.get_neural_network_prediction(tool, &task_data["params"]).await;
-        
-        // Combine historical and neural network predictions
-        let combined_success_rate = if let Some(neural_pred) = neural_prediction {
-            if total_attempts > 10 {
-                // Weight historical data more for well-known commands
-                success_rate * 0.7 + neural_pred * 0.3
-            } else if total_attempts > 3 {
-                // Balance both predictions
-                (success_rate + neural_pred) / 2.0
-            } else {
-                // Trust neural network more for new commands
-                neural_pred * 0.7 + success_rate * 0.3
-            }
-        } else {
-            success_rate
-        };
-
-        let confidence = if neural_prediction.is_some() && total_attempts > 3 { 
-            0.95 
-        } else if total_attempts > 10 { 
-            0.9 
-        } else if total_attempts > 3 { 
-            0.7 
-        } else { 
-            0.3 
-        };
-        
+        let confidence = if total_attempts > 10 { 0.9 } else if total_attempts > 3 { 0.7 } else { 0.3 };
         let estimated_duration = avg_duration.unwrap_or(1000.0) as u64;
         let processing_time = start_time.elapsed().as_micros() as u64;
 
         Ok(serde_json::to_string(&serde_json::json!({
-            "successRate": combined_success_rate,
+            "successRate": success_rate,
             "confidence": confidence,
             "historicalAttempts": total_attempts,
-            "historicalSuccessRate": success_rate,
-            "neuralPrediction": neural_prediction,
             "estimatedDuration": estimated_duration,
             "processingTime": processing_time,
             "tool": tool
@@ -671,133 +520,6 @@ impl EphemeralAgent {
             "processingTime": processing_time,
             "tool": tool
         }))?)
-    }
-
-    /// Get neural network prediction for outcome
-    async fn get_neural_network_prediction(&self, tool: &str, params: &serde_json::Value) -> Option<f64> {
-        // Encode features for neural network
-        let features = self.encode_features_for_neural_network(tool, params);
-        let input = Array1::from(features);
-        
-        // Get prediction from neural network
-        let prediction = {
-            if let Ok(network_guard) = NETWORK.lock() {
-                if let Some(ref network) = *network_guard {
-                    let output = network.predict(&input);
-                    // Return the first output as success probability
-                    output.get(0).cloned().map(|v| v.max(0.0).min(1.0) as f64)
-                } else {
-                    None
-                }
-            } else {
-                None
-            }
-        };
-        
-        // Initialize network if not present (after dropping the guard)
-        if prediction.is_none() {
-            self.initialize_neural_network().await;
-        }
-        
-        prediction
-    }
-
-    /// Initialize the neural network if not already present
-    async fn initialize_neural_network(&self) {
-        if let Ok(mut network_guard) = NETWORK.lock() {
-            if network_guard.is_none() {
-                // Create a network optimized for tool success prediction
-                // Input: [tool_type(8) + param_features(12) + temporal(4)] = 24 features
-                let network = NeuralNetwork::new(vec![24, 32, 16, 1], 0.01);
-                *network_guard = Some(network);
-                tracing::info!("Initialized neural network for prediction");
-            }
-        }
-    }
-
-    /// Encode tool and parameters into feature vector for neural network
-    fn encode_features_for_neural_network(&self, tool: &str, params: &serde_json::Value) -> Vec<f32> {
-        let mut features = vec![0.0; 24];
-
-        // Encode tool type (first 8 features - one-hot encoding)
-        match tool.to_lowercase().as_str() {
-            "bash" | "shell" | "command" => features[0] = 1.0,
-            "read" | "file_read" => features[1] = 1.0,
-            "write" | "file_write" => features[2] = 1.0,
-            "edit" | "file_edit" => features[3] = 1.0,
-            "search" | "grep" | "find" => features[4] = 1.0,
-            "git" => features[5] = 1.0,
-            "bq" | "bigquery" => features[6] = 1.0,
-            "general" | "unknown" => features[7] = 1.0,
-            _ => features[7] = 1.0, // Default to general
-        }
-
-        // Encode parameter characteristics (features 8-19)
-        if let serde_json::Value::Object(param_obj) = params {
-            // Parameter count (normalized)
-            features[8] = (param_obj.len() as f32 / 5.0).min(1.0);
-            
-            // Analyze parameter content
-            for (key, value) in param_obj {
-                match key.as_str() {
-                    "query" | "command" | "code" => {
-                        if let serde_json::Value::String(s) = value {
-                            // Command/query complexity features
-                            features[9] = (s.len() as f32 / 100.0).min(1.0); // Length normalized
-                            features[10] = (s.split_whitespace().count() as f32 / 10.0).min(1.0); // Word count
-                            
-                            // Risk pattern detection
-                            if s.contains("rm ") || s.contains("delete") || s.contains("DROP") {
-                                features[11] = 1.0; // Destructive operations
-                            }
-                            if s.contains("SELECT *") || s.contains("UPDATE") || s.contains("INSERT") {
-                                features[12] = 1.0; // Database operations
-                            }
-                        }
-                    }
-                    "file_path" | "path" => {
-                        if let serde_json::Value::String(s) = value {
-                            features[13] = (s.len() as f32 / 50.0).min(1.0); // Path length
-                            if s.contains(".") { features[14] = 1.0; } // Has file extension
-                            if s.starts_with("/") { features[15] = 1.0; } // Absolute path
-                        }
-                    }
-                    "timeout" | "limit" => {
-                        if let Some(timeout_val) = value.as_u64() {
-                            features[16] = (timeout_val as f32 / 5000.0).min(1.0); // Timeout value
-                        }
-                    }
-                    _ => {}
-                }
-            }
-        }
-
-        // Add temporal features (features 20-23)
-        let now = Utc::now();
-        features[20] = now.hour() as f32 / 24.0; // Hour of day (normalized)
-        features[21] = now.weekday().number_from_monday() as f32 / 7.0; // Day of week
-        features[22] = (now.timestamp() % 86400) as f32 / 86400.0; // Time of day as fraction
-        features[23] = if now.weekday().number_from_monday() >= 6 { 1.0 } else { 0.0 }; // Weekend flag
-
-        features
-    }
-
-    /// Train neural network with execution outcome
-    async fn train_neural_network(&self, tool: &str, params: &serde_json::Value, success: bool) {
-        let features = self.encode_features_for_neural_network(tool, params);
-        let input = Array1::from(features);
-        let target = Array1::from(vec![if success { 1.0 } else { 0.0 }]);
-        
-        // Train in a separate scope to ensure guard is dropped before any potential await
-        {
-            if let Ok(mut network_guard) = NETWORK.lock() {
-                if let Some(ref mut network) = *network_guard {
-                    // Perform single-step online learning
-                    let _losses = network.train(&[input], &[target], 1);
-                    tracing::debug!("Neural network trained with outcome: {}", success);
-                }
-            }
-        }
     }
 
     /// Ultra-fast parameter similarity calculation

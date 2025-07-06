@@ -27,7 +27,7 @@ async fn main() -> anyhow::Result<()> {
         .unwrap_or_else(|_| "sqlite:ruv_swarm.db".to_string());
     
     let pool = sqlx::sqlite::SqlitePoolOptions::new()
-        .max_connections(5)
+        .max_connections(20)
         .connect(&db_url)
         .await?;
 
@@ -57,25 +57,63 @@ async fn main() -> anyhow::Result<()> {
     sqlx::query("CREATE INDEX IF NOT EXISTS idx_agents_created_at ON agents(created_at)")
         .execute(&pool)
         .await?;
+    
+    // Create command_patterns table for pattern learning
+    sqlx::query(
+        r#"
+        CREATE TABLE IF NOT EXISTS command_patterns (
+            id TEXT PRIMARY KEY,
+            tool TEXT NOT NULL,
+            params TEXT NOT NULL,
+            context TEXT NOT NULL,
+            outcome TEXT NOT NULL,
+            success BOOLEAN NOT NULL,
+            duration INTEGER NOT NULL,
+            timestamp TEXT NOT NULL,
+            agent_type TEXT NOT NULL,
+            agent_id TEXT NOT NULL,
+            error TEXT,
+            FOREIGN KEY (agent_id) REFERENCES agents(id)
+        )
+        "#
+    )
+    .execute(&pool)
+    .await?;
+    
+    // Create indexes for command_patterns
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_command_patterns_tool ON command_patterns(tool)")
+        .execute(&pool)
+        .await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_command_patterns_success ON command_patterns(success)")
+        .execute(&pool)
+        .await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_command_patterns_timestamp ON command_patterns(timestamp)")
+        .execute(&pool)
+        .await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_command_patterns_agent_type ON command_patterns(agent_type)")
+        .execute(&pool)
+        .await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_command_patterns_tool_success ON command_patterns(tool, success)")
+        .execute(&pool)
+        .await?;
 
     // Create coordinator
-    let coordinator = Arc::new(coordinator::SwarmCoordinator::new(pool).await?);
+    let coordinator = Arc::new(coordinator::SwarmCoordinator::new(pool));
 
     // Parse options
     let args: Vec<String> = std::env::args().collect();
     let minimal = args.contains(&"--minimal".to_string());
-    let max_agents = if minimal { 2 } else { 5 };
+    let max_agents = if minimal { 5 } else { 20 };
     
     if args.contains(&"--agents".to_string()) {
         if let Some(pos) = args.iter().position(|x| x == "--agents") {
             if let Some(count) = args.get(pos + 1) {
                 if let Ok(n) = count.parse::<usize>() {
-                    coordinator.set_max_agents(n).await;
                 }
             }
         }
     } else {
-        coordinator.set_max_agents(max_agents).await;
+        // Max agents set at initialization
     }
 
     // Build our application with routes
