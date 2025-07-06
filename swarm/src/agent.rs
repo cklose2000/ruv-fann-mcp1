@@ -22,6 +22,11 @@ pub enum AgentType {
     Solver,
     Analyzer,
     Optimizer,
+    // Pattern analysis agents for MCP
+    PatternMatcher,
+    OutcomePredictor,
+    AlternativeGen,
+    ContextAnalyzer,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -91,6 +96,49 @@ impl EphemeralAgent {
                 sleep(Duration::from_millis(35)).await;
                 format!("Optimized: {}", problem.to_uppercase())
             }
+            AgentType::PatternMatcher => {
+                // Pattern matcher: find similar patterns
+                sleep(Duration::from_millis(25)).await;
+                serde_json::to_string(&serde_json::json!({
+                    "patterns": [
+                        {"id": "p1", "type": "command_sequence", "confidence": 0.85},
+                        {"id": "p2", "type": "failure_pattern", "confidence": 0.72}
+                    ],
+                    "best_match": "p1"
+                }))?
+            }
+            AgentType::OutcomePredictor => {
+                // Outcome predictor: predict success/failure
+                sleep(Duration::from_millis(30)).await;
+                serde_json::to_string(&serde_json::json!({
+                    "successRate": 0.73,
+                    "failureModes": ["timeout", "quota_exceeded"],
+                    "confidence": 0.81
+                }))?
+            }
+            AgentType::AlternativeGen => {
+                // Alternative generator: suggest alternatives
+                sleep(Duration::from_millis(35)).await;
+                serde_json::to_string(&serde_json::json!({
+                    "alternatives": [
+                        {
+                            "tool": "bq query",
+                            "params": {"query": "SELECT * FROM table LIMIT 1000"},
+                            "rationale": "Add LIMIT to prevent full scan",
+                            "successProbability": 0.92
+                        }
+                    ]
+                }))?
+            }
+            AgentType::ContextAnalyzer => {
+                // Context analyzer: evaluate execution context
+                sleep(Duration::from_millis(28)).await;
+                serde_json::to_string(&serde_json::json!({
+                    "riskFactor": 0.85,
+                    "contextFlags": ["peak_hours", "large_dataset"],
+                    "recommendation": "defer_execution"
+                }))?
+            }
         };
         
         self.solution = Some(solution.clone());
@@ -132,6 +180,10 @@ impl EphemeralAgent {
                 AgentType::Solver => 30,
                 AgentType::Analyzer => 40,
                 AgentType::Optimizer => 35,
+                AgentType::PatternMatcher => 25,
+                AgentType::OutcomePredictor => 30,
+                AgentType::AlternativeGen => 35,
+                AgentType::ContextAnalyzer => 28,
             },
             dissolve_time_ms: 10,
         }

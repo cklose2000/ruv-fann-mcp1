@@ -85,6 +85,8 @@ async fn main() -> anyhow::Result<()> {
         .route("/api/spawn", post(api::spawn_agent))
         .route("/api/agents", get(api::list_agents))
         .route("/api/agent/:id", get(api::agent_status))
+        .route("/api/agent/:id/result", get(api::get_agent_result))
+        .route("/api/agent/spawn", post(api::spawn_agent))
         .route("/api/solve", post(api::solve_problem))
         .route("/api/stats", get(api::swarm_stats))
         .route("/demo/ephemeral-solve", get(api::demo_ephemeral_solve))

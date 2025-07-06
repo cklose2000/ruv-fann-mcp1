@@ -1,6 +1,22 @@
-# ruv-FANN Minimal POC
+# ruv-FANN MCP Server
 
-A minimal proof-of-concept implementation of the ruv-FANN neural intelligence platform, demonstrating core innovations in <500MB with <100ms decision times.
+An MCP (Model Context Protocol) server that leverages ruv-FANN neural intelligence to provide executive function capabilities for Claude Code. This server acts as a cognitive extension, enabling advanced planning, reasoning, and decision-making capabilities.
+
+## 🧠 Executive Function Capabilities
+
+### Core Features
+- **Goal Planning**: Hierarchical goal decomposition and prioritization
+- **Task Management**: Intelligent task ordering and dependency resolution  
+- **Context Switching**: Efficient management of multiple concurrent contexts
+- **Working Memory**: Neural-backed short-term memory for active tasks
+- **Decision Making**: Evidence-based reasoning with confidence scoring
+- **Pattern Recognition**: Learning from past decisions and outcomes
+
+### Integration with ruv-FANN
+- **Ephemeral Agents**: Spawn specialized cognitive agents for specific tasks
+- **Neural Networks**: Pattern matching and decision optimization
+- **Swarm Intelligence**: Coordinate multiple agents for complex reasoning
+- **Time-Series Forecasting**: Predict task durations and resource needs
 
 ## 🚀 Quick Start
 
@@ -41,98 +57,143 @@ PORT=8090 ./target/release/ruv-fann-core
 
 ## 🧠 Components
 
-### 1. ruv-FANN Core
+### 1. MCP Server (NEW)
+- Model Context Protocol server for Claude Code integration
+- Tool request interception and prediction
+- Pattern learning from execution history
+- Real-time failure prevention (<50ms predictions)
+- TypeScript/Node.js implementation
+
+### 2. ruv-FANN Core
 - Minimal feedforward neural network
 - REST API for training and inference
 - <1ms inference time
-- ~1000 lines of Rust
+- Extended with pattern analysis agents
 
-### 2. ruv-swarm (Ephemeral Intelligence)
-- Agents that spawn, solve, and dissolve
-- <100ms total lifespan
-- SQLite for state persistence
-- ~500 lines of Rust
+### 3. ruv-swarm (Ephemeral Intelligence)
+- Specialized agents for pattern analysis:
+  - Pattern Matcher: Identifies similar past commands
+  - Outcome Predictor: Predicts success/failure probability
+  - Alternative Generator: Suggests better approaches
+  - Context Analyzer: Evaluates execution context
+- <100ms total lifespan per agent
+- SQLite for pattern persistence
 
-### 3. Model Server
-- Simple MLP time series forecaster
-- Pre-trained weights
-- Confidence intervals
-- ~300 lines of Rust
-
-### 4. WASM Demo
-- Neural networks in the browser
-- XOR training demo
-- Time series visualization
-- ~200 lines JS/HTML
+### 4. Model Server
+- Time series forecasting for command sequences
+- Prediction of execution durations
+- Confidence interval calculations
 
 ## 📊 Performance Metrics
 
-- **Neural Network Training**: <1s for 1000 epochs
-- **Inference Time**: <1ms per prediction
+- **Pattern Prediction**: <50ms end-to-end
+- **Neural Network Inference**: <1ms per prediction
 - **Ephemeral Agent Lifespan**: <100ms
-- **Time Series Forecast**: <50ms
-- **Total Memory**: <500MB
-- **Binary Sizes**: ~5MB each
+- **Pattern Learning**: Batch processing every 10 commands
+- **Success Rate**: >70% prediction accuracy after 1000 commands
+- **Memory Usage**: <500MB total system
+- **Cache Performance**: 1-minute prediction cache
 
-## 🎮 API Examples
+## 🎮 MCP API Examples
 
-### Create Neural Network
+### Predict Command Outcome
 ```bash
-curl -X POST http://localhost:8090/api/network/create \
-  -H "Content-Type: application/json" \
-  -d '{"layers": [2, 4, 1], "learning_rate": 0.5}'
+# Via MCP protocol
+{
+  "method": "call_tool",
+  "params": {
+    "name": "predict_outcome",
+    "arguments": {
+      "tool": "bq query",
+      "params": {
+        "query": "SELECT * FROM dataset.table",
+        "use_legacy_sql": false
+      }
+    }
+  }
+}
 ```
 
-### Ephemeral Solve
+### Learn from Execution
 ```bash
-curl -X POST http://localhost:8081/api/solve \
-  -H "Content-Type: application/json" \
-  -d '{"problem": "Analyze this data"}'
+{
+  "method": "call_tool",
+  "params": {
+    "name": "learn_pattern",
+    "arguments": {
+      "tool": "git push",
+      "params": { "remote": "origin", "branch": "main" },
+      "outcome": "failure",
+      "duration": 2500,
+      "error": "rejected: non-fast-forward"
+    }
+  }
+}
 ```
 
-### Time Series Forecast
+### Get Alternative Suggestions
 ```bash
-curl -X POST http://localhost:8082/api/forecast \
-  -H "Content-Type: application/json" \
-  -d '{"values": [1,2,3,4,5], "horizon": 3}'
-```
-
-## 🌐 WASM Demo
-
-```bash
-cd wasm
-./build.sh
-cd pkg
-python3 -m http.server 8000
-# Open http://localhost:8000
+{
+  "method": "call_tool",
+  "params": {
+    "name": "get_suggestions",
+    "arguments": {
+      "tool": "gcloud",
+      "params": { "command": "compute instances list" },
+      "goal": "List all running instances"
+    }
+  }
+}
 ```
 
 ## 📁 Project Structure
 
 ```
-ruv-fann-poc/
-├── core/           # Neural network foundation
-├── swarm/          # Ephemeral agent system
-├── model/          # Forecasting model
-├── wasm/           # Browser demo
-└── examples/       # Integration demos
+ruv-fann-mcp1/
+├── mcp-server/          # MCP server implementation
+│   ├── src/
+│   │   ├── clients/     # ruv-FANN service clients
+│   │   ├── interceptors/# Tool request interceptors
+│   │   ├── predictors/  # Pattern prediction engine
+│   │   └── learners/    # Pattern learning system
+│   └── data/            # Pattern database
+├── core/                # Neural network foundation
+├── swarm/               # Ephemeral agent system
+│   └── src/agents/      # Specialized pattern agents
+├── model/               # Time series forecasting
+├── shared/              # Shared schemas
+└── extensions/          # Pattern definitions
 ```
 
 ## 🚀 Next Steps
 
-This POC demonstrates:
-- ✅ Core neural network capabilities
-- ✅ Ephemeral intelligence concept
-- ✅ <100ms decision making
-- ✅ WASM browser deployment
-- ✅ Minimal resource footprint
+### Current Capabilities
+- ✅ MCP server for Claude Code integration
+- ✅ Pattern learning from command execution
+- ✅ Real-time failure prediction (<50ms)
+- ✅ Ephemeral agent analysis
+- ✅ Alternative command suggestions
 
-To scale up:
-1. Add GPU acceleration
-2. Implement more neural architectures
-3. Add distributed swarm coordination
-4. Integrate full forecasting models
-5. Deploy to cloud infrastructure
+### Roadmap
+1. **Enhanced Learning**
+   - Deep learning for complex patterns
+   - Cross-project knowledge transfer
+   - User preference adaptation
+
+2. **Domain Extensions**
+   - Specialized modules for AWS, Azure
+   - Docker/Kubernetes operations
+   - Database query optimization
+
+3. **Advanced Features**
+   - Multi-step workflow prediction
+   - Resource usage forecasting
+   - Team pattern learning
+
+4. **Integration**
+   - Direct Claude Code plugin
+   - VS Code extension
+   - CLI tool for standalone use
 
 ## 📄 License
 

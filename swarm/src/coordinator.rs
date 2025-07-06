@@ -106,6 +106,23 @@ impl SwarmCoordinator {
         Ok(solution)
     }
 
+    /// Solve a problem with a specific agent
+    pub async fn solve_with_agent(&self, agent_id: Uuid, problem: String) -> anyhow::Result<String> {
+        // Solve problem
+        let solution = {
+            let mut agents = self.agents.write().await;
+            let agent = agents.get_mut(&agent_id)
+                .ok_or_else(|| anyhow::anyhow!("Agent not found"))?;
+            
+            agent.solve(problem).await?
+        };
+        
+        // Note: We don't automatically dissolve the agent here
+        // The MCP server can query the result and then dissolve manually
+        
+        Ok(solution)
+    }
+
     /// Dissolve an agent
     pub async fn dissolve_agent(&self, agent_id: Uuid) -> anyhow::Result<()> {
         let mut agents = self.agents.write().await;

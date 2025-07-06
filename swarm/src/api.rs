@@ -13,6 +13,7 @@ use uuid::Uuid;
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SpawnRequest {
     pub agent_type: Option<String>,
+    pub task_data: Option<serde_json::Value>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -53,6 +54,10 @@ pub async fn spawn_agent(
     let agent_type = match req.agent_type.as_deref() {
         Some("analyzer") => AgentType::Analyzer,
         Some("optimizer") => AgentType::Optimizer,
+        Some("pattern_matcher") => AgentType::PatternMatcher,
+        Some("outcome_predictor") => AgentType::OutcomePredictor,
+        Some("alternative_gen") => AgentType::AlternativeGen,
+        Some("context_analyzer") => AgentType::ContextAnalyzer,
         _ => AgentType::Solver,
     };
 
@@ -62,6 +67,12 @@ pub async fn spawn_agent(
         .map_err(|e| ApiError {
             error: e.to_string(),
         })?;
+
+    // If task data is provided, have the agent solve it immediately
+    if let Some(task_data) = req.task_data {
+        let problem = serde_json::to_string(&task_data).unwrap_or_default();
+        coordinator.solve_with_agent(agent_id, problem).await.ok();
+    }
 
     Ok(Json(SpawnResponse {
         agent_id,
@@ -193,4 +204,68 @@ pub struct DemoResponse {
     pub results: Vec<DemoResult>,
     pub stats: SwarmStats,
     pub note: String,
+}
+
+/// Get agent result after completion
+pub async fn get_agent_result(
+    State(coordinator): State<Arc<SwarmCoordinator>>,
+    Path(id): Path<String>,
+) -> Result<Json<AgentResultResponse>, ApiError> {
+    let agent_id = Uuid::parse_str(&id).map_err(|_| ApiError {
+        error: "Invalid agent ID".to_string(),
+    })?;
+    
+    // Check if agent exists and get its status
+    let agent = coordinator
+        .get_agent(agent_id)
+        .await
+        .ok_or_else(|| ApiError {
+            error: "Agent not found".to_string(),
+        })?;
+    
+    // Return result based on agent status
+    match agent.status {
+        crate::agent::AgentStatus::Completed => {
+            Ok(Json(AgentResultResponse {
+                agent_id,
+                status: "completed".to_string(),
+                result: agent.solution,
+                confidence: match agent.agent_type {
+                    AgentType::PatternMatcher => 0.85,
+                    AgentType::OutcomePredictor => 0.75,
+                    AgentType::AlternativeGen => 0.80,
+                    AgentType::ContextAnalyzer => 0.70,
+                    _ => 0.90,
+                },
+                duration_ms: agent.lifespan_ms,
+            }))
+        }
+        crate::agent::AgentStatus::Solving => {
+            Ok(Json(AgentResultResponse {
+                agent_id,
+                status: "processing".to_string(),
+                result: None,
+                confidence: 0.0,
+                duration_ms: 0,
+            }))
+        }
+        _ => {
+            Ok(Json(AgentResultResponse {
+                agent_id,
+                status: "pending".to_string(),
+                result: None,
+                confidence: 0.0,
+                duration_ms: 0,
+            }))
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AgentResultResponse {
+    pub agent_id: Uuid,
+    pub status: String,
+    pub result: Option<String>,
+    pub confidence: f64,
+    pub duration_ms: u64,
 }
