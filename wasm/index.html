@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ruv-FANN WASM Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .performance {
+            color: #28a745;
+            font-weight: bold;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 ruv-FANN WASM Demo</h1>
+        <p style="text-align: center;">Neural Networks Running in Your Browser!</p>
+
+        <div class="demo-section">
+            <h2>XOR Neural Network Demo</h2>
+            <p>Train a neural network to learn the XOR function right in your browser.</p>
+            <button onclick="trainXOR()">Train XOR Network</button>
+            <button onclick="testXOR()">Test XOR Predictions</button>
+            <div id="xor-result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Time Series Prediction</h2>
+            <p>Predict future values from a time series using WASM neural processing.</p>
+            <button onclick="generateTimeSeries()">Generate Data</button>
+            <button onclick="predictTimeSeries()">Predict Next Values</button>
+            <canvas id="chart" width="700" height="300" style="display: none;"></canvas>
+            <div id="ts-result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Performance Benchmark</h2>
+            <button onclick="runBenchmark()">Run Performance Test</button>
+            <div id="benchmark-result" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import init, { WasmNeuralNetwork, create_xor_demo, process_time_series } from './pkg/ruv_fann_wasm.js';
+
+        let network = null;
+        let timeSeriesData = [];
+
+        async function initialize() {
+            await init();
+            window.WasmNeuralNetwork = WasmNeuralNetwork;
+            window.create_xor_demo = create_xor_demo;
+            window.process_time_series = process_time_series;
+            console.log('WASM module loaded successfully!');
+        }
+
+        window.trainXOR = function() {
+            const startTime = performance.now();
+            network = create_xor_demo();
+            
+            // Training data for XOR
+            const inputs = [[0, 0], [0, 1], [1, 0], [1, 1]];
+            const targets = [[0], [1], [1], [0]];
+            
+            let totalLoss = 0;
+            const epochs = 1000;
+            
+            for (let epoch = 0; epoch < epochs; epoch++) {
+                let epochLoss = 0;
+                for (let i = 0; i < inputs.length; i++) {
+                    const loss = network.train_step(inputs[i], targets[i], 0.5);
+                    epochLoss += loss;
+                }
+                totalLoss = epochLoss / inputs.length;
+            }
+            
+            const trainingTime = performance.now() - startTime;
+            
+            document.getElementById('xor-result').style.display = 'block';
+            document.getElementById('xor-result').innerHTML = `
+                <h3>Training Complete!</h3>
+                <p>Final Loss: ${totalLoss.toFixed(6)}</p>
+                <p class="performance">Training Time: ${trainingTime.toFixed(2)}ms</p>
+                <p>Trained for ${epochs} epochs in browser using WASM</p>
+            `;
+        };
+
+        window.testXOR = function() {
+            if (!network) {
+                alert('Please train the network first!');
+                return;
+            }
+            
+            const inputs = [[0, 0], [0, 1], [1, 0], [1, 1]];
+            const expected = [0, 1, 1, 0];
+            let results = '<h3>XOR Predictions:</h3>';
+            
+            const startTime = performance.now();
+            
+            for (let i = 0; i < inputs.length; i++) {
+                const output = network.predict(inputs[i]);
+                results += `<p>Input: [${inputs[i]}] → Output: ${output[0].toFixed(4)} (Expected: ${expected[i]})</p>`;
+            }
+            
+            const inferenceTime = performance.now() - startTime;
+            results += `<p class="performance">Total Inference Time: ${inferenceTime.toFixed(2)}ms</p>`;
+            
+            document.getElementById('xor-result').style.display = 'block';
+            document.getElementById('xor-result').innerHTML = results;
+        };
+
+        window.generateTimeSeries = function() {
+            // Generate synthetic time series data
+            timeSeriesData = [];
+            for (let i = 0; i < 50; i++) {
+                timeSeriesData.push(
+                    Math.sin(i * 0.1) * 50 + 
+                    Math.cos(i * 0.05) * 30 + 
+                    Math.random() * 10 + 50
+                );
+            }
+            
+            drawChart(timeSeriesData, []);
+            document.getElementById('ts-result').style.display = 'block';
+            document.getElementById('ts-result').innerHTML = '<p>Time series data generated!</p>';
+        };
+
+        window.predictTimeSeries = function() {
+            if (timeSeriesData.length === 0) {
+                alert('Please generate data first!');
+                return;
+            }
+            
+            const startTime = performance.now();
+            const predictions = process_time_series(timeSeriesData, 5);
+            const predictionTime = performance.now() - startTime;
+            
+            drawChart(timeSeriesData, predictions);
+            
+            document.getElementById('ts-result').style.display = 'block';
+            document.getElementById('ts-result').innerHTML = `
+                <h3>Predictions Complete!</h3>
+                <p>Generated ${predictions.length} predictions</p>
+                <p class="performance">Prediction Time: ${predictionTime.toFixed(2)}ms</p>
+            `;
+        };
+
+        window.runBenchmark = function() {
+            const sizes = [10, 100, 1000];
+            let results = '<h3>Performance Benchmark Results:</h3>';
+            
+            for (const size of sizes) {
+                const data = new Float32Array(size).map(() => Math.random());
+                
+                const startTime = performance.now();
+                for (let i = 0; i < 100; i++) {
+                    process_time_series(data, 5);
+                }
+                const totalTime = performance.now() - startTime;
+                const avgTime = totalTime / 100;
+                
+                results += `<p>Array size ${size}: <span class="performance">${avgTime.toFixed(3)}ms</span> avg per operation</p>`;
+            }
+            
+            results += '<p><strong>All computations performed in WASM in your browser!</strong></p>';
+            
+            document.getElementById('benchmark-result').style.display = 'block';
+            document.getElementById('benchmark-result').innerHTML = results;
+        };
+
+        function drawChart(data, predictions) {
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 40;
+            const width = canvas.width - 2 * padding;
+            const height = canvas.height - 2 * padding;
+            
+            const allData = [...data, ...predictions];
+            const maxValue = Math.max(...allData);
+            const minValue = Math.min(...allData);
+            const range = maxValue - minValue;
+            
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Draw data
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < data.length; i++) {
+                const x = padding + (i / (allData.length - 1)) * width;
+                const y = canvas.height - padding - ((data[i] - minValue) / range) * height;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // Draw predictions
+            if (predictions.length > 0) {
+                ctx.strokeStyle = '#28a745';
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                const startX = padding + ((data.length - 1) / (allData.length - 1)) * width;
+                const startY = canvas.height - padding - ((data[data.length - 1] - minValue) / range) * height;
+                ctx.moveTo(startX, startY);
+                
+                for (let i = 0; i < predictions.length; i++) {
+                    const x = padding + ((data.length + i) / (allData.length - 1)) * width;
+                    const y = canvas.height - padding - ((predictions[i] - minValue) / range) * height;
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        // Initialize on load
+        initialize();
+    </script>
+</body>
+</html>

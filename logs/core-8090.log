@@ -1,0 +1,27 @@
+[2m2025-07-05T11:59:37.207728Z[0m [32m INFO[0m [2mruv_fann_core[0m[2m:[0m ruv-FANN Core listening on 0.0.0.0:8090
+[2m2025-07-05T12:04:45.269929Z[0m [32m INFO[0m [2mruv_fann_core::api[0m[2m:[0m Created network: NetworkInfo { layers: [2, 4, 1], total_parameters: 17, learning_rate: 0.5 }
+[2m2025-07-06T10:44:24.809155Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 0: Loss = 0.316349
+[2m2025-07-06T10:44:24.813190Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 100: Loss = 0.282967
+[2m2025-07-06T10:44:24.813650Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 200: Loss = 0.282967
+[2m2025-07-06T10:44:24.814113Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 300: Loss = 0.282967
+[2m2025-07-06T10:44:24.814582Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 400: Loss = 0.282967
+[2m2025-07-06T10:44:24.815125Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 500: Loss = 0.282967
+[2m2025-07-06T10:44:24.815930Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 600: Loss = 0.282967
+[2m2025-07-06T10:44:24.816758Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 700: Loss = 0.282967
+[2m2025-07-06T10:44:24.817499Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 800: Loss = 0.282967
+[2m2025-07-06T10:44:24.818220Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 900: Loss = 0.282967
+[2m2025-07-06T10:44:24.818999Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1000: Loss = 0.282967
+[2m2025-07-06T10:44:24.819706Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1100: Loss = 0.282967
+[2m2025-07-06T10:44:24.820468Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1200: Loss = 0.282967
+[2m2025-07-06T10:44:24.821174Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1300: Loss = 0.282967
+[2m2025-07-06T10:44:24.821763Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1400: Loss = 0.282967
+[2m2025-07-06T10:44:24.822357Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1500: Loss = 0.282967
+[2m2025-07-06T10:44:24.822950Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1600: Loss = 0.282967
+[2m2025-07-06T10:44:24.823581Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1700: Loss = 0.282967
+[2m2025-07-06T10:44:24.824190Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1800: Loss = 0.282967
+[2m2025-07-06T10:44:24.824730Z[0m [32m INFO[0m [2mruv_fann_core::network[0m[2m:[0m Epoch 1900: Loss = 0.282967
+[2m2025-07-06T10:44:24.825282Z[0m [32m INFO[0m [2mruv_fann_core::api[0m[2m:[0m Training completed in 17.00ms, final loss: 0.282967
+[2m2025-07-06T10:44:42.780638Z[0m [34mDEBUG[0m [2mruv_fann_core::api[0m[2m:[0m Inference completed in 0.009ms
+[2m2025-07-06T10:44:42.798356Z[0m [34mDEBUG[0m [2mruv_fann_core::api[0m[2m:[0m Inference completed in 0.003ms
+[2m2025-07-06T10:44:42.811995Z[0m [34mDEBUG[0m [2mruv_fann_core::api[0m[2m:[0m Inference completed in 0.003ms
+[2m2025-07-06T10:44:42.825368Z[0m [34mDEBUG[0m [2mruv_fann_core::api[0m[2m:[0m Inference completed in 0.003ms

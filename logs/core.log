@@ -1,0 +1,2 @@
+[2m2025-07-05T11:59:13.890816Z[0m [32m INFO[0m [2mruv_fann_core[0m[2m:[0m ruv-FANN Core listening on 0.0.0.0:8080
+Error: Address already in use (os error 98)
