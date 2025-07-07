@@ -37,6 +37,9 @@ export declare class GCPPredictor {
     private analyzeAuthStatus;
     private analyzeRisks;
     private getNeuralPrediction;
+    private generateNeuralWarnings;
+    private estimateDurationFromNeural;
+    private estimateCostFromNeural;
     private combinePredictions;
     private generateSuggestions;
     private generateExplanation;

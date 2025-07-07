@@ -23,6 +23,8 @@ export declare class RuvFannClient {
     private coreClient;
     private swarmClient;
     private modelClient;
+    private sqlAnalyzer;
+    private trainingDataGenerator;
     constructor(config: RuvFannConfig);
     testConnectivity(): Promise<void>;
     spawnPatternAnalysisAgents(tool: string, params: any, context: any): Promise<SwarmAnalysis[]>;
@@ -34,6 +36,7 @@ export declare class RuvFannClient {
         confidence: number;
     }>;
     private patternsToInputs;
+    private fallbackFeatureExtraction;
     private hashString;
 }
 //# sourceMappingURL=ruv-fann-client.d.ts.map

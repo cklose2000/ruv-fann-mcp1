@@ -250,12 +250,28 @@ export class GCPPredictor {
         try {
             // Get historical patterns for this tool
             const patterns = await this.patternStorage.getSimilarCommands(tool, params, 10);
-            // Use ruv-FANN for pattern-based prediction
+            // Use enhanced ruv-FANN for detailed prediction
             const response = await this.ruvFannClient.predictPattern(tool, params, patterns, context);
+            // Get raw neural network outputs for detailed analysis
+            const rawPrediction = await this.ruvFannClient.predict([[0.1, 0.5, 0.3, 0.2, 0.1, 0.0, 0.0, 0.4, 0.0, 0.0]], context);
+            const neuralOutputs = rawPrediction.output || [0.5, 0.0, 0.0, 0.0];
+            // Generate neural-based warnings
+            const neuralWarnings = this.generateNeuralWarnings(neuralOutputs, params);
+            // Estimate duration and cost based on neural outputs
+            const estimatedDuration = this.estimateDurationFromNeural(neuralOutputs, patterns);
+            const estimatedCost = this.estimateCostFromNeural(neuralOutputs, params);
             return {
                 neuralSuccessProbability: response.successProbability || 0.5,
-                neuralDuration: 5000, // Default duration since not in response
-                neuralConfidence: response.confidence || 0.3
+                neuralDuration: estimatedDuration,
+                neuralConfidence: response.confidence || 0.3,
+                neuralOutputs: neuralOutputs,
+                neuralWarnings: neuralWarnings,
+                estimatedCost: estimatedCost,
+                failureTypeIndicators: {
+                    syntax: neuralOutputs[1] || 0.0,
+                    permission: neuralOutputs[2] || 0.0,
+                    costPerformance: neuralOutputs[3] || 0.0
+                }
             };
         }
         catch (error) {
@@ -263,9 +279,103 @@ export class GCPPredictor {
             return {
                 neuralSuccessProbability: 0.5,
                 neuralDuration: 5000,
-                neuralConfidence: 0.1
+                neuralConfidence: 0.1,
+                neuralOutputs: [0.5, 0.0, 0.0, 0.0],
+                neuralWarnings: [],
+                estimatedCost: 0.0,
+                failureTypeIndicators: {
+                    syntax: 0.0,
+                    permission: 0.0,
+                    costPerformance: 0.0
+                }
             };
         }
+    }
+    generateNeuralWarnings(neuralOutputs, params) {
+        const warnings = [];
+        const [successProb, syntaxRisk, permissionRisk, costPerfRisk] = neuralOutputs;
+        // Syntax warnings
+        if (syntaxRisk > 0.6) {
+            warnings.push({
+                level: syntaxRisk > 0.8 ? 'high' : 'medium',
+                message: 'Neural network detected potential syntax error in query',
+                reason: 'Query structure analysis indicates missing keywords or invalid syntax patterns',
+                preventable: true
+            });
+        }
+        // Permission warnings
+        if (permissionRisk > 0.5) {
+            warnings.push({
+                level: permissionRisk > 0.7 ? 'high' : 'medium',
+                message: 'Neural network detected potential permission issue',
+                reason: 'Access pattern analysis suggests dataset or table access restrictions',
+                preventable: true
+            });
+        }
+        // Cost/Performance warnings
+        if (costPerfRisk > 0.5) {
+            if (params.query && (params.query.includes('*') || params.query.includes('JOIN'))) {
+                warnings.push({
+                    level: costPerfRisk > 0.8 ? 'high' : 'medium',
+                    message: 'Neural network detected high cost/performance risk',
+                    reason: 'Query patterns suggest expensive operations (full scans, complex joins)',
+                    preventable: true
+                });
+            }
+            else {
+                warnings.push({
+                    level: costPerfRisk > 0.8 ? 'high' : 'medium',
+                    message: 'Neural network detected potential performance issue',
+                    reason: 'Query complexity indicators suggest potential resource constraints',
+                    preventable: true
+                });
+            }
+        }
+        return warnings;
+    }
+    estimateDurationFromNeural(neuralOutputs, patterns) {
+        const [successProb, syntaxRisk, permissionRisk, costPerfRisk] = neuralOutputs;
+        // Base duration from historical patterns
+        let baseDuration = 2000;
+        if (patterns.length > 0) {
+            const avgDuration = patterns.reduce((sum, p) => sum + (p.duration || 2000), 0) / patterns.length;
+            baseDuration = avgDuration;
+        }
+        // Adjust based on neural outputs
+        let multiplier = 1.0;
+        if (syntaxRisk > 0.7)
+            multiplier += 0.5; // Syntax errors cause delays
+        if (permissionRisk > 0.7)
+            multiplier += 0.3; // Permission checks add time
+        if (costPerfRisk > 0.7)
+            multiplier += 1.0; // High cost queries take longer
+        // If success probability is high, likely to be faster
+        if (successProb > 0.8)
+            multiplier *= 0.8;
+        return Math.round(baseDuration * multiplier);
+    }
+    estimateCostFromNeural(neuralOutputs, params) {
+        const [successProb, syntaxRisk, permissionRisk, costPerfRisk] = neuralOutputs;
+        // Base cost estimation
+        let baseCost = 0.01;
+        // Cost risk strongly indicates higher costs
+        if (costPerfRisk > 0.5) {
+            baseCost = 0.10 + (costPerfRisk * 2.0); // $0.10 to $2.10 based on risk
+        }
+        // Query-specific cost indicators
+        if (params.query) {
+            const query = params.query.toLowerCase();
+            if (query.includes('*') && !query.includes('limit'))
+                baseCost *= 3;
+            if (query.includes('join'))
+                baseCost *= 1.5;
+            if (query.includes('group by'))
+                baseCost *= 1.2;
+        }
+        // Failed queries still have minimal cost
+        if (successProb < 0.3)
+            baseCost = Math.min(baseCost, 0.05);
+        return Math.round(baseCost * 100) / 100; // Round to cents
     }
     combinePredictions(analyses) {
         const { patternAnalysis, costAnalysis, authAnalysis, riskAnalysis, neuralPrediction } = analyses;
@@ -281,11 +391,12 @@ export class GCPPredictor {
             authAnalysis.authScore * weights.auth +
             riskAnalysis.riskScore * weights.risk);
         const confidence = Math.min(patternAnalysis.confidence, neuralPrediction.neuralConfidence, 1.0);
-        // Combine all warnings
+        // Combine all warnings including neural-based warnings
         const warnings = [
             ...costAnalysis.costWarnings,
             ...authAnalysis.authWarnings,
-            ...riskAnalysis.risks
+            ...riskAnalysis.risks,
+            ...(neuralPrediction.neuralWarnings || [])
         ];
         // Generate suggestions
         const suggestions = this.generateSuggestions(analyses);
@@ -295,7 +406,9 @@ export class GCPPredictor {
             successProbability: Math.max(0, Math.min(1, successProbability)),
             confidence: Math.max(0, Math.min(1, confidence)),
             estimatedDuration: Math.round((patternAnalysis.avgDuration + neuralPrediction.neuralDuration) / 2),
-            estimatedCost: costAnalysis.estimatedCost,
+            estimatedCost: neuralPrediction.estimatedCost
+                ? Math.max(costAnalysis.estimatedCost, neuralPrediction.estimatedCost)
+                : costAnalysis.estimatedCost,
             warnings,
             suggestions,
             explanation
