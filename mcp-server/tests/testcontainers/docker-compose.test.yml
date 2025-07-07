@@ -1,0 +1,92 @@
+version: '3.8'
+
+# Test containers for integration testing
+# These services provide real backends for integration tests
+# avoiding the need for mocks and preventing test hallucinations
+
+services:
+  # PostgreSQL for pattern storage (alternative to SQLite for tests)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: patterns_test
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-scripts/postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Mock GCP MCP Backend service
+  gcp-mcp-backend:
+    build:
+      context: ./mock-services
+      dockerfile: Dockerfile.gcp-backend
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: test
+      LOG_LEVEL: debug
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Mock ruv-FANN Core service
+  ruv-fann-core:
+    build:
+      context: ./mock-services
+      dockerfile: Dockerfile.ruv-core
+    ports:
+      - "8090:8090"
+    environment:
+      NODE_ENV: test
+      MOCK_MODE: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Mock ruv-FANN Swarm service
+  ruv-fann-swarm:
+    build:
+      context: ./mock-services
+      dockerfile: Dockerfile.ruv-swarm
+    ports:
+      - "8081:8081"
+    environment:
+      NODE_ENV: test
+      AGENT_POOL_SIZE: 5
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Mock ruv-FANN Model service
+  ruv-fann-model:
+    build:
+      context: ./mock-services
+      dockerfile: Dockerfile.ruv-model
+    ports:
+      - "8082:8082"
+    environment:
+      NODE_ENV: test
+      MODEL_TYPE: mock
+      PREDICTION_DELAY_MS: 50
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+networks:
+  default:
+    name: ruv-fann-test-network

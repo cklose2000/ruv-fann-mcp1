@@ -11,6 +11,7 @@ export default {
       'ts-jest',
       {
         useESM: true,
+        isolatedModules: true,
       },
     ],
   },
@@ -30,9 +31,4 @@ export default {
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   verbose: true,
   testTimeout: 10000,
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
-    },
-  },
 };

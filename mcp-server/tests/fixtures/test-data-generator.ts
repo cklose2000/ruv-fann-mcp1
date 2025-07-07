@@ -192,7 +192,7 @@ export class TestDataGenerator {
           Math.floor(executionTime),
           cost,
           Math.floor(Math.random() * 1000000),
-          true,
+          1,  // true as 1 for SQLite
           null
         );
       }
@@ -207,7 +207,7 @@ export class TestDataGenerator {
           Math.floor(Math.random() * 10000),
           null,
           0,
-          false,
+          0,  // false as 0 for SQLite
           errorTypes[Math.floor(Math.random() * errorTypes.length)]
         );
       }

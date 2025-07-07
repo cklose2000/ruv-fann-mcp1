@@ -65,7 +65,7 @@ describe('GCPPatternStorage', () => {
       const tool = 'bq-query';
       const baseParams = { query: 'SELECT * FROM dataset.table' };
       
-      // Record multiple patterns
+      // Record multiple patterns with slight delays to ensure different timestamps
       for (let i = 0; i < 5; i++) {
         await storage.recordCommandPattern({
           tool,
@@ -74,6 +74,8 @@ describe('GCPPatternStorage', () => {
           outcome: i % 2 === 0 ? 'success' : 'failure',
           duration: 1000 + i * 100,
         });
+        // Small delay to ensure different timestamps
+        await new Promise(resolve => setTimeout(resolve, 10));
       }
 
       // Act
@@ -222,10 +224,10 @@ describe('GCPPatternStorage', () => {
       // Arrange
       const userId = 'test-user';
       const patterns = {
-        commonProjects: ['project-a', 'project-b'],
-        frequentDatasets: ['analytics', 'reporting'],
-        typicalOperations: ['SELECT', 'JOIN'],
-        errorPatterns: ['syntax_error', 'permission_denied'],
+        common_projects: ['project-a', 'project-b'],
+        frequent_datasets: ['analytics', 'reporting'],
+        typical_operations: ['SELECT', 'JOIN'],
+        error_patterns: ['syntax_error', 'permission_denied'],
       };
 
       // Act
@@ -234,8 +236,8 @@ describe('GCPPatternStorage', () => {
 
       // Assert
       expect(retrieved).toBeDefined();
-      expect(retrieved?.common_projects).toEqual(patterns.commonProjects);
-      expect(retrieved?.frequent_datasets).toEqual(patterns.frequentDatasets);
+      expect(retrieved?.common_projects).toEqual(patterns.common_projects);
+      expect(retrieved?.frequent_datasets).toEqual(patterns.frequent_datasets);
     });
 
     it('should update existing user patterns', async () => {
@@ -244,18 +246,18 @@ describe('GCPPatternStorage', () => {
       
       // First update
       await storage.updateUserPatterns(userId, {
-        commonProjects: ['project-a'],
-        frequentDatasets: ['dataset-a'],
-        typicalOperations: ['SELECT'],
-        errorPatterns: [],
+        common_projects: ['project-a'],
+        frequent_datasets: ['dataset-a'],
+        typical_operations: ['SELECT'],
+        error_patterns: [],
       });
 
       // Second update
       await storage.updateUserPatterns(userId, {
-        commonProjects: ['project-a', 'project-b'],
-        frequentDatasets: ['dataset-a', 'dataset-b'],
-        typicalOperations: ['SELECT', 'INSERT'],
-        errorPatterns: ['timeout'],
+        common_projects: ['project-a', 'project-b'],
+        frequent_datasets: ['dataset-a', 'dataset-b'],
+        typical_operations: ['SELECT', 'INSERT'],
+        error_patterns: ['timeout'],
       });
 
       // Act

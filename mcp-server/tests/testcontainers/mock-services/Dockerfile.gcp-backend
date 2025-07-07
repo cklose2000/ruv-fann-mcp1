@@ -1,0 +1,191 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install dependencies
+RUN npm init -y && npm install express cors body-parser
+
+# Create mock GCP backend service
+COPY <<'EOF' /app/server.js
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy', service: 'gcp-mcp-backend-mock' });
+});
+
+// Mock BigQuery query execution
+app.post('/execute/bq-query', (req, res) => {
+  const { params } = req.body;
+  
+  // Simulate various scenarios based on query content
+  if (params.query.includes('SYNTAX_ERROR')) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        code: 'INVALID_ARGUMENT',
+        message: 'Syntax error: Unexpected keyword SYNTAX_ERROR',
+        details: { line: 1, column: 15 },
+      },
+    });
+  }
+  
+  if (params.query.includes('PERMISSION_DENIED')) {
+    return res.status(403).json({
+      success: false,
+      error: {
+        code: 'PERMISSION_DENIED',
+        message: 'User does not have bigquery.tables.getData permission',
+      },
+    });
+  }
+  
+  if (params.query.includes('TIMEOUT')) {
+    // Simulate timeout
+    setTimeout(() => {
+      res.status(504).json({
+        success: false,
+        error: {
+          code: 'TIMEOUT',
+          message: 'Query execution timed out',
+        },
+      });
+    }, 5000);
+    return;
+  }
+  
+  // Default success response
+  const mockRows = [];
+  if (params.query.includes('SELECT')) {
+    mockRows.push({ id: 1, value: 'test', timestamp: new Date().toISOString() });
+  }
+  
+  res.json({
+    success: true,
+    data: {
+      rows: mockRows,
+      schema: {
+        fields: [
+          { name: 'id', type: 'INTEGER' },
+          { name: 'value', type: 'STRING' },
+          { name: 'timestamp', type: 'TIMESTAMP' },
+        ],
+      },
+      totalRows: mockRows.length,
+    },
+    metadata: {
+      duration: Math.floor(Math.random() * 500) + 100,
+      bytesProcessed: Math.floor(Math.random() * 10000),
+      cost: Math.random() * 0.01,
+      cacheHit: Math.random() > 0.5,
+    },
+  });
+});
+
+// Mock dataset operations
+app.post('/execute/bq-list-datasets', (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      datasets: [
+        {
+          id: 'test_dataset_1',
+          projectId: req.body.params.projectId || 'test-project',
+          location: 'US',
+          creationTime: '2024-01-01T00:00:00Z',
+        },
+        {
+          id: 'test_dataset_2',
+          projectId: req.body.params.projectId || 'test-project',
+          location: 'EU',
+          creationTime: '2024-01-02T00:00:00Z',
+        },
+      ],
+    },
+  });
+});
+
+// Mock table operations
+app.post('/execute/bq-list-tables', (req, res) => {
+  const { datasetId } = req.body.params;
+  
+  if (datasetId === 'restricted_dataset') {
+    return res.status(403).json({
+      success: false,
+      error: {
+        code: 'PERMISSION_DENIED',
+        message: 'Access denied to dataset',
+      },
+    });
+  }
+  
+  res.json({
+    success: true,
+    data: {
+      tables: [
+        {
+          id: 'table_1',
+          datasetId,
+          projectId: req.body.params.projectId || 'test-project',
+          type: 'TABLE',
+          creationTime: '2024-01-01T00:00:00Z',
+        },
+      ],
+    },
+  });
+});
+
+// Mock GCP SQL operations
+app.post('/execute/gcp-sql', (req, res) => {
+  const { operation } = req.body.params;
+  
+  switch (operation) {
+    case 'list-datasets':
+      res.json({
+        success: true,
+        data: {
+          datasets: ['dataset1', 'dataset2'],
+        },
+      });
+      break;
+      
+    case 'describe-table':
+      res.json({
+        success: true,
+        data: {
+          schema: {
+            fields: [
+              { name: 'id', type: 'INTEGER' },
+              { name: 'name', type: 'STRING' },
+            ],
+          },
+        },
+      });
+      break;
+      
+    default:
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'INVALID_OPERATION',
+          message: `Unknown operation: ${operation}`,
+        },
+      });
+  }
+});
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Mock GCP Backend running on port ${PORT}`);
+});
+EOF
+
+EXPOSE 8080
+
+CMD ["node", "server.js"]
