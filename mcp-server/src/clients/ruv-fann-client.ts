@@ -71,7 +71,7 @@ export class RuvFannClient {
       // Test model service
       const modelHealth = await this.modelClient.get("/health");
       logger.info(`Model service: ${modelHealth.status === 200 ? "OK" : "Failed"}`);
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Connectivity test failed:", error);
       throw new Error("Failed to connect to ruv-FANN services");
     }
@@ -115,7 +115,7 @@ export class RuvFannClient {
           confidence: analysisResponse.data.confidence || 0.5,
           duration: analysisResponse.data.duration_ms || 0,
         };
-      } catch (error) {
+      } catch (error: any) {
         logger.warn(`Agent ${agentType} failed:`, error);
         return {
           agentId: "error",
@@ -137,7 +137,7 @@ export class RuvFannClient {
         context,
       });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Prediction failed:", error);
       throw error;
     }
@@ -154,7 +154,7 @@ export class RuvFannClient {
         targets,
         epochs,
       });
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Training failed:", error);
       throw error;
     }
@@ -167,9 +167,92 @@ export class RuvFannClient {
         horizon,
       });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Forecast failed:", error);
       throw error;
     }
+  }
+
+  async predictPattern(
+    tool: string,
+    params: any,
+    patterns: any[],
+    context?: any
+  ): Promise<{ successProbability: number; confidence: number }> {
+    try {
+      // Convert patterns to numerical inputs for the neural network
+      const inputs = this.patternsToInputs(patterns, tool, params);
+      
+      // Use the core prediction API
+      const response = await this.predict(inputs, {
+        ...context,
+        tool,
+        params,
+        patternCount: patterns.length
+      });
+      
+      // Extract success probability and confidence from the response
+      const successProbability = response.outputs?.[0]?.[0] || 0.5;
+      const confidence = response.confidence || 0.5;
+      
+      return { successProbability, confidence };
+    } catch (error: any) {
+      logger.error("Pattern prediction failed:", error);
+      // Return neutral prediction on error
+      return { successProbability: 0.5, confidence: 0.1 };
+    }
+  }
+
+  private patternsToInputs(patterns: any[], tool: string, params: any): number[][] {
+    // Convert patterns to numerical features for neural network
+    const features: number[] = [];
+    
+    // Tool-specific encoding
+    const toolHash = this.hashString(tool) % 100;
+    features.push(toolHash / 100);
+    
+    // Pattern statistics
+    const totalPatterns = patterns.length || 1;
+    const successCount = patterns.filter(p => p.outcome === 'success').length;
+    const avgDuration = patterns.reduce((sum, p) => sum + (p.duration || 0), 0) / totalPatterns;
+    
+    features.push(successCount / totalPatterns); // Success rate
+    features.push(Math.min(avgDuration / 10000, 1)); // Normalized duration
+    features.push(Math.min(totalPatterns / 100, 1)); // Pattern count normalized
+    
+    // Param-based features
+    if (params.projectId) {
+      features.push(this.hashString(params.projectId) % 100 / 100);
+    } else {
+      features.push(0.5); // Default project
+    }
+    
+    if (params.datasetId || params.dataset) {
+      features.push(this.hashString(params.datasetId || params.dataset) % 100 / 100);
+    } else {
+      features.push(0);
+    }
+    
+    // Recent pattern trends (last 5 patterns)
+    const recentPatterns = patterns.slice(-5);
+    const recentSuccessRate = recentPatterns.filter(p => p.outcome === 'success').length / (recentPatterns.length || 1);
+    features.push(recentSuccessRate);
+    
+    // Pad to ensure consistent input size
+    while (features.length < 10) {
+      features.push(0);
+    }
+    
+    return [features.slice(0, 10)]; // Return as 2D array with single sample
+  }
+
+  private hashString(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
   }
 }

@@ -1,0 +1,207 @@
+{
+  "failures": [
+    {
+      "timestamp": "2024-01-15T10:23:45Z",
+      "query": "SELECT * FROM `project.dataset.table` WHRE status = 'active'",
+      "error": "Syntax error: Unexpected keyword WHRE at [1:42]",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 145,
+      "project": "analytics-prod",
+      "user": "data-analyst@company.com"
+    },
+    {
+      "timestamp": "2024-01-15T11:45:22Z",
+      "query": "SELECT user_id, COUNT(*) FROM events GROUP BY user_name",
+      "error": "SELECT list expression references column user_name which is neither grouped nor aggregated at [1:1]",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 267,
+      "project": "analytics-prod",
+      "user": "junior-dev@company.com"
+    },
+    {
+      "timestamp": "2024-01-15T14:32:11Z",
+      "query": "SELECT * FROM marketing.campaigns JOIN sales.leads",
+      "error": "Syntax error: Expected keyword ON or USING but got end of query",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 189,
+      "project": "analytics-prod",
+      "user": "marketing@company.com"
+    },
+    {
+      "timestamp": "2024-01-16T09:15:33Z",
+      "query": "SELECT * FROM `project.dataset.huge_table`",
+      "error": "Query exceeded resource limits. 14.2TB bytes would be scanned. This exceeds the maximum allowed bytes scanned per query (1.0TB)",
+      "errorCode": "RESOURCE_EXHAUSTED",
+      "duration": 1245,
+      "estimatedCost": 71.0,
+      "project": "analytics-prod",
+      "user": "data-scientist@company.com"
+    },
+    {
+      "timestamp": "2024-01-16T10:45:12Z",
+      "query": "SELECT * FROM restricted_dataset.financial_data",
+      "error": "Access Denied: User does not have bigquery.tables.getData permission on table restricted_dataset.financial_data",
+      "errorCode": "PERMISSION_DENIED",
+      "duration": 98,
+      "project": "finance-prod",
+      "user": "contractor@company.com"
+    },
+    {
+      "timestamp": "2024-01-16T13:22:45Z",
+      "query": "WITH RECURSIVE cte AS (SELECT * FROM cte) SELECT * FROM cte",
+      "error": "Recursive reference to CTE cte is not allowed",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 234,
+      "project": "analytics-prod",
+      "user": "data-engineer@company.com"
+    },
+    {
+      "timestamp": "2024-01-17T08:30:22Z",
+      "query": "SELECT PARSE_DATE('%Y-%m-%d', date_string) FROM events",
+      "error": "Failed to parse date from string '2024-13-45'",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 3421,
+      "rowsProcessed": 1250000,
+      "project": "analytics-prod",
+      "user": "etl-service@company.com"
+    },
+    {
+      "timestamp": "2024-01-17T11:45:55Z",
+      "query": "SELECT * FROM us-east1.dataset.table UNION ALL SELECT * FROM eu-west1.dataset.table",
+      "error": "Cannot query across regions. Dataset us-east1.dataset is in region us-east1, but other datasets are in region eu-west1",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 456,
+      "project": "global-analytics",
+      "user": "global-analyst@company.com"
+    },
+    {
+      "timestamp": "2024-01-17T15:12:33Z",
+      "query": "SELECT * FROM temp_table_2024_01_15",
+      "error": "Not found: Table project:dataset.temp_table_2024_01_15 was not found",
+      "errorCode": "NOT_FOUND",
+      "duration": 67,
+      "project": "analytics-prod",
+      "user": "scheduled-job@company.com"
+    },
+    {
+      "timestamp": "2024-01-18T09:45:11Z",
+      "query": "SELECT customer_id, ARRAY_AGG(STRUCT(order_id, items)) FROM orders GROUP BY customer_id",
+      "error": "Resources exceeded during query execution: The query could not be executed in the allotted memory",
+      "errorCode": "RESOURCE_EXHAUSTED",
+      "duration": 45678,
+      "project": "ecommerce-prod",
+      "user": "analytics-team@company.com"
+    },
+    {
+      "timestamp": "2024-01-18T14:33:22Z",
+      "query": "INSERT INTO production.users SELECT * FROM staging.users",
+      "error": "Access Denied: User does not have bigquery.tables.updateData permission on table production.users",
+      "errorCode": "PERMISSION_DENIED",
+      "duration": 123,
+      "project": "user-data",
+      "user": "staging-etl@company.com"
+    },
+    {
+      "timestamp": "2024-01-19T10:15:45Z",
+      "query": "CREATE OR REPLACE TABLE dataset.table AS SELECT * FROM source WHERE 1=0",
+      "error": "Dataset dataset not found in location US",
+      "errorCode": "NOT_FOUND",
+      "duration": 89,
+      "project": "analytics-dev",
+      "user": "developer@company.com"
+    },
+    {
+      "timestamp": "2024-01-19T11:45:33Z",
+      "query": "SELECT COUNT(DISTINCT user_id) OVER (PARTITION BY DATE(timestamp)) FROM events",
+      "error": "COUNT(DISTINCT) is not supported in analytic functions",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 234,
+      "project": "analytics-prod",
+      "user": "data-analyst@company.com"
+    },
+    {
+      "timestamp": "2024-01-19T16:22:11Z",
+      "query": "SELECT * FROM table1 a, table2 b, table3 c WHERE a.id > 1000",
+      "error": "Query exceeded resource limits. Cartesian joins can produce extremely large results",
+      "errorCode": "RESOURCE_EXHAUSTED",
+      "duration": 8901,
+      "estimatedCost": 125.5,
+      "project": "analytics-prod",
+      "user": "junior-analyst@company.com"
+    },
+    {
+      "timestamp": "2024-01-20T09:30:45Z",
+      "query": "SELECT JSON_EXTRACT_SCALAR(data, '$.invalid..path') FROM json_table",
+      "error": "Invalid JSONPath '$.invalid..path'",
+      "errorCode": "INVALID_ARGUMENT",
+      "duration": 567,
+      "project": "analytics-prod",
+      "user": "data-engineer@company.com"
+    }
+  ],
+  "patterns": {
+    "syntaxErrors": {
+      "count": 215,
+      "commonTypes": [
+        "Misspelled keywords (WHERE as WHRE, etc)",
+        "Missing JOIN conditions",
+        "GROUP BY mismatches",
+        "Invalid date formats",
+        "Recursive CTE errors"
+      ]
+    },
+    "permissionErrors": {
+      "count": 89,
+      "commonTypes": [
+        "Missing table read permissions",
+        "Missing dataset access",
+        "Cross-project access denied",
+        "Service account limitations"
+      ]
+    },
+    "resourceErrors": {
+      "count": 156,
+      "commonTypes": [
+        "Query bytes scanned limit exceeded",
+        "Memory exhaustion on large aggregations",
+        "Timeout on complex queries",
+        "Cartesian join explosions"
+      ]
+    },
+    "dataErrors": {
+      "count": 67,
+      "commonTypes": [
+        "Table not found (expired temporary tables)",
+        "Dataset location mismatches",
+        "Invalid data type conversions",
+        "Malformed JSON paths"
+      ]
+    }
+  },
+  "recommendations": {
+    "syntaxErrors": [
+      "Use query validators before execution",
+      "Enable SQL formatting and linting",
+      "Provide autocomplete for column names",
+      "Show common syntax patterns"
+    ],
+    "permissionErrors": [
+      "Pre-check permissions before query execution",
+      "Display available datasets/tables upfront",
+      "Suggest permission request workflow",
+      "Show current user's access scope"
+    ],
+    "resourceErrors": [
+      "Estimate query cost before execution",
+      "Suggest query optimization (add WHERE clauses)",
+      "Warn about cartesian joins",
+      "Recommend partitioning and clustering"
+    ],
+    "dataErrors": [
+      "Validate table existence before querying",
+      "Check dataset locations for cross-region queries",
+      "Provide data type conversion helpers",
+      "Validate JSON paths before execution"
+    ]
+  }
+}

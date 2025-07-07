@@ -1,0 +1,387 @@
+import Database from 'better-sqlite3';
+import winston from 'winston';
+
+export interface GCPCommandPattern {
+  id?: number;
+  tool: string;
+  params: string; // JSON string
+  context: string; // JSON string
+  outcome: 'success' | 'failure';
+  duration: number;
+  error?: string;
+  timestamp: Date;
+  cost_estimate?: number; // For BigQuery operations
+  rows_processed?: number; // For BigQuery operations
+  auth_token_age?: number; // Minutes since token refresh
+}
+
+export interface GCPQueryPattern {
+  id?: number;
+  query_type: string;
+  table_size_gb?: number;
+  execution_time_ms: number;
+  cost_usd?: number;
+  rows_returned: number;
+  success: boolean;
+  error_type?: string;
+  timestamp: Date;
+}
+
+export interface GCPAuthPattern {
+  id?: number;
+  token_age_minutes: number;
+  operation_type: string;
+  success: boolean;
+  error_message?: string;
+  timestamp: Date;
+}
+
+export interface GCPQuotaPattern {
+  id?: number;
+  resource_type: string; // 'bigquery_slots', 'gcs_operations', etc.
+  usage_level: number; // 0.0 to 1.0
+  operation_type: string;
+  success: boolean;
+  timestamp: Date;
+}
+
+export interface GCPUserPattern {
+  id?: number;
+  user_id: string;
+  common_projects: string; // JSON array
+  frequent_datasets: string; // JSON array
+  typical_operations: string; // JSON array
+  error_patterns: string; // JSON array
+  last_updated: Date;
+}
+
+export class GCPPatternStorage {
+  private db: Database.Database;
+  private logger: winston.Logger;
+
+  constructor(dbPath: string = './data/gcp-patterns.db') {
+    this.db = new Database(dbPath);
+    this.logger = winston.createLogger({
+      level: 'info',
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json()
+      ),
+      transports: [
+        new winston.transports.File({ filename: 'gcp-pattern-storage.log' }),
+      ],
+    });
+
+    this.initializeTables();
+  }
+
+  private initializeTables(): void {
+    // Command patterns table
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gcp_command_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tool TEXT NOT NULL,
+        params TEXT NOT NULL,
+        context TEXT NOT NULL,
+        outcome TEXT NOT NULL CHECK (outcome IN ('success', 'failure')),
+        duration INTEGER NOT NULL,
+        error TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+        cost_estimate REAL,
+        rows_processed INTEGER,
+        auth_token_age INTEGER
+      )
+    `);
+
+    // BigQuery query patterns
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gcp_query_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        query_type TEXT NOT NULL,
+        table_size_gb REAL,
+        execution_time_ms INTEGER NOT NULL,
+        cost_usd REAL,
+        rows_returned INTEGER NOT NULL,
+        success BOOLEAN NOT NULL,
+        error_type TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Authentication patterns
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gcp_auth_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        token_age_minutes INTEGER NOT NULL,
+        operation_type TEXT NOT NULL,
+        success BOOLEAN NOT NULL,
+        error_message TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Quota usage patterns
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gcp_quota_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        resource_type TEXT NOT NULL,
+        usage_level REAL NOT NULL,
+        operation_type TEXT NOT NULL,
+        success BOOLEAN NOT NULL,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // User behavior patterns
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS gcp_user_patterns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id TEXT NOT NULL UNIQUE,
+        common_projects TEXT NOT NULL,
+        frequent_datasets TEXT NOT NULL,
+        typical_operations TEXT NOT NULL,
+        error_patterns TEXT NOT NULL,
+        last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Create indexes for performance
+    this.db.exec(`
+      CREATE INDEX IF NOT EXISTS idx_command_tool ON gcp_command_patterns(tool);
+      CREATE INDEX IF NOT EXISTS idx_command_outcome ON gcp_command_patterns(outcome);
+      CREATE INDEX IF NOT EXISTS idx_command_timestamp ON gcp_command_patterns(timestamp);
+      CREATE INDEX IF NOT EXISTS idx_query_type ON gcp_query_patterns(query_type);
+      CREATE INDEX IF NOT EXISTS idx_auth_token_age ON gcp_auth_patterns(token_age_minutes);
+      CREATE INDEX IF NOT EXISTS idx_quota_resource ON gcp_quota_patterns(resource_type);
+    `);
+
+    this.logger.info('GCP pattern storage tables initialized');
+  }
+
+  // Command pattern methods
+  async recordCommandPattern(pattern: Omit<GCPCommandPattern, 'id' | 'timestamp'>): Promise<number> {
+    const stmt = this.db.prepare(`
+      INSERT INTO gcp_command_patterns 
+      (tool, params, context, outcome, duration, error, cost_estimate, rows_processed, auth_token_age)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const result = stmt.run(
+      pattern.tool,
+      JSON.stringify(pattern.params),
+      JSON.stringify(pattern.context),
+      pattern.outcome,
+      pattern.duration,
+      pattern.error,
+      pattern.cost_estimate,
+      pattern.rows_processed,
+      pattern.auth_token_age
+    );
+
+    this.logger.info('Recorded GCP command pattern', { 
+      id: result.lastInsertRowid, 
+      tool: pattern.tool, 
+      outcome: pattern.outcome 
+    });
+
+    return result.lastInsertRowid as number;
+  }
+
+  async getSimilarCommands(tool: string, params: any, limit: number = 10): Promise<GCPCommandPattern[]> {
+    const stmt = this.db.prepare(`
+      SELECT * FROM gcp_command_patterns 
+      WHERE tool = ? 
+      ORDER BY timestamp DESC 
+      LIMIT ?
+    `);
+
+    const rows = stmt.all(tool, limit) as any[];
+    return rows.map(row => ({
+      ...row,
+      params: JSON.parse(row.params),
+      context: JSON.parse(row.context),
+      timestamp: new Date(row.timestamp)
+    }));
+  }
+
+  async getSuccessfulPatterns(tool: string, limit: number = 10): Promise<GCPCommandPattern[]> {
+    const stmt = this.db.prepare(`
+      SELECT * FROM gcp_command_patterns 
+      WHERE tool = ? AND outcome = 'success' 
+      ORDER BY timestamp DESC 
+      LIMIT ?
+    `);
+
+    const rows = stmt.all(tool, limit) as any[];
+    return rows.map(row => ({
+      ...row,
+      params: JSON.parse(row.params),
+      context: JSON.parse(row.context),
+      timestamp: new Date(row.timestamp)
+    }));
+  }
+
+  // BigQuery pattern methods
+  async recordQueryPattern(pattern: Omit<GCPQueryPattern, 'id' | 'timestamp'>): Promise<number> {
+    const stmt = this.db.prepare(`
+      INSERT INTO gcp_query_patterns 
+      (query_type, table_size_gb, execution_time_ms, cost_usd, rows_returned, success, error_type)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    const result = stmt.run(
+      pattern.query_type,
+      pattern.table_size_gb,
+      pattern.execution_time_ms,
+      pattern.cost_usd,
+      pattern.rows_returned,
+      pattern.success,
+      pattern.error_type
+    );
+
+    return result.lastInsertRowid as number;
+  }
+
+  async predictQueryCost(queryType: string, tableSizeGb?: number): Promise<{ avgCost: number; confidence: number }> {
+    let query = `
+      SELECT AVG(cost_usd) as avg_cost, COUNT(*) as count
+      FROM gcp_query_patterns 
+      WHERE query_type = ? AND cost_usd IS NOT NULL
+    `;
+    let params: any[] = [queryType];
+
+    if (tableSizeGb) {
+      query += ` AND table_size_gb BETWEEN ? AND ?`;
+      params.push(tableSizeGb * 0.8, tableSizeGb * 1.2); // 20% tolerance
+    }
+
+    const stmt = this.db.prepare(query);
+    const result = stmt.get(...params) as any;
+
+    return {
+      avgCost: result.avg_cost || 0,
+      confidence: Math.min(result.count / 10, 1.0) // Max confidence with 10+ samples
+    };
+  }
+
+  // Auth pattern methods
+  async recordAuthPattern(pattern: Omit<GCPAuthPattern, 'id' | 'timestamp'>): Promise<number> {
+    const stmt = this.db.prepare(`
+      INSERT INTO gcp_auth_patterns 
+      (token_age_minutes, operation_type, success, error_message)
+      VALUES (?, ?, ?, ?)
+    `);
+
+    const result = stmt.run(
+      pattern.token_age_minutes,
+      pattern.operation_type,
+      pattern.success,
+      pattern.error_message
+    );
+
+    return result.lastInsertRowid as number;
+  }
+
+  async predictAuthFailure(tokenAgeMinutes: number): Promise<{ failureProbability: number; confidence: number }> {
+    const stmt = this.db.prepare(`
+      SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as failures
+      FROM gcp_auth_patterns 
+      WHERE token_age_minutes BETWEEN ? AND ?
+    `);
+
+    const result = stmt.get(tokenAgeMinutes - 5, tokenAgeMinutes + 5) as any;
+    
+    if (result.total === 0) {
+      return { failureProbability: 0, confidence: 0 };
+    }
+
+    return {
+      failureProbability: result.failures / result.total,
+      confidence: Math.min(result.total / 20, 1.0) // Max confidence with 20+ samples
+    };
+  }
+
+  // User pattern methods
+  async updateUserPatterns(userId: string, updates: Partial<GCPUserPattern>): Promise<void> {
+    const stmt = this.db.prepare(`
+      INSERT OR REPLACE INTO gcp_user_patterns 
+      (user_id, common_projects, frequent_datasets, typical_operations, error_patterns, last_updated)
+      VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `);
+
+    stmt.run(
+      userId,
+      updates.common_projects || '[]',
+      updates.frequent_datasets || '[]',
+      updates.typical_operations || '[]',
+      updates.error_patterns || '[]'
+    );
+  }
+
+  async getUserPatterns(userId: string): Promise<GCPUserPattern | null> {
+    const stmt = this.db.prepare(`
+      SELECT * FROM gcp_user_patterns WHERE user_id = ?
+    `);
+
+    const result = stmt.get(userId) as any;
+    
+    if (!result) return null;
+
+    return {
+      ...result,
+      common_projects: JSON.parse(result.common_projects),
+      frequent_datasets: JSON.parse(result.frequent_datasets),
+      typical_operations: JSON.parse(result.typical_operations),
+      error_patterns: JSON.parse(result.error_patterns),
+      last_updated: new Date(result.last_updated)
+    };
+  }
+
+  // Statistics and analytics
+  async getPatternStatistics(): Promise<any> {
+    const totalCommands = this.db.prepare('SELECT COUNT(*) as count FROM gcp_command_patterns').get() as any;
+    const successRate = this.db.prepare(`
+      SELECT 
+        (COUNT(CASE WHEN outcome = 'success' THEN 1 END) * 100.0 / COUNT(*)) as rate
+      FROM gcp_command_patterns
+    `).get() as any;
+
+    const avgDuration = this.db.prepare('SELECT AVG(duration) as avg FROM gcp_command_patterns').get() as any;
+    
+    const topErrors = this.db.prepare(`
+      SELECT error, COUNT(*) as count 
+      FROM gcp_command_patterns 
+      WHERE outcome = 'failure' AND error IS NOT NULL
+      GROUP BY error 
+      ORDER BY count DESC 
+      LIMIT 5
+    `).all();
+
+    return {
+      totalCommands: totalCommands.count,
+      successRate: successRate.rate || 0,
+      avgDuration: avgDuration.avg || 0,
+      topErrors
+    };
+  }
+
+  // Cleanup old patterns
+  async cleanupOldPatterns(daysToKeep: number = 90): Promise<number> {
+    const stmt = this.db.prepare(`
+      DELETE FROM gcp_command_patterns 
+      WHERE timestamp < datetime('now', '-' || ? || ' days')
+    `);
+
+    const result = stmt.run(daysToKeep);
+    this.logger.info('Cleaned up old patterns', { deletedRows: result.changes });
+    
+    return result.changes;
+  }
+
+  close(): void {
+    this.db.close();
+    this.logger.info('GCP pattern storage closed');
+  }
+}

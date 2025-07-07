@@ -1,0 +1,47 @@
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T12:43:04.947Z"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T12:43:50.353Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T12:43:50.415Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T12:43:50.795Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T12:43:51.794Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T12:43:52.796Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T12:52:54.723Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T12:52:54.882Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T12:52:54.899Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T12:52:55.397Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T12:52:56.395Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T13:17:01.478Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T13:17:01.549Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T13:17:01.866Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T13:17:02.870Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T13:17:03.869Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T13:17:58.355Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T13:17:58.412Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T13:17:58.794Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T13:17:59.795Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T13:18:00.799Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T13:24:31.971Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T13:24:32.129Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T13:24:32.145Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T13:24:32.717Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T13:24:33.715Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T13:29:58.743Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T13:29:58.817Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T13:29:59.029Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T13:30:00.029Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T13:30:01.031Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T23:36:46.662Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T23:36:46.984Z"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T23:36:57.308Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T23:36:57.511Z"}
+{"context":{"projectType":"data-analysis"},"level":"info","message":"Tool called: predict_outcome","params":{"query":"SELECT * FROM bigquery-public-data.samples.shakespeare","use_legacy_sql":false},"timestamp":"2025-07-06T23:36:57.560Z","tool":"bq query"}
+{"duration":30000,"error":"Query exceeded resource limits","level":"info","message":"Tool called: learn_pattern","outcome":"failure","params":{"query":"SELECT * FROM huge_table","use_legacy_sql":false},"timestamp":"2025-07-06T23:36:57.594Z","tool":"bq query"}
+{"goal":"Push changes to remote","level":"info","message":"Tool called: get_suggestions","params":{"branch":"main"},"timestamp":"2025-07-06T23:36:58.526Z","tool":"git push"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T23:38:31.425Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T23:38:31.501Z"}
+{"context":{"projectType":"analytics"},"level":"info","message":"Tool called: predict_outcome","params":{"dataset":"broadway_prod_v4","query":"SELECT COUNT(*) FROM broadway_prod_v4.etl_process_log"},"timestamp":"2025-07-06T23:38:31.514Z","tool":"bq"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T23:39:04.032Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T23:39:04.099Z"}
+{"duration":245,"error":null,"level":"info","message":"Tool called: learn_pattern","outcome":"success","params":{"dataset":"broadway_prod_v4","query":"SELECT COUNT(*) FROM broadway_prod_v4.etl_process_log"},"timestamp":"2025-07-06T23:39:04.109Z","tool":"bq"}
+{"level":"info","message":"Starting ruv-FANN MCP server...","timestamp":"2025-07-06T23:39:49.239Z"}
+{"level":"info","message":"ruv-FANN MCP server started successfully","timestamp":"2025-07-06T23:39:49.297Z"}
+{"goal":"Get sample data efficiently","level":"info","message":"Tool called: get_suggestions","params":{"dataset":"broadway_prod_v4","query":"SELECT * FROM broadway_prod_v4.ext_ticketing_statuses"},"timestamp":"2025-07-06T23:39:49.307Z","tool":"bq"}
