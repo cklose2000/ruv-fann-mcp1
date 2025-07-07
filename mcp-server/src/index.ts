@@ -16,7 +16,7 @@ import { PatternPredictor } from "./predictors/pattern-predictor.js";
 import { GCPPredictor } from "./predictors/gcp-predictor.js";
 import { PatternLearner } from "./learners/pattern-learner.js";
 import { GCPPatternStorage } from "./storage/gcp-pattern-storage.js";
-import { GCP_TOOLS, isGCPTool, convertToolNameForBackend } from "./tools/gcp-tools.js";
+import { GCP_TOOLS, isGCPTool, convertToolNameForBackend, normalizeMCPToolName } from "./tools/gcp-tools.js";
 
 // Configure logging
 const logger = winston.createLogger({
@@ -66,7 +66,7 @@ class RuvFannMCPServer {
 
     // Initialize GCP components
     this.gcpMCPClient = new GCPMCPClient({
-      baseUrl: process.env.GCP_MCP_BACKEND_URL || "http://127.0.0.1:8080",
+      baseUrl: process.env.GCP_MCP_BACKEND_URL || "http://127.0.0.1:8085",
       secretToken: process.env.GCP_MCP_SECRET || "change-this-secret-token",
       timeout: 30000,
     });
@@ -287,8 +287,11 @@ class RuvFannMCPServer {
     try {
       logger.info('Handling GCP tool with intelligence', { toolName, args: this.sanitizeArgs(args) });
 
+      // Normalize tool name (remove mcp__gcp__ prefix if present)
+      const normalizedToolName = normalizeMCPToolName(toolName);
+      
       // 1. Get prediction from ruv-FANN intelligence
-      const prediction = await this.gcpPredictor.predictGCPOperation(toolName, args, {
+      const prediction = await this.gcpPredictor.predictGCPOperation(normalizedToolName, args, {
         timestamp: Date.now(),
         authTokenAge: this.estimateTokenAge()
       });
@@ -313,7 +316,7 @@ class RuvFannMCPServer {
       }
 
       // 3. Execute the GCP operation via proxy
-      const backendToolName = convertToolNameForBackend(toolName);
+      const backendToolName = convertToolNameForBackend(normalizedToolName);
       const gcpResponse = await this.gcpMCPClient.callTool(backendToolName, args);
       
       const duration = Date.now() - startTime;

@@ -1,0 +1,38 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT \n                SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,\n                SUM(CASE WHEN timestamp > datetime('now', '-1 day') THEN 1 ELSE 0 END) as recent_total,\n                SUM(CASE WHEN timestamp > datetime('now', '-7 days') AND success = 0 THEN 1 ELSE 0 END) as week_failures,\n                SUM(CASE WHEN timestamp > datetime('now', '-7 days') THEN 1 ELSE 0 END) as week_total\n            FROM command_patterns \n            WHERE tool = ?\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "recent_failures",
+        "ordinal": 0,
+        "type_info": "Null"
+      },
+      {
+        "name": "recent_total",
+        "ordinal": 1,
+        "type_info": "Null"
+      },
+      {
+        "name": "week_failures",
+        "ordinal": 2,
+        "type_info": "Null"
+      },
+      {
+        "name": "week_total",
+        "ordinal": 3,
+        "type_info": "Null"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "7aaad51fb1ec4ab6943ff32024509764ee186fa48f3a5761a795e13bcf739bdf"
+}

@@ -1,1 +1,1 @@
-/home/cklose/ruv-fann-poc/target/release/ruv-swarm: /home/cklose/ruv-fann-poc/swarm/src/agent.rs /home/cklose/ruv-fann-poc/swarm/src/api.rs /home/cklose/ruv-fann-poc/swarm/src/coordinator.rs /home/cklose/ruv-fann-poc/swarm/src/main.rs
+/home/cklose/ruv-fann-mcp1/target/release/ruv-swarm: /home/cklose/ruv-fann-mcp1/swarm/src/agent.rs /home/cklose/ruv-fann-mcp1/swarm/src/api.rs /home/cklose/ruv-fann-mcp1/swarm/src/coordinator.rs /home/cklose/ruv-fann-mcp1/swarm/src/main.rs

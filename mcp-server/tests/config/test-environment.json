@@ -1,0 +1,77 @@
+{
+  "services": {
+    "core": {
+      "url": "http://127.0.0.1:8090",
+      "healthEndpoint": "/health",
+      "startupTimeout": 5000
+    },
+    "swarm": {
+      "url": "http://127.0.0.1:8081",
+      "healthEndpoint": "/health",
+      "startupTimeout": 5000,
+      "minAgents": 2
+    },
+    "model": {
+      "url": "http://127.0.0.1:8082",
+      "healthEndpoint": "/health",
+      "startupTimeout": 5000
+    },
+    "gcpBackend": {
+      "url": "http://127.0.0.1:8085",
+      "healthEndpoint": "/mcp",
+      "secretToken": "test-secret-token",
+      "startupTimeout": 5000
+    }
+  },
+  
+  "mcp": {
+    "serverPath": "/home/cklose/ruv-fann-mcp1/mcp-server/dist/index.js",
+    "transport": "stdio",
+    "timeout": 30000
+  },
+  
+  "bigquery": {
+    "testProject": "test-project-123",
+    "testDatasets": {
+      "public": "test_public_data",
+      "restricted": "test_restricted_data",
+      "finance": "test_finance_data",
+      "analytics": "test_analytics"
+    },
+    "mockData": {
+      "customers": {
+        "rows": 1000000,
+        "sizeGB": 5
+      },
+      "orders": {
+        "rows": 10000000,
+        "sizeGB": 50
+      },
+      "events": {
+        "rows": 1000000000,
+        "sizeGB": 1000
+      },
+      "billion_row_table": {
+        "rows": 1000000000,
+        "sizeGB": 10000
+      }
+    }
+  },
+  
+  "testing": {
+    "concurrency": 5,
+    "retries": 2,
+    "timeout": 30000,
+    "resultDirectory": "./test-results"
+  },
+  
+  "businessMetrics": {
+    "developerHourlyRate": 125,
+    "teamSize": 100,
+    "queriesPerDevPerDay": 20,
+    "workingDaysPerMonth": 20,
+    "workingDaysPerYear": 250,
+    "monthlyLicenseCost": 1000,
+    "bigqueryAvgResponseTime": 15000
+  }
+}

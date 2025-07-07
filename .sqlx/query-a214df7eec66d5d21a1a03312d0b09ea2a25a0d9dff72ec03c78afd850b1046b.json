@@ -1,0 +1,26 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT COUNT(*) as total,\n                   SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes\n            FROM command_patterns \n            WHERE tool = ? AND timestamp > datetime('now', '-30 days')\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "total",
+        "ordinal": 0,
+        "type_info": "Integer"
+      },
+      {
+        "name": "successes",
+        "ordinal": 1,
+        "type_info": "Null"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true
+    ]
+  },
+  "hash": "a214df7eec66d5d21a1a03312d0b09ea2a25a0d9dff72ec03c78afd850b1046b"
+}

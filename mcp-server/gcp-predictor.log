@@ -1,0 +1,742 @@
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T10:45:55.113Z","tool":"bq-query"}
+{"duration":586,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:45:55.698Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T10:45:55.699Z","tool":"bq-query"}
+{"duration":75,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:45:55.774Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T10:45:55.798Z","tool":"bq-list-tables"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.85,"timestamp":"2025-07-07T10:45:55.832Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T10:45:55.838Z","tool":"bq-query"}
+{"duration":26,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:45:55.864Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T10:45:55.870Z","tool":"bq-query"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:45:55.896Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T10:45:56.166Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:45:56.183Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T10:45:56.383Z","tool":"bq-query"}
+{"duration":27,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:45:56.410Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.359Z","tool":"bq-list-datasets"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T10:46:01.390Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.391Z","tool":"bq-list-datasets"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T10:46:01.424Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.425Z","tool":"bq-list-datasets"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T10:46:01.468Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.469Z","tool":"bq-list-datasets"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T10:46:01.505Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.506Z","tool":"bq-list-datasets"}
+{"duration":29,"level":"info","message":"GCP prediction completed","successProbability":0.39,"timestamp":"2025-07-07T10:46:01.535Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:46:01.535Z","tool":"bq-list-datasets"}
+{"duration":34,"level":"info","message":"GCP prediction completed","successProbability":0.39,"timestamp":"2025-07-07T10:46:01.569Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T10:46:01.575Z","tool":"bq-query"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:46:01.612Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T10:46:01.613Z","tool":"bq-query"}
+{"duration":38,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:46:01.650Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T10:55:21.653Z","tool":"bq-query"}
+{"duration":151,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T10:55:21.804Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T10:55:21.805Z","tool":"bq-query"}
+{"duration":24,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T10:55:21.829Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T10:55:21.845Z","tool":"bq-list-tables"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:21.874Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T10:55:21.881Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T10:55:21.902Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T10:55:21.906Z","tool":"bq-query"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T10:55:21.935Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T10:55:22.516Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:55:22.546Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T10:55:22.959Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:55:22.972Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:55:39.609Z","tool":"bq-list-datasets"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T10:55:39.675Z","tool":"bq-query"}
+{"duration":300,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T10:55:39.909Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:55:39.910Z","tool":"bq-list-datasets"}
+{"duration":370,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T10:55:40.045Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T10:55:40.047Z","tool":"bq-query"}
+{"duration":352,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T10:55:40.262Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T10:55:40.264Z","tool":"bq-list-datasets"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.373Z","tool":"bq-query"}
+{"duration":222,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.595Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.596Z","tool":"bq-query"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.639Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.640Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.670Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.670Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.705Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.705Z","tool":"bq-query"}
+{"duration":38,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.744Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.744Z","tool":"bq-query"}
+{"duration":34,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.778Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.778Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.808Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.809Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.839Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.840Z","tool":"bq-query"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.865Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.865Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.887Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.888Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.906Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.907Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.928Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.929Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.950Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.951Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:48.986Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:48.986Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.021Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.022Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.055Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.055Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.073Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.073Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.091Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.092Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.114Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.114Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.135Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.135Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.156Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.157Z","tool":"bq-query"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.181Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.181Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.200Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.200Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.218Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.219Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.237Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.237Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.258Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.258Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.277Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.278Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.299Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.300Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.316Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.316Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.333Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.333Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.352Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.352Z","tool":"bq-query"}
+{"duration":24,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.376Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.376Z","tool":"bq-query"}
+{"duration":20,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.396Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.396Z","tool":"bq-query"}
+{"duration":23,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.419Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.420Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.437Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.437Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.455Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.455Z","tool":"bq-query"}
+{"duration":20,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.475Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.475Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.494Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.494Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.516Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.516Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.534Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.534Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.551Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.551Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.572Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.572Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.590Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.591Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.609Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.609Z","tool":"bq-query"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.631Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.632Z","tool":"bq-query"}
+{"duration":16,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.648Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.648Z","tool":"bq-query"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.669Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.670Z","tool":"bq-query"}
+{"duration":20,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.690Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.690Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.707Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM test_table"},"timestamp":"2025-07-07T10:55:49.708Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.726Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table5"},"timestamp":"2025-07-07T10:55:49.749Z","tool":"bq-query"}
+{"duration":20,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.769Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table2"},"timestamp":"2025-07-07T10:55:49.770Z","tool":"bq-query"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.798Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table6"},"timestamp":"2025-07-07T10:55:49.798Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.831Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table4"},"timestamp":"2025-07-07T10:55:49.831Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.863Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table8"},"timestamp":"2025-07-07T10:55:49.864Z","tool":"bq-query"}
+{"duration":44,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.908Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table6"},"timestamp":"2025-07-07T10:55:49.908Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.940Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table9"},"timestamp":"2025-07-07T10:55:49.940Z","tool":"bq-query"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:49.987Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table8"},"timestamp":"2025-07-07T10:55:49.988Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:50.036Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table6"},"timestamp":"2025-07-07T10:55:50.037Z","tool":"bq-query"}
+{"duration":50,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:50.087Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM dataset.table9"},"timestamp":"2025-07-07T10:55:50.087Z","tool":"bq-query"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.6900000000000002,"timestamp":"2025-07-07T10:55:50.132Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-58"},"timestamp":"2025-07-07T10:55:50.133Z","tool":"bq-list-datasets"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.181Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-91"},"timestamp":"2025-07-07T10:55:50.181Z","tool":"bq-list-datasets"}
+{"duration":39,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.220Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-22"},"timestamp":"2025-07-07T10:55:50.221Z","tool":"bq-list-datasets"}
+{"duration":42,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.263Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-38"},"timestamp":"2025-07-07T10:55:50.264Z","tool":"bq-list-datasets"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.300Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-60"},"timestamp":"2025-07-07T10:55:50.301Z","tool":"bq-list-datasets"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.326Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-45"},"timestamp":"2025-07-07T10:55:50.327Z","tool":"bq-list-datasets"}
+{"duration":26,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.353Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-96"},"timestamp":"2025-07-07T10:55:50.353Z","tool":"bq-list-datasets"}
+{"duration":39,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.392Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-14"},"timestamp":"2025-07-07T10:55:50.392Z","tool":"bq-list-datasets"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.437Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-73"},"timestamp":"2025-07-07T10:55:50.438Z","tool":"bq-list-datasets"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.475Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"project-45"},"timestamp":"2025-07-07T10:55:50.477Z","tool":"bq-list-datasets"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.501Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_4"},"timestamp":"2025-07-07T10:55:50.502Z","tool":"bq-list-tables"}
+{"duration":26,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.528Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_8"},"timestamp":"2025-07-07T10:55:50.529Z","tool":"bq-list-tables"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.554Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_8"},"timestamp":"2025-07-07T10:55:50.555Z","tool":"bq-list-tables"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.583Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_3"},"timestamp":"2025-07-07T10:55:50.584Z","tool":"bq-list-tables"}
+{"duration":40,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.624Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_8"},"timestamp":"2025-07-07T10:55:50.627Z","tool":"bq-list-tables"}
+{"duration":29,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.655Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_1"},"timestamp":"2025-07-07T10:55:50.656Z","tool":"bq-list-tables"}
+{"duration":54,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.710Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_3"},"timestamp":"2025-07-07T10:55:50.710Z","tool":"bq-list-tables"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.738Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_7"},"timestamp":"2025-07-07T10:55:50.738Z","tool":"bq-list-tables"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.785Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_7"},"timestamp":"2025-07-07T10:55:50.786Z","tool":"bq-list-tables"}
+{"duration":51,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.837Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"dataset_7"},"timestamp":"2025-07-07T10:55:50.838Z","tool":"bq-list-tables"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.863Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_8","operation":"list-tables"},"timestamp":"2025-07-07T10:55:50.864Z","tool":"gcp-sql"}
+{"duration":107,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:50.971Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_7","operation":"list-tables"},"timestamp":"2025-07-07T10:55:50.975Z","tool":"gcp-sql"}
+{"duration":51,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.026Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_4","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.026Z","tool":"gcp-sql"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.075Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_4","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.075Z","tool":"gcp-sql"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.112Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_3","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.113Z","tool":"gcp-sql"}
+{"duration":83,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.197Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_6","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.197Z","tool":"gcp-sql"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.242Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_4","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.243Z","tool":"gcp-sql"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.268Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_5","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.268Z","tool":"gcp-sql"}
+{"duration":29,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.297Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_1","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.297Z","tool":"gcp-sql"}
+{"duration":26,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.324Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"dataset":"dataset_6","operation":"list-tables"},"timestamp":"2025-07-07T10:55:51.324Z","tool":"gcp-sql"}
+{"duration":54,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T10:55:51.378Z","tool":"gcp-sql","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 0 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:52.318Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:52.332Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 2 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:52.346Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 3 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:52.358Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 4 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:52.366Z","tool":"bq-query"}
+{"duration":418,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:52.735Z","tool":"bq-query","warningCount":1}
+{"duration":501,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:52.833Z","tool":"bq-query","warningCount":1}
+{"duration":578,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:52.922Z","tool":"bq-query","warningCount":1}
+{"duration":813,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:53.172Z","tool":"bq-query","warningCount":1}
+{"duration":889,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:53.255Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 0 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.260Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.264Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 2 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.268Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 3 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.272Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 4 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.276Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 5 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.279Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 6 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.283Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 7 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.290Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 8 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.295Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 9 FROM concurrent_test"},"timestamp":"2025-07-07T10:55:53.303Z","tool":"bq-query"}
+{"duration":378,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:53.638Z","tool":"bq-query","warningCount":1}
+{"duration":753,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:54.017Z","tool":"bq-query","warningCount":1}
+{"duration":1096,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:54.364Z","tool":"bq-query","warningCount":1}
+{"duration":1307,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:54.580Z","tool":"bq-query","warningCount":1}
+{"duration":1556,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:54.832Z","tool":"bq-query","warningCount":1}
+{"duration":1782,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:55.061Z","tool":"bq-query","warningCount":1}
+{"duration":1901,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:55.184Z","tool":"bq-query","warningCount":1}
+{"duration":2046,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:55.337Z","tool":"bq-query","warningCount":1}
+{"duration":2398,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:55.692Z","tool":"bq-query","warningCount":1}
+{"duration":2546,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:55.848Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:55.875Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:55.959Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.014Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.056Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.092Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.165Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.251Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.350Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.430Z","tool":"bq-query"}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT 1"},"timestamp":"2025-07-07T10:55:56.497Z","tool":"bq-query"}
+{"duration":1313,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:57.187Z","tool":"bq-query","warningCount":1}
+{"duration":1467,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:57.426Z","tool":"bq-query","warningCount":1}
+{"duration":1662,"level":"info","message":"GCP prediction completed","successProbability":0.77,"timestamp":"2025-07-07T10:55:57.676Z","tool":"bq-query","warningCount":1}
+{"duration":1890,"level":"info","message":"GCP prediction completed","successProbability":0.79,"timestamp":"2025-07-07T10:55:57.946Z","tool":"bq-query","warningCount":1}
+{"duration":2078,"level":"info","message":"GCP prediction completed","successProbability":0.79,"timestamp":"2025-07-07T10:55:58.170Z","tool":"bq-query","warningCount":1}
+{"duration":2418,"level":"info","message":"GCP prediction completed","successProbability":0.79,"timestamp":"2025-07-07T10:55:58.583Z","tool":"bq-query","warningCount":1}
+{"duration":2460,"level":"info","message":"GCP prediction completed","successProbability":0.81,"timestamp":"2025-07-07T10:55:58.712Z","tool":"bq-query","warningCount":1}
+{"duration":2542,"level":"info","message":"GCP prediction completed","successProbability":0.81,"timestamp":"2025-07-07T10:55:58.892Z","tool":"bq-query","warningCount":1}
+{"duration":2572,"level":"info","message":"GCP prediction completed","successProbability":0.81,"timestamp":"2025-07-07T10:55:59.002Z","tool":"bq-query","warningCount":1}
+{"duration":2600,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.097Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_0"},"timestamp":"2025-07-07T10:55:59.107Z","tool":"bq-query"}
+{"duration":64,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.171Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_1"},"timestamp":"2025-07-07T10:55:59.172Z","tool":"bq-query"}
+{"duration":50,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.223Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_2"},"timestamp":"2025-07-07T10:55:59.223Z","tool":"bq-query"}
+{"duration":39,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.262Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_3"},"timestamp":"2025-07-07T10:55:59.263Z","tool":"bq-query"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.294Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_4"},"timestamp":"2025-07-07T10:55:59.294Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.330Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_5"},"timestamp":"2025-07-07T10:55:59.335Z","tool":"bq-query"}
+{"duration":49,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.384Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_6"},"timestamp":"2025-07-07T10:55:59.385Z","tool":"bq-query"}
+{"duration":44,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.429Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_7"},"timestamp":"2025-07-07T10:55:59.429Z","tool":"bq-query"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.472Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_8"},"timestamp":"2025-07-07T10:55:59.472Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.520Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_9"},"timestamp":"2025-07-07T10:55:59.521Z","tool":"bq-query"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.568Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_10"},"timestamp":"2025-07-07T10:55:59.569Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.604Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_11"},"timestamp":"2025-07-07T10:55:59.604Z","tool":"bq-query"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.648Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_12"},"timestamp":"2025-07-07T10:55:59.648Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.680Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_13"},"timestamp":"2025-07-07T10:55:59.681Z","tool":"bq-query"}
+{"duration":42,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.723Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_14"},"timestamp":"2025-07-07T10:55:59.723Z","tool":"bq-query"}
+{"duration":41,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.764Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_15"},"timestamp":"2025-07-07T10:55:59.765Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.797Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_16"},"timestamp":"2025-07-07T10:55:59.798Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.830Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_17"},"timestamp":"2025-07-07T10:55:59.830Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.863Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_18"},"timestamp":"2025-07-07T10:55:59.863Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.896Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_19"},"timestamp":"2025-07-07T10:55:59.897Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.933Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_20"},"timestamp":"2025-07-07T10:55:59.934Z","tool":"bq-query"}
+{"duration":49,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:55:59.983Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_21"},"timestamp":"2025-07-07T10:55:59.984Z","tool":"bq-query"}
+{"duration":34,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.019Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_22"},"timestamp":"2025-07-07T10:56:00.019Z","tool":"bq-query"}
+{"duration":63,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.082Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_23"},"timestamp":"2025-07-07T10:56:00.082Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.117Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_24"},"timestamp":"2025-07-07T10:56:00.117Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.165Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_25"},"timestamp":"2025-07-07T10:56:00.167Z","tool":"bq-query"}
+{"duration":102,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.268Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_26"},"timestamp":"2025-07-07T10:56:00.268Z","tool":"bq-query"}
+{"duration":95,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.363Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_27"},"timestamp":"2025-07-07T10:56:00.363Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.411Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_28"},"timestamp":"2025-07-07T10:56:00.417Z","tool":"bq-query"}
+{"duration":54,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.471Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_29"},"timestamp":"2025-07-07T10:56:00.471Z","tool":"bq-query"}
+{"duration":62,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.533Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_30"},"timestamp":"2025-07-07T10:56:00.533Z","tool":"bq-query"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.581Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_31"},"timestamp":"2025-07-07T10:56:00.581Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.617Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_32"},"timestamp":"2025-07-07T10:56:00.617Z","tool":"bq-query"}
+{"duration":34,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.651Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_33"},"timestamp":"2025-07-07T10:56:00.652Z","tool":"bq-query"}
+{"duration":38,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.689Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_34"},"timestamp":"2025-07-07T10:56:00.689Z","tool":"bq-query"}
+{"duration":61,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.750Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_35"},"timestamp":"2025-07-07T10:56:00.750Z","tool":"bq-query"}
+{"duration":51,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.801Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_36"},"timestamp":"2025-07-07T10:56:00.802Z","tool":"bq-query"}
+{"duration":63,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.865Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_37"},"timestamp":"2025-07-07T10:56:00.866Z","tool":"bq-query"}
+{"duration":121,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:00.987Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_38"},"timestamp":"2025-07-07T10:56:00.988Z","tool":"bq-query"}
+{"duration":40,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.029Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_39"},"timestamp":"2025-07-07T10:56:01.029Z","tool":"bq-query"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.074Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_40"},"timestamp":"2025-07-07T10:56:01.074Z","tool":"bq-query"}
+{"duration":72,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.146Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_41"},"timestamp":"2025-07-07T10:56:01.146Z","tool":"bq-query"}
+{"duration":90,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.236Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_42"},"timestamp":"2025-07-07T10:56:01.236Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.272Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_43"},"timestamp":"2025-07-07T10:56:01.273Z","tool":"bq-query"}
+{"duration":39,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.312Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_44"},"timestamp":"2025-07-07T10:56:01.313Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.348Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_45"},"timestamp":"2025-07-07T10:56:01.348Z","tool":"bq-query"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.385Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_46"},"timestamp":"2025-07-07T10:56:01.385Z","tool":"bq-query"}
+{"duration":42,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.427Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_47"},"timestamp":"2025-07-07T10:56:01.427Z","tool":"bq-query"}
+{"duration":155,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.582Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_48"},"timestamp":"2025-07-07T10:56:01.582Z","tool":"bq-query"}
+{"duration":96,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.678Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_49"},"timestamp":"2025-07-07T10:56:01.679Z","tool":"bq-query"}
+{"duration":77,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.756Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_50"},"timestamp":"2025-07-07T10:56:01.757Z","tool":"bq-query"}
+{"duration":57,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.814Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_51"},"timestamp":"2025-07-07T10:56:01.815Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.863Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_52"},"timestamp":"2025-07-07T10:56:01.863Z","tool":"bq-query"}
+{"duration":60,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:01.924Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_53"},"timestamp":"2025-07-07T10:56:01.925Z","tool":"bq-query"}
+{"duration":99,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.023Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_54"},"timestamp":"2025-07-07T10:56:02.023Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.071Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_55"},"timestamp":"2025-07-07T10:56:02.072Z","tool":"bq-query"}
+{"duration":59,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.131Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_56"},"timestamp":"2025-07-07T10:56:02.131Z","tool":"bq-query"}
+{"duration":67,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.198Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_57"},"timestamp":"2025-07-07T10:56:02.199Z","tool":"bq-query"}
+{"duration":50,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.249Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_58"},"timestamp":"2025-07-07T10:56:02.250Z","tool":"bq-query"}
+{"duration":50,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.300Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_59"},"timestamp":"2025-07-07T10:56:02.300Z","tool":"bq-query"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.343Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_60"},"timestamp":"2025-07-07T10:56:02.344Z","tool":"bq-query"}
+{"duration":59,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.403Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_61"},"timestamp":"2025-07-07T10:56:02.404Z","tool":"bq-query"}
+{"duration":62,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.466Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_62"},"timestamp":"2025-07-07T10:56:02.467Z","tool":"bq-query"}
+{"duration":74,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.540Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_63"},"timestamp":"2025-07-07T10:56:02.541Z","tool":"bq-query"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.586Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_64"},"timestamp":"2025-07-07T10:56:02.587Z","tool":"bq-query"}
+{"duration":58,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.645Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_65"},"timestamp":"2025-07-07T10:56:02.647Z","tool":"bq-query"}
+{"duration":88,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.735Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_66"},"timestamp":"2025-07-07T10:56:02.735Z","tool":"bq-query"}
+{"duration":41,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.777Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_67"},"timestamp":"2025-07-07T10:56:02.777Z","tool":"bq-query"}
+{"duration":40,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.817Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_68"},"timestamp":"2025-07-07T10:56:02.817Z","tool":"bq-query"}
+{"duration":49,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.866Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_69"},"timestamp":"2025-07-07T10:56:02.867Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.900Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_70"},"timestamp":"2025-07-07T10:56:02.901Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.936Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_71"},"timestamp":"2025-07-07T10:56:02.936Z","tool":"bq-query"}
+{"duration":46,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:02.982Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_72"},"timestamp":"2025-07-07T10:56:02.983Z","tool":"bq-query"}
+{"duration":59,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.042Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_73"},"timestamp":"2025-07-07T10:56:03.043Z","tool":"bq-query"}
+{"duration":45,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.088Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_74"},"timestamp":"2025-07-07T10:56:03.089Z","tool":"bq-query"}
+{"duration":56,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.145Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_75"},"timestamp":"2025-07-07T10:56:03.145Z","tool":"bq-query"}
+{"duration":43,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.188Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_76"},"timestamp":"2025-07-07T10:56:03.189Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.219Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_77"},"timestamp":"2025-07-07T10:56:03.219Z","tool":"bq-query"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.247Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_78"},"timestamp":"2025-07-07T10:56:03.248Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.278Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_79"},"timestamp":"2025-07-07T10:56:03.278Z","tool":"bq-query"}
+{"duration":27,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.305Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_80"},"timestamp":"2025-07-07T10:56:03.306Z","tool":"bq-query"}
+{"duration":23,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.328Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_81"},"timestamp":"2025-07-07T10:56:03.329Z","tool":"bq-query"}
+{"duration":25,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.354Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_82"},"timestamp":"2025-07-07T10:56:03.355Z","tool":"bq-query"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.387Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_83"},"timestamp":"2025-07-07T10:56:03.388Z","tool":"bq-query"}
+{"duration":44,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.433Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_84"},"timestamp":"2025-07-07T10:56:03.434Z","tool":"bq-query"}
+{"duration":51,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.485Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_85"},"timestamp":"2025-07-07T10:56:03.485Z","tool":"bq-query"}
+{"duration":54,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.539Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_86"},"timestamp":"2025-07-07T10:56:03.540Z","tool":"bq-query"}
+{"duration":91,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.631Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_87"},"timestamp":"2025-07-07T10:56:03.631Z","tool":"bq-query"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.679Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_88"},"timestamp":"2025-07-07T10:56:03.680Z","tool":"bq-query"}
+{"duration":48,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.728Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_89"},"timestamp":"2025-07-07T10:56:03.729Z","tool":"bq-query"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.765Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_90"},"timestamp":"2025-07-07T10:56:03.765Z","tool":"bq-query"}
+{"duration":62,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.827Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_91"},"timestamp":"2025-07-07T10:56:03.828Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.862Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_92"},"timestamp":"2025-07-07T10:56:03.862Z","tool":"bq-query"}
+{"duration":35,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.897Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_93"},"timestamp":"2025-07-07T10:56:03.898Z","tool":"bq-query"}
+{"duration":51,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.950Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_94"},"timestamp":"2025-07-07T10:56:03.950Z","tool":"bq-query"}
+{"duration":49,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:03.999Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_95"},"timestamp":"2025-07-07T10:56:03.999Z","tool":"bq-query"}
+{"duration":41,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.040Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_96"},"timestamp":"2025-07-07T10:56:04.041Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.071Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_97"},"timestamp":"2025-07-07T10:56:04.071Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.107Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_98"},"timestamp":"2025-07-07T10:56:04.108Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.143Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM memory_test_99"},"timestamp":"2025-07-07T10:56:04.144Z","tool":"bq-query"}
+{"duration":106,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.250Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.271Z","tool":"bq-query"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.303Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.303Z","tool":"bq-query"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.334Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.335Z","tool":"bq-query"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.367Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.367Z","tool":"bq-query"}
+{"duration":30,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.397Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.397Z","tool":"bq-query"}
+{"duration":42,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.439Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.440Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.473Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.474Z","tool":"bq-query"}
+{"duration":53,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.526Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.526Z","tool":"bq-query"}
+{"duration":37,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.563Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.563Z","tool":"bq-query"}
+{"duration":36,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.599Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"test"},"timestamp":"2025-07-07T10:56:04.600Z","tool":"bq-query"}
+{"duration":31,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T10:56:04.631Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T11:45:41.296Z","tool":"bq-query"}
+{"duration":227,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:41.523Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T11:45:41.524Z","tool":"bq-query"}
+{"duration":33,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:41.557Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T11:45:41.570Z","tool":"bq-list-tables"}
+{"duration":22,"level":"info","message":"GCP prediction completed","successProbability":0.85,"timestamp":"2025-07-07T11:45:41.592Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T11:45:41.597Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:41.614Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T11:45:41.618Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:41.638Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T11:45:41.847Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:41.865Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T11:45:42.028Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:42.042Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.595Z","tool":"bq-list-datasets"}
+{"duration":13,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T11:45:44.608Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.608Z","tool":"bq-list-datasets"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T11:45:44.622Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.622Z","tool":"bq-list-datasets"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T11:45:44.641Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.641Z","tool":"bq-list-datasets"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T11:45:44.653Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.654Z","tool":"bq-list-datasets"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T11:45:44.666Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:45:44.666Z","tool":"bq-list-datasets"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T11:45:44.685Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T11:45:44.688Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:44.703Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T11:45:44.703Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:44.715Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T11:45:57.895Z","tool":"bq-query"}
+{"duration":128,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:58.022Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T11:45:58.023Z","tool":"bq-query"}
+{"duration":34,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:58.058Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T11:45:58.067Z","tool":"bq-list-tables"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.65,"timestamp":"2025-07-07T11:45:58.081Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T11:45:58.084Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:58.098Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T11:45:58.102Z","tool":"bq-query"}
+{"duration":11,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T11:45:58.113Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T11:45:58.305Z","tool":"bq-query"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:58.324Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T11:45:58.472Z","tool":"bq-query"}
+{"duration":13,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:45:58.485Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.269Z","tool":"bq-list-datasets"}
+{"duration":19,"level":"info","message":"GCP prediction completed","successProbability":0.55,"timestamp":"2025-07-07T11:46:01.288Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.288Z","tool":"bq-list-datasets"}
+{"duration":16,"level":"info","message":"GCP prediction completed","successProbability":0.55,"timestamp":"2025-07-07T11:46:01.304Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.305Z","tool":"bq-list-datasets"}
+{"duration":21,"level":"info","message":"GCP prediction completed","successProbability":0.55,"timestamp":"2025-07-07T11:46:01.326Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.327Z","tool":"bq-list-datasets"}
+{"duration":13,"level":"info","message":"GCP prediction completed","successProbability":0.55,"timestamp":"2025-07-07T11:46:01.340Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.341Z","tool":"bq-list-datasets"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.41000000000000003,"timestamp":"2025-07-07T11:46:01.355Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T11:46:01.355Z","tool":"bq-list-datasets"}
+{"duration":16,"level":"info","message":"GCP prediction completed","successProbability":0.41000000000000003,"timestamp":"2025-07-07T11:46:01.372Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T11:46:01.375Z","tool":"bq-query"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:46:01.390Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T11:46:01.390Z","tool":"bq-query"}
+{"duration":16,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T11:46:01.406Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T12:10:40.291Z","tool":"bq-query"}
+{"duration":89,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T12:10:40.380Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T12:10:40.381Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T12:10:40.395Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T12:10:40.401Z","tool":"bq-list-tables"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.7299999999999999,"timestamp":"2025-07-07T12:10:40.410Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T12:10:40.412Z","tool":"bq-query"}
+{"duration":11,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T12:10:40.423Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T12:10:40.425Z","tool":"bq-query"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T12:10:40.432Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T12:10:40.652Z","tool":"bq-query"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:10:40.667Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T12:10:40.877Z","tool":"bq-query"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:10:40.895Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.812Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:10:43.819Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.820Z","tool":"bq-list-datasets"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:10:43.828Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.829Z","tool":"bq-list-datasets"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:10:43.843Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.844Z","tool":"bq-list-datasets"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:10:43.859Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.860Z","tool":"bq-list-datasets"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T12:10:43.870Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:10:43.870Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T12:10:43.877Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T12:10:43.879Z","tool":"bq-query"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:10:43.886Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T12:10:43.886Z","tool":"bq-query"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:10:43.896Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T12:13:56.349Z","tool":"bq-query"}
+{"duration":74,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T12:13:56.423Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T12:13:56.424Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T12:13:56.436Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T12:13:56.442Z","tool":"bq-list-tables"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.85,"timestamp":"2025-07-07T12:13:56.452Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T12:13:56.455Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T12:13:56.468Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T12:13:56.470Z","tool":"bq-query"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.6300000000000001,"timestamp":"2025-07-07T12:13:56.477Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T12:13:56.733Z","tool":"bq-query"}
+{"duration":23,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:13:56.756Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T12:13:56.886Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:13:56.894Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.529Z","tool":"bq-list-datasets"}
+{"duration":15,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:13:59.544Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.545Z","tool":"bq-list-datasets"}
+{"duration":18,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:13:59.563Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.563Z","tool":"bq-list-datasets"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:13:59.571Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.571Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.51,"timestamp":"2025-07-07T12:13:59.578Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.578Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T12:13:59.585Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T12:13:59.585Z","tool":"bq-list-datasets"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.37,"timestamp":"2025-07-07T12:13:59.594Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T12:13:59.596Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:13:59.604Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T12:13:59.604Z","tool":"bq-query"}
+{"duration":6,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T12:13:59.611Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T13:04:29.109Z","tool":"bq-query"}
+{"duration":78,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:04:29.187Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T13:04:29.188Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:04:29.202Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T13:04:29.208Z","tool":"bq-list-tables"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.85,"timestamp":"2025-07-07T13:04:29.220Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T13:04:29.222Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:04:29.230Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:04:29.233Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:04:29.245Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:04:29.410Z","tool":"bq-query"}
+{"duration":28,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:04:29.438Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T13:04:29.626Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:04:29.634Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.315Z","tool":"bq-list-datasets"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T13:04:32.332Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.332Z","tool":"bq-list-datasets"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T13:04:32.341Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.342Z","tool":"bq-list-datasets"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T13:04:32.352Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.352Z","tool":"bq-list-datasets"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.53,"timestamp":"2025-07-07T13:04:32.361Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.361Z","tool":"bq-list-datasets"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.39,"timestamp":"2025-07-07T13:04:32.370Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:04:32.370Z","tool":"bq-list-datasets"}
+{"duration":13,"level":"info","message":"GCP prediction completed","successProbability":0.39,"timestamp":"2025-07-07T13:04:32.383Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T13:04:32.385Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:04:32.393Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T13:04:32.393Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:04:32.405Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T13:05:09.522Z","tool":"bq-query"}
+{"duration":86,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:05:09.608Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T13:05:09.608Z","tool":"bq-query"}
+{"duration":14,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:05:09.622Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T13:05:09.631Z","tool":"bq-list-tables"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.85,"timestamp":"2025-07-07T13:05:09.641Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T13:05:09.643Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:05:09.651Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:05:09.653Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.8300000000000001,"timestamp":"2025-07-07T13:05:09.661Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:05:09.828Z","tool":"bq-query"}
+{"duration":11,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:05:09.839Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T13:05:09.963Z","tool":"bq-query"}
+{"duration":11,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:05:09.974Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.287Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T13:05:12.294Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.294Z","tool":"bq-list-datasets"}
+{"duration":9,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T13:05:12.303Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.303Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T13:05:12.310Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.310Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.5700000000000001,"timestamp":"2025-07-07T13:05:12.317Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.318Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.43000000000000005,"timestamp":"2025-07-07T13:05:12.325Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:05:12.325Z","tool":"bq-list-datasets"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.43000000000000005,"timestamp":"2025-07-07T13:05:12.333Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T13:05:12.335Z","tool":"bq-query"}
+{"duration":6,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:05:12.341Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T13:05:12.341Z","tool":"bq-query"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.43,"timestamp":"2025-07-07T13:05:12.348Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T13:06:05.256Z","tool":"bq-query"}
+{"duration":50,"level":"info","message":"GCP prediction completed","successProbability":0.6236494780000001,"timestamp":"2025-07-07T13:06:05.306Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T13:06:05.306Z","tool":"bq-query"}
+{"duration":6,"level":"info","message":"GCP prediction completed","successProbability":0.6236494780000001,"timestamp":"2025-07-07T13:06:05.312Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T13:06:05.332Z","tool":"bq-list-tables"}
+{"duration":3,"level":"info","message":"GCP prediction completed","successProbability":0.796896025,"timestamp":"2025-07-07T13:06:05.336Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T13:06:05.338Z","tool":"bq-query"}
+{"duration":3,"level":"info","message":"GCP prediction completed","successProbability":0.6236494780000001,"timestamp":"2025-07-07T13:06:05.341Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:06:05.343Z","tool":"bq-query"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.6236494780000001,"timestamp":"2025-07-07T13:06:05.347Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T13:06:05.546Z","tool":"bq-query"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.386502769,"timestamp":"2025-07-07T13:06:05.550Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T13:06:05.719Z","tool":"bq-query"}
+{"duration":5,"level":"info","message":"GCP prediction completed","successProbability":0.386502769,"timestamp":"2025-07-07T13:06:05.724Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.190Z","tool":"bq-list-datasets"}
+{"duration":6,"level":"info","message":"GCP prediction completed","successProbability":0.4829455610000001,"timestamp":"2025-07-07T13:06:08.195Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.196Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.4829455610000001,"timestamp":"2025-07-07T13:06:08.203Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.204Z","tool":"bq-list-datasets"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.4829455610000001,"timestamp":"2025-07-07T13:06:08.208Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.208Z","tool":"bq-list-datasets"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.4829455610000001,"timestamp":"2025-07-07T13:06:08.212Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.213Z","tool":"bq-list-datasets"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.34294556100000007,"timestamp":"2025-07-07T13:06:08.217Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T13:06:08.218Z","tool":"bq-list-datasets"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.34294556100000007,"timestamp":"2025-07-07T13:06:08.222Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T13:06:08.224Z","tool":"bq-query"}
+{"duration":4,"level":"info","message":"GCP prediction completed","successProbability":0.386502769,"timestamp":"2025-07-07T13:06:08.228Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T13:06:08.229Z","tool":"bq-query"}
+{"duration":3,"level":"info","message":"GCP prediction completed","successProbability":0.386502769,"timestamp":"2025-07-07T13:06:08.232Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT id, name WHERE id > 100"},"timestamp":"2025-07-07T14:23:28.206Z","tool":"bq-query"}
+{"duration":111,"level":"info","message":"GCP prediction completed","successProbability":0.75969938,"timestamp":"2025-07-07T14:23:28.316Z","tool":"bq-query","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM table1 JOIN ON table1.id = table2.id"},"timestamp":"2025-07-07T14:23:28.317Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.761505071,"timestamp":"2025-07-07T14:23:28.334Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"datasetId":"restricted_dataset"},"timestamp":"2025-07-07T14:23:28.370Z","tool":"bq-list-tables"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.7824181060000001,"timestamp":"2025-07-07T14:23:28.382Z","tool":"bq-list-tables","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM project.dataset.billion_row_table"},"timestamp":"2025-07-07T14:23:28.386Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.761753321,"timestamp":"2025-07-07T14:23:28.398Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T14:23:28.401Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.7608872900000001,"timestamp":"2025-07-07T14:23:28.413Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM problematic_table WHERE status = ?"},"timestamp":"2025-07-07T14:23:28.620Z","tool":"bq-query"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.361018492,"timestamp":"2025-07-07T14:23:28.637Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"query":"SELECT * FROM large_table WHERE status = 'active'"},"timestamp":"2025-07-07T14:23:28.792Z","tool":"bq-query"}
+{"duration":12,"level":"info","message":"GCP prediction completed","successProbability":0.361021192,"timestamp":"2025-07-07T14:23:28.804Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.116Z","tool":"bq-list-datasets"}
+{"duration":47,"level":"info","message":"GCP prediction completed","successProbability":0.50000604,"timestamp":"2025-07-07T14:23:32.162Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.163Z","tool":"bq-list-datasets"}
+{"duration":32,"level":"info","message":"GCP prediction completed","successProbability":0.50000604,"timestamp":"2025-07-07T14:23:32.195Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.196Z","tool":"bq-list-datasets"}
+{"duration":29,"level":"info","message":"GCP prediction completed","successProbability":0.50000604,"timestamp":"2025-07-07T14:23:32.225Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.226Z","tool":"bq-list-datasets"}
+{"duration":17,"level":"info","message":"GCP prediction completed","successProbability":0.50000604,"timestamp":"2025-07-07T14:23:32.243Z","tool":"bq-list-datasets","warningCount":0}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.244Z","tool":"bq-list-datasets"}
+{"duration":10,"level":"info","message":"GCP prediction completed","successProbability":0.36000604,"timestamp":"2025-07-07T14:23:32.254Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"projectId":"test-project"},"timestamp":"2025-07-07T14:23:32.255Z","tool":"bq-list-datasets"}
+{"duration":7,"level":"info","message":"GCP prediction completed","successProbability":0.36000604,"timestamp":"2025-07-07T14:23:32.262Z","tool":"bq-list-datasets","warningCount":1}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"US","query":"SELECT * FROM `us.dataset.table` JOIN `eu.dataset.table` USING(id)"},"timestamp":"2025-07-07T14:23:32.265Z","tool":"bq-query"}
+{"duration":8,"level":"info","message":"GCP prediction completed","successProbability":0.36176493400000004,"timestamp":"2025-07-07T14:23:32.273Z","tool":"bq-query","warningCount":2}
+{"level":"info","message":"Starting GCP operation prediction","params":{"location":"asia-northeast1","query":"SELECT * FROM `asia-northeast1.data.table` UNION ALL SELECT * FROM `us-central1.data.table`"},"timestamp":"2025-07-07T14:23:32.273Z","tool":"bq-query"}
+{"duration":6,"level":"info","message":"GCP prediction completed","successProbability":0.361867519,"timestamp":"2025-07-07T14:23:32.279Z","tool":"bq-query","warningCount":2}

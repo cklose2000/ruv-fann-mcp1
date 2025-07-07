@@ -1,0 +1,6 @@
+[2m2025-07-06T22:58:45.128741Z[0m [32m INFO[0m [2mruv_swarm[0m[2m:[0m ruv-swarm coordinator listening on 0.0.0.0:3001 (max_agents: 20)
+[2m2025-07-06T23:05:29.016502Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 88512b62-87fa-4170-84e2-1b17442929b7 solving: {"params":{"problem":"{\"tool\":\"bq\",\"params\":{\"query\":\"SELECT * FROM users\"}}"},"tool":"general"}
+[2m2025-07-06T23:06:08.946963Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent ae7351f8-3df2-43e9-8489-5dd6491ff500 solving: {"params":{"problem":"find similar patterns for this bq query"},"tool":"general"}
+[2m2025-07-06T23:06:25.319422Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 7a53dbe7-b7b7-4d20-b4e7-4655ff9c5cfa solving: {"params":{"problem":"predict success rate for this operation"},"tool":"general"}
+[2m2025-07-06T23:07:11.475888Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 030d0d50-8662-48bb-a9cc-897429ae11e4 solving: {"params":{"problem":"analyze execution context for this timing"},"tool":"general"}
+[2m2025-07-06T23:09:08.688185Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 65768419-22d9-47ef-8e25-b54e56333289 solving: {"params":{"problem":"evaluate context for this operation"},"tool":"general"}

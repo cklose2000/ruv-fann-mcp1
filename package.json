@@ -1,0 +1,29 @@
+{
+  "name": "ruv-fann-mcp1",
+  "version": "1.0.0",
+  "description": "An MCP (Model Context Protocol) server that leverages ruv-FANN neural intelligence to provide executive function capabilities for Claude Code. This server acts as a cognitive extension, enabling advanced planning, reasoning, and decision-making capabilities.",
+  "main": "mock-gcp-backend.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cklose2000/ruv-fann-mcp1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cklose2000/ruv-fann-mcp1/issues"
+  },
+  "homepage": "https://github.com/cklose2000/ruv-fann-mcp1#readme",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}

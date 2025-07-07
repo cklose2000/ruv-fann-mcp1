@@ -1,0 +1,766 @@
+warning: unused doc comment
+  --> core/src/network.rs:15:1
+   |
+15 | /// Global network storage (in-memory for POC)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: `ruv-fann-core` (bin "ruv-fann-core") generated 1 warning
+   Compiling ruv-swarm v0.1.0 (/home/cklose/ruv-fann-mcp1/swarm)
+error: no built in mapping found for type NULL of column #2 ("successful_attempts"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:435:32
+    |
+435 |           let historical_stats = sqlx::query!(
+    |  ________________________________^
+436 | |             r#"
+437 | |             SELECT 
+438 | |                 COUNT(*) as total_attempts,
+...   |
+445 | |             tool
+446 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #3 ("avg_duration"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:435:32
+    |
+435 |           let historical_stats = sqlx::query!(
+    |  ________________________________^
+436 | |             r#"
+437 | |             SELECT 
+438 | |                 COUNT(*) as total_attempts,
+...   |
+445 | |             tool
+446 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #4 ("failure_errors"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:435:32
+    |
+435 |           let historical_stats = sqlx::query!(
+    |  ________________________________^
+436 | |             r#"
+437 | |             SELECT 
+438 | |                 COUNT(*) as total_attempts,
+...   |
+445 | |             tool
+446 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #1 ("hour"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:827:28
+    |
+827 |           let hourly_stats = sqlx::query!(
+    |  ____________________________^
+828 | |             r#"
+829 | |             SELECT 
+830 | |                 strftime('%H', timestamp) as hour,
+...   |
+838 | |             tool
+839 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #2 ("total"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:827:28
+    |
+827 |           let hourly_stats = sqlx::query!(
+    |  ____________________________^
+828 | |             r#"
+829 | |             SELECT 
+830 | |                 strftime('%H', timestamp) as hour,
+...   |
+838 | |             tool
+839 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #3 ("successes"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:827:28
+    |
+827 |           let hourly_stats = sqlx::query!(
+    |  ____________________________^
+828 | |             r#"
+829 | |             SELECT 
+830 | |                 strftime('%H', timestamp) as hour,
+...   |
+838 | |             tool
+839 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #1 ("recent_failures"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:883:28
+    |
+883 |           let recent_stats = sqlx::query!(
+    |  ____________________________^
+884 | |             r#"
+885 | |             SELECT 
+886 | |                 SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+...   |
+893 | |             tool
+894 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #2 ("recent_total"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:883:28
+    |
+883 |           let recent_stats = sqlx::query!(
+    |  ____________________________^
+884 | |             r#"
+885 | |             SELECT 
+886 | |                 SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+...   |
+893 | |             tool
+894 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #3 ("week_failures"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:883:28
+    |
+883 |           let recent_stats = sqlx::query!(
+    |  ____________________________^
+884 | |             r#"
+885 | |             SELECT 
+886 | |                 SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+...   |
+893 | |             tool
+894 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #4 ("week_total"); a type override may be required, see documentation for details
+   --> swarm/src/agent.rs:883:28
+    |
+883 |           let recent_stats = sqlx::query!(
+    |  ____________________________^
+884 | |             r#"
+885 | |             SELECT 
+886 | |                 SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+...   |
+893 | |             tool
+894 | |         )
+    | |_________^
+    |
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: no built in mapping found for type NULL of column #2 ("successes"); a type override may be required, see documentation for details
+    --> swarm/src/agent.rs:1398:33
+     |
+1398 |           let similar_successes = sqlx::query!(
+     |  _________________________________^
+1399 | |             r#"
+1400 | |             SELECT COUNT(*) as total,
+1401 | |                    SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+...    |
+1405 | |             tool
+1406 | |         )
+     | |_________^
+     |
+     = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `(): sqlx::Decode<'_, Sqlite>` is not satisfied
+   --> swarm/src/agent.rs:435:32
+    |
+435 |           let historical_stats = sqlx::query!(
+    |  ________________________________^
+436 | |             r#"
+437 | |             SELECT 
+438 | |                 COUNT(*) as total_attempts,
+...   |
+445 | |             tool
+446 | |         )
+    | |_________^ the trait `sqlx::Decode<'_, Sqlite>` is not implemented for `()`
+    |
+    = help: the following other types implement trait `sqlx::Decode<'r, DB>`:
+              `&'a str` implements `sqlx::Decode<'a, sqlx::Any>`
+              `&'r JsonRawValue` implements `sqlx::Decode<'r, DB>`
+              `&'r [u8]` implements `sqlx::Decode<'r, Sqlite>`
+              `&'r [u8]` implements `sqlx::Decode<'r, sqlx::Any>`
+              `&'r str` implements `sqlx::Decode<'r, Sqlite>`
+              `Box<[u8]>` implements `sqlx::Decode<'_, Sqlite>`
+              `Box<str>` implements `sqlx::Decode<'_, Sqlite>`
+              `Cow<'r, str>` implements `sqlx::Decode<'r, Sqlite>`
+            and 33 others
+    = note: required for `std::option::Option<()>` to implement `sqlx::Decode<'_, Sqlite>`
+note: required by a bound in `try_get_unchecked`
+   --> /home/cklose/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-core-0.8.6/src/row.rs:155:12
+    |
+152 |     fn try_get_unchecked<'r, T, I>(&'r self, index: I) -> Result<T, Error>
+    |        ----------------- required by a bound in this associated function
+...
+155 |         T: Decode<'r, Self::Database>,
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Row::try_get_unchecked`
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:451:82
+    |
+451 |         let successful_attempts = historical_stats.successful_attempts.unwrap_or(0);
+    |                                                                        --------- ^ expected `()`, found integer
+    |                                                                        |
+    |                                                                        arguments to this method are incorrect
+    |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+   --> swarm/src/agent.rs:451:35
+    |
+451 |         let successful_attempts = historical_stats.successful_attempts.unwrap_or(0);
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+    |                                                                                  |
+    |                                                                                  this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0599]: the method `as_deref` exists for enum `Option<()>`, but its trait bounds were not satisfied
+   --> swarm/src/agent.rs:480:45
+    |
+480 |             historical_stats.failure_errors.as_deref().unwrap_or("")
+    |                                             ^^^^^^^^
+    |
+    = note: the following trait bounds were not satisfied:
+            `(): Deref`
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:491:74
+    |
+491 |         let estimated_duration = historical_stats.avg_duration.unwrap_or(1000.0) as u64;
+    |                                                                --------- ^^^^^^ expected `()`, found floating-point number
+    |                                                                |
+    |                                                                arguments to this method are incorrect
+    |
+help: the return type of this call is `{float}` due to the type of the argument passed
+   --> swarm/src/agent.rs:491:34
+    |
+491 |         let estimated_duration = historical_stats.avg_duration.unwrap_or(1000.0) as u64;
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^------^
+    |                                                                          |
+    |                                                                          this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:455:13
+    |
+455 |             successful_attempts as f64 / total_attempts as f64
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0605]: non-primitive cast: `()` as `u64`
+   --> swarm/src/agent.rs:491:34
+    |
+491 |         let estimated_duration = historical_stats.avg_duration.unwrap_or(1000.0) as u64;
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0277]: the trait bound `(): sqlx::Decode<'_, Sqlite>` is not satisfied
+   --> swarm/src/agent.rs:827:28
+    |
+827 |           let hourly_stats = sqlx::query!(
+    |  ____________________________^
+828 | |             r#"
+829 | |             SELECT 
+830 | |                 strftime('%H', timestamp) as hour,
+...   |
+838 | |             tool
+839 | |         )
+    | |_________^ the trait `sqlx::Decode<'_, Sqlite>` is not implemented for `()`
+    |
+    = help: the following other types implement trait `sqlx::Decode<'r, DB>`:
+              `&'a str` implements `sqlx::Decode<'a, sqlx::Any>`
+              `&'r JsonRawValue` implements `sqlx::Decode<'r, DB>`
+              `&'r [u8]` implements `sqlx::Decode<'r, Sqlite>`
+              `&'r [u8]` implements `sqlx::Decode<'r, sqlx::Any>`
+              `&'r str` implements `sqlx::Decode<'r, Sqlite>`
+              `Box<[u8]>` implements `sqlx::Decode<'_, Sqlite>`
+              `Box<str>` implements `sqlx::Decode<'_, Sqlite>`
+              `Cow<'r, str>` implements `sqlx::Decode<'r, Sqlite>`
+            and 33 others
+    = note: required for `std::option::Option<()>` to implement `sqlx::Decode<'_, Sqlite>`
+note: required by a bound in `try_get_unchecked`
+   --> /home/cklose/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-core-0.8.6/src/row.rs:155:12
+    |
+152 |     fn try_get_unchecked<'r, T, I>(&'r self, index: I) -> Result<T, Error>
+    |        ----------------- required by a bound in this associated function
+...
+155 |         T: Decode<'r, Self::Database>,
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Row::try_get_unchecked`
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `parse` found for unit type `()` in the current scope
+   --> swarm/src/agent.rs:849:41
+    |
+849 |                 if let Ok(hour_num) = h.parse::<u32>() {
+    |                                         ^^^^^ method not found in `()`
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:848:36
+    |
+848 |                 let success_rate = successes as f64 / total as f64;
+    |                                    ^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:848:55
+    |
+848 |                 let success_rate = successes as f64 / total as f64;
+    |                                                       ^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0277]: the trait bound `(): sqlx::Decode<'_, Sqlite>` is not satisfied
+   --> swarm/src/agent.rs:883:28
+    |
+883 |           let recent_stats = sqlx::query!(
+    |  ____________________________^
+884 | |             r#"
+885 | |             SELECT 
+886 | |                 SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+...   |
+893 | |             tool
+894 | |         )
+    | |_________^ the trait `sqlx::Decode<'_, Sqlite>` is not implemented for `()`
+    |
+    = help: the following other types implement trait `sqlx::Decode<'r, DB>`:
+              `&'a str` implements `sqlx::Decode<'a, sqlx::Any>`
+              `&'r JsonRawValue` implements `sqlx::Decode<'r, DB>`
+              `&'r [u8]` implements `sqlx::Decode<'r, Sqlite>`
+              `&'r [u8]` implements `sqlx::Decode<'r, sqlx::Any>`
+              `&'r str` implements `sqlx::Decode<'r, Sqlite>`
+              `Box<[u8]>` implements `sqlx::Decode<'_, Sqlite>`
+              `Box<str>` implements `sqlx::Decode<'_, Sqlite>`
+              `Cow<'r, str>` implements `sqlx::Decode<'r, Sqlite>`
+            and 33 others
+    = note: required for `std::option::Option<()>` to implement `sqlx::Decode<'_, Sqlite>`
+note: required by a bound in `try_get_unchecked`
+   --> /home/cklose/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-core-0.8.6/src/row.rs:155:12
+    |
+152 |     fn try_get_unchecked<'r, T, I>(&'r self, index: I) -> Result<T, Error>
+    |        ----------------- required by a bound in this associated function
+...
+155 |         T: Decode<'r, Self::Database>,
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Row::try_get_unchecked`
+    = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:898:70
+    |
+898 |         let recent_failures = recent_stats.recent_failures.unwrap_or(0) as f64;
+    |                                                            --------- ^ expected `()`, found integer
+    |                                                            |
+    |                                                            arguments to this method are incorrect
+    |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+   --> swarm/src/agent.rs:898:31
+    |
+898 |         let recent_failures = recent_stats.recent_failures.unwrap_or(0) as f64;
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+    |                                                                      |
+    |                                                                      this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:899:64
+    |
+899 |         let recent_total = recent_stats.recent_total.unwrap_or(0) as f64;
+    |                                                      --------- ^ expected `()`, found integer
+    |                                                      |
+    |                                                      arguments to this method are incorrect
+    |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+   --> swarm/src/agent.rs:899:28
+    |
+899 |         let recent_total = recent_stats.recent_total.unwrap_or(0) as f64;
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+    |                                                                |
+    |                                                                this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:900:66
+    |
+900 |         let week_failures = recent_stats.week_failures.unwrap_or(0) as f64;
+    |                                                        --------- ^ expected `()`, found integer
+    |                                                        |
+    |                                                        arguments to this method are incorrect
+    |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+   --> swarm/src/agent.rs:900:29
+    |
+900 |         let week_failures = recent_stats.week_failures.unwrap_or(0) as f64;
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+    |                                                                  |
+    |                                                                  this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:901:60
+    |
+901 |         let week_total = recent_stats.week_total.unwrap_or(0) as f64;
+    |                                                  --------- ^ expected `()`, found integer
+    |                                                  |
+    |                                                  arguments to this method are incorrect
+    |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+   --> swarm/src/agent.rs:901:26
+    |
+901 |         let week_total = recent_stats.week_total.unwrap_or(0) as f64;
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+    |                                                            |
+    |                                                            this argument influences the return type of `unwrap_or`
+note: method defined here
+   --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:898:31
+    |
+898 |         let recent_failures = recent_stats.recent_failures.unwrap_or(0) as f64;
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:899:28
+    |
+899 |         let recent_total = recent_stats.recent_total.unwrap_or(0) as f64;
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:900:29
+    |
+900 |         let week_failures = recent_stats.week_failures.unwrap_or(0) as f64;
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0605]: non-primitive cast: `()` as `f64`
+   --> swarm/src/agent.rs:901:26
+    |
+901 |         let week_total = recent_stats.week_total.unwrap_or(0) as f64;
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:978:46
+    |
+978 |                 if historical_avg_duration > 0.0 {
+    |                    -----------------------   ^^^ expected `i64`, found floating-point number
+    |                    |
+    |                    expected because this is `i64`
+
+error[E0308]: mismatched types
+   --> swarm/src/agent.rs:980:44
+    |
+980 |                     if performance_ratio > 1.5 {
+    |                        -----------------   ^^^ expected `i64`, found floating-point number
+    |                        |
+    |                        expected because this is `i64`
+
+error[E0277]: the trait bound `(): sqlx::Decode<'_, Sqlite>` is not satisfied
+    --> swarm/src/agent.rs:1398:33
+     |
+1398 |           let similar_successes = sqlx::query!(
+     |  _________________________________^
+1399 | |             r#"
+1400 | |             SELECT COUNT(*) as total,
+1401 | |                    SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+...    |
+1405 | |             tool
+1406 | |         )
+     | |_________^ the trait `sqlx::Decode<'_, Sqlite>` is not implemented for `()`
+     |
+     = help: the following other types implement trait `sqlx::Decode<'r, DB>`:
+               `&'a str` implements `sqlx::Decode<'a, sqlx::Any>`
+               `&'r JsonRawValue` implements `sqlx::Decode<'r, DB>`
+               `&'r [u8]` implements `sqlx::Decode<'r, Sqlite>`
+               `&'r [u8]` implements `sqlx::Decode<'r, sqlx::Any>`
+               `&'r str` implements `sqlx::Decode<'r, Sqlite>`
+               `Box<[u8]>` implements `sqlx::Decode<'_, Sqlite>`
+               `Box<str>` implements `sqlx::Decode<'_, Sqlite>`
+               `Cow<'r, str>` implements `sqlx::Decode<'r, Sqlite>`
+             and 33 others
+     = note: required for `std::option::Option<()>` to implement `sqlx::Decode<'_, Sqlite>`
+note: required by a bound in `try_get_unchecked`
+    --> /home/cklose/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-core-0.8.6/src/row.rs:155:12
+     |
+152  |     fn try_get_unchecked<'r, T, I>(&'r self, index: I) -> Result<T, Error>
+     |        ----------------- required by a bound in this associated function
+...
+155  |         T: Decode<'r, Self::Database>,
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Row::try_get_unchecked`
+     = note: this error originates in the macro `$crate::sqlx_macros::expand_query` which comes from the expansion of the macro `sqlx::query` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+    --> swarm/src/agent.rs:1411:63
+     |
+1411 |         let successes = similar_successes.successes.unwrap_or(0);
+     |                                                     --------- ^ expected `()`, found integer
+     |                                                     |
+     |                                                     arguments to this method are incorrect
+     |
+help: the return type of this call is `{integer}` due to the type of the argument passed
+    --> swarm/src/agent.rs:1411:25
+     |
+1411 |         let successes = similar_successes.successes.unwrap_or(0);
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-^
+     |                                                               |
+     |                                                               this argument influences the return type of `unwrap_or`
+note: method defined here
+    --> /rustc/6b00bc3880198600130e1cf62b8f8a93494488cc/library/core/src/option.rs:1023:12
+
+error[E0605]: non-primitive cast: `()` as `f64`
+    --> swarm/src/agent.rs:1414:16
+     |
+1414 |             Ok(successes as f64 / total as f64)
+     |                ^^^^^^^^^^^^^^^^ an `as` expression can only be used to convert between primitive types or to coerce to a specific trait object
+
+error[E0599]: no variant or associated item named `ErrorAnalyzer` found for enum `AgentType` in the current scope
+  --> swarm/src/coordinator.rs:64:24
+   |
+64 |             AgentType::ErrorAnalyzer,
+   |                        ^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+   |
+  ::: swarm/src/agent.rs:24:1
+   |
+24 | pub enum AgentType {
+   | ------------------ variant or associated item `ErrorAnalyzer` not found for this enum
+
+error[E0599]: no variant or associated item named `PerformanceAnalyzer` found for enum `AgentType` in the current scope
+  --> swarm/src/coordinator.rs:65:24
+   |
+65 |             AgentType::PerformanceAnalyzer,
+   |                        ^^^^^^^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+   |
+  ::: swarm/src/agent.rs:24:1
+   |
+24 | pub enum AgentType {
+   | ------------------ variant or associated item `PerformanceAnalyzer` not found for this enum
+
+error[E0061]: this function takes 1 argument but 2 arguments were supplied
+  --> swarm/src/coordinator.rs:73:29
+   |
+73 |                 let agent = EphemeralAgent::new(agent_type, 5000)
+   |                             ^^^^^^^^^^^^^^^^^^^             ---- unexpected argument #2 of type `{integer}`
+   |
+note: associated function defined here
+  --> swarm/src/agent.rs:46:12
+   |
+46 |     pub fn new(agent_type: AgentType) -> Self {
+   |            ^^^
+help: remove the extra argument
+   |
+73 -                 let agent = EphemeralAgent::new(agent_type, 5000)
+73 +                 let agent = EphemeralAgent::new(agent_type)
+   |
+
+error[E0599]: no method named `with_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:74:22
+   |
+73 |                   let agent = EphemeralAgent::new(agent_type, 5000)
+   |  _____________________________-
+74 | |                     .with_pool(self.pool.clone());
+   | |                     -^^^^^^^^^ method not found in `EphemeralAgent`
+   | |_____________________|
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |   pub struct EphemeralAgent {
+   |   ------------------------- method `with_pool` not found for this struct
+
+error[E0061]: this function takes 1 argument but 2 arguments were supplied
+  --> swarm/src/coordinator.rs:97:17
+   |
+97 |                 EphemeralAgent::new(agent_type, 5000)
+   |                 ^^^^^^^^^^^^^^^^^^^             ---- unexpected argument #2 of type `{integer}`
+   |
+note: associated function defined here
+  --> swarm/src/agent.rs:46:12
+   |
+46 |     pub fn new(agent_type: AgentType) -> Self {
+   |            ^^^
+help: remove the extra argument
+   |
+97 -                 EphemeralAgent::new(agent_type, 5000)
+97 +                 EphemeralAgent::new(agent_type)
+   |
+
+error[E0599]: no method named `with_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:98:22
+   |
+97 | /                 EphemeralAgent::new(agent_type, 5000)
+98 | |                     .with_pool(self.pool.clone())
+   | |                     -^^^^^^^^^ method not found in `EphemeralAgent`
+   | |_____________________|
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |   pub struct EphemeralAgent {
+   |   ------------------------- method `with_pool` not found for this struct
+
+error[E0599]: no method named `run` found for struct `EphemeralAgent` in the current scope
+   --> swarm/src/coordinator.rs:103:28
+    |
+103 |         let result = agent.run(task).await;
+    |                            ^^^ method not found in `EphemeralAgent`
+    |
+   ::: swarm/src/agent.rs:9:1
+    |
+9   | pub struct EphemeralAgent {
+    | ------------------------- method `run` not found for this struct
+
+error[E0599]: no variant or associated item named `Created` found for enum `AgentStatus` in the current scope
+   --> swarm/src/coordinator.rs:110:59
+    |
+110 |                 agent.status = crate::agent::AgentStatus::Created;
+    |                                                           ^^^^^^^ variant or associated item not found in `AgentStatus`
+    |
+   ::: swarm/src/agent.rs:36:1
+    |
+36  | pub enum AgentStatus {
+    | -------------------- variant or associated item `Created` not found for this enum
+
+error[E0599]: no method named `spawn_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:65:10
+   |
+64 |       let agent_id = coordinator
+   |  ____________________-
+65 | |         .spawn_agent(agent_type)
+   | |         -^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+   | |_________|
+   |
+
+error[E0599]: no method named `solve_with_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:74:21
+   |
+74 |         coordinator.solve_with_agent(agent_id, problem).await.ok();
+   |                     ^^^^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+error[E0599]: no method named `list_agents` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:87:30
+   |
+87 |     let agents = coordinator.list_agents().await;
+   |                              ^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+error[E0599]: no method named `get_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:99:10
+   |
+98 | /     coordinator
+99 | |         .get_agent(agent_id)
+   | |         -^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+   | |_________|
+   |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:113:38
+    |
+113 |     let _initial_stats = coordinator.get_stats().await;
+    |                                      ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+113 |     let _initial_stats = coordinator.get_status().await;
+    |                                              +
+
+error[E0599]: no method named `solve_problem` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:117:10
+    |
+116 |       let solution = coordinator
+    |  ____________________-
+117 | |         .solve_problem(req.problem.clone())
+    | |         -^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_________|
+    |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:124:36
+    |
+124 |     let _final_stats = coordinator.get_stats().await;
+    |                                    ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+124 |     let _final_stats = coordinator.get_status().await;
+    |                                            +
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:150:29
+    |
+150 |     let stats = coordinator.get_stats().await;
+    |                             ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+150 |     let stats = coordinator.get_status().await;
+    |                                     +
+
+error[E0599]: no method named `solve_problem` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:169:14
+    |
+168 |           let solution = coordinator
+    |  ________________________-
+169 | |             .solve_problem(problem.to_string())
+    | |             -^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_____________|
+    |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:184:29
+    |
+184 |     let stats = coordinator.get_stats().await;
+    |                             ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+184 |     let stats = coordinator.get_status().await;
+    |                                     +
+
+error[E0599]: no method named `get_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:220:10
+    |
+219 |       let agent = coordinator
+    |  _________________-
+220 | |         .get_agent(agent_id)
+    | |         -^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_________|
+    |
+
+error[E0599]: no variant or associated item named `ErrorAnalyzer` found for enum `AgentType` in the current scope
+   --> swarm/src/coordinator.rs:139:24
+    |
+139 |             AgentType::ErrorAnalyzer
+    |                        ^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+    |
+   ::: swarm/src/agent.rs:24:1
+    |
+24  | pub enum AgentType {
+    | ------------------ variant or associated item `ErrorAnalyzer` not found for this enum
+
+error[E0599]: no variant or associated item named `PerformanceAnalyzer` found for enum `AgentType` in the current scope
+   --> swarm/src/coordinator.rs:141:24
+    |
+141 |             AgentType::PerformanceAnalyzer
+    |                        ^^^^^^^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+    |
+   ::: swarm/src/agent.rs:24:1
+    |
+24  | pub enum AgentType {
+    | ------------------ variant or associated item `PerformanceAnalyzer` not found for this enum
+
+error[E0599]: no method named `set_max_agents` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/main.rs:112:33
+    |
+112 |                     coordinator.set_max_agents(n);
+    |                                 ^^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+Some errors have detailed explanations: E0061, E0277, E0308, E0599, E0605.
+For more information about an error, try `rustc --explain E0061`.
+error: could not compile `ruv-swarm` (bin "ruv-swarm") due to 57 previous errors

@@ -1,0 +1,8 @@
+error: failed to select a version for `sqlx`.
+    ... required by package `ruv-swarm v0.1.0 (/home/cklose/ruv-fann-mcp1/swarm)`
+versions that meet the requirements `^0.8` (locked to 0.8.6) are: 0.8.6
+
+package `ruv-swarm` depends on `sqlx` with feature `offline` but `sqlx` does not have that feature.
+
+
+failed to select a version for `sqlx` which could resolve this conflict

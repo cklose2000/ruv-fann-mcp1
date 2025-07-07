@@ -1,0 +1,3 @@
+[2m2025-07-06T22:18:43.443683Z[0m [32m INFO[0m [2mruv_swarm[0m[2m:[0m ruv-swarm coordinator listening on 0.0.0.0:3001 (max_agents: 20)
+[2m2025-07-06T22:25:31.701905Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 50b6f4d8-189a-4bfa-a29e-2bc0a60aa8ce solving: {"params":{"problem":"test database integration"},"tool":"general"}
+[2m2025-07-06T22:25:31.756551Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 50b6f4d8-189a-4bfa-a29e-2bc0a60aa8ce completed solving

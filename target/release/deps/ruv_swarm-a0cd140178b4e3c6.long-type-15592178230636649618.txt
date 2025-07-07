@@ -1,0 +1,2 @@
+fn(axum::extract::State<Arc<SwarmCoordinator>>) -> impl std::future::Future<Output = Result<impl IntoResponse, axum::http::StatusCode>> {demo_ephemeral_solve}
+fn(axum::extract::State<Arc<SwarmCoordinator>>) -> impl std::future::Future<Output = Result<impl IntoResponse, axum::http::StatusCode>> {demo_ephemeral_solve}: Handler<_, _>

@@ -1,0 +1,38 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT \n                COUNT(*) as total_attempts,\n                SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successful_attempts,\n                AVG(duration) as avg_duration,\n                GROUP_CONCAT(CASE WHEN success = 0 THEN error END) as failure_errors\n            FROM command_patterns \n            WHERE tool = ?\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "total_attempts",
+        "ordinal": 0,
+        "type_info": "Integer"
+      },
+      {
+        "name": "successful_attempts",
+        "ordinal": 1,
+        "type_info": "Null"
+      },
+      {
+        "name": "avg_duration",
+        "ordinal": 2,
+        "type_info": "Null"
+      },
+      {
+        "name": "failure_errors",
+        "ordinal": 3,
+        "type_info": "Null"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "8d2651034e94e891d839ad068a4f3df3b3a69713742b7f9801032fa0a489074c"
+}

@@ -13,6 +13,7 @@ export declare const STORAGE_TOOLS: MCPTool[];
 export declare const COMPUTE_TOOLS: MCPTool[];
 export declare const CLOUD_RUN_TOOLS: MCPTool[];
 export declare const PROJECT_TOOLS: MCPTool[];
+export declare function normalizeMCPToolName(toolName: string): string;
 export declare function isGCPTool(toolName: string): boolean;
 export declare function getGCPTool(toolName: string): MCPTool | undefined;
 export declare function convertToolNameForBackend(toolName: string): string;

@@ -1,0 +1,59 @@
+warning: unused doc comment
+  --> core/src/network.rs:15:1
+   |
+15 | /// Global network storage (in-memory for POC)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: `ruv-fann-core` (bin "ruv-fann-core") generated 1 warning
+   Compiling ruv-swarm v0.1.0 (/home/cklose/ruv-fann-mcp1/swarm)
+error[E0599]: no method named `with_db_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:74:22
+   |
+73 |                    let agent = EphemeralAgent::new(agent_type)
+   |   _____________________________-
+   |  |_____________________________|
+74 | ||                     .with_db_pool(agent_type, self.pool.clone());
+   | ||_____________________-^^^^^^^^^^^^______________________________- help: use associated function syntax instead: `EphemeralAgent::with_db_pool(agent_type, self.pool.clone())`
+   | |                      ||
+   | |______________________|this is an associated function, not a method
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |    pub struct EphemeralAgent {
+   |    ------------------------- method `with_db_pool` not found for this struct
+   |
+   = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in an impl for the type `EphemeralAgent`
+  --> swarm/src/agent.rs:61:5
+   |
+61 |     pub fn with_db_pool(agent_type: AgentType, db_pool: SqlitePool) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `with_db_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:98:22
+   |
+97 | //                 EphemeralAgent::new(agent_type)
+98 | ||                     .with_db_pool(agent_type, self.pool.clone())
+   | ||_____________________-^^^^^^^^^^^^______________________________- help: use associated function syntax instead: `EphemeralAgent::with_db_pool(agent_type, self.pool.clone())`
+   | |                      ||
+   | |______________________|this is an associated function, not a method
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |    pub struct EphemeralAgent {
+   |    ------------------------- method `with_db_pool` not found for this struct
+   |
+   = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in an impl for the type `EphemeralAgent`
+  --> swarm/src/agent.rs:61:5
+   |
+61 |     pub fn with_db_pool(agent_type: AgentType, db_pool: SqlitePool) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `ruv-swarm` (bin "ruv-swarm") due to 2 previous errors

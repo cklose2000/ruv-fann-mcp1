@@ -1,0 +1,183 @@
+warning: unused doc comment
+  --> core/src/network.rs:15:1
+   |
+15 | /// Global network storage (in-memory for POC)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: `ruv-fann-core` (bin "ruv-fann-core") generated 1 warning
+   Compiling ruv-swarm v0.1.0 (/home/cklose/ruv-fann-mcp1/swarm)
+error[E0432]: unresolved import `crate::coordinator::SwarmStats`
+ --> swarm/src/api.rs:2:44
+  |
+2 | use crate::coordinator::{SwarmCoordinator, SwarmStats};
+  |                                            ^^^^^^^^^^ no `SwarmStats` in `coordinator`
+
+warning: unused variable: `failure_errors`
+   --> swarm/src/agent.rs:220:13
+    |
+220 |         let failure_errors: Option<String> = row.get("failure_errors");
+    |             ^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_failure_errors`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: variable does not need to be mutable
+   --> swarm/src/agent.rs:392:10
+    |
+392 |     for (mut agent, problem) in agents.into_iter().zip(problems.into_iter()) {
+    |          ----^^^^^
+    |          |
+    |          help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+error[E0599]: no method named `spawn_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:65:10
+   |
+64 |       let agent_id = coordinator
+   |  ____________________-
+65 | |         .spawn_agent(agent_type)
+   | |         -^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+   | |_________|
+   |
+
+error[E0599]: no method named `solve_with_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:74:21
+   |
+74 |         coordinator.solve_with_agent(agent_id, problem).await.ok();
+   |                     ^^^^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+error[E0599]: no method named `list_agents` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:87:30
+   |
+87 |     let agents = coordinator.list_agents().await;
+   |                              ^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+error[E0599]: no method named `get_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+  --> swarm/src/api.rs:99:10
+   |
+98 | /     coordinator
+99 | |         .get_agent(agent_id)
+   | |         -^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+   | |_________|
+   |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:113:38
+    |
+113 |     let _initial_stats = coordinator.get_stats().await;
+    |                                      ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+113 |     let _initial_stats = coordinator.get_status().await;
+    |                                              +
+
+error[E0599]: no method named `solve_problem` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:117:10
+    |
+116 |       let solution = coordinator
+    |  ____________________-
+117 | |         .solve_problem(req.problem.clone())
+    | |         -^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_________|
+    |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:124:36
+    |
+124 |     let _final_stats = coordinator.get_stats().await;
+    |                                    ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+124 |     let _final_stats = coordinator.get_status().await;
+    |                                            +
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:150:29
+    |
+150 |     let stats = coordinator.get_stats().await;
+    |                             ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+150 |     let stats = coordinator.get_status().await;
+    |                                     +
+
+error[E0599]: no method named `solve_problem` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:169:14
+    |
+168 |           let solution = coordinator
+    |  ________________________-
+169 | |             .solve_problem(problem.to_string())
+    | |             -^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_____________|
+    |
+
+error[E0599]: no method named `get_stats` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:184:29
+    |
+184 |     let stats = coordinator.get_stats().await;
+    |                             ^^^^^^^^^
+    |
+help: there is a method `get_status` with a similar name
+    |
+184 |     let stats = coordinator.get_status().await;
+    |                                     +
+
+error[E0599]: no method named `get_agent` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/api.rs:220:10
+    |
+219 |       let agent = coordinator
+    |  _________________-
+220 | |         .get_agent(agent_id)
+    | |         -^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+    | |_________|
+    |
+
+error[E0599]: no variant or associated item named `Solving` found for enum `AgentStatus` in the current scope
+   --> swarm/src/api.rs:243:36
+    |
+243 |         crate::agent::AgentStatus::Solving => {
+    |                                    ^^^^^^^ variant or associated item not found in `AgentStatus`
+    |
+   ::: swarm/src/agent.rs:38:1
+    |
+38  | pub enum AgentStatus {
+    | -------------------- variant or associated item `Solving` not found for this enum
+
+error[E0277]: `SwarmCoordinator` is not a future
+   --> swarm/src/main.rs:101:73
+    |
+101 |     let coordinator = Arc::new(coordinator::SwarmCoordinator::new(pool).await?);
+    |                                -----------------------------------------^^^^^
+    |                                |                                       ||
+    |                                |                                       |`SwarmCoordinator` is not a future
+    |                                |                                       help: remove the `.await`
+    |                                this call returns `SwarmCoordinator`
+    |
+    = help: the trait `std::future::Future` is not implemented for `SwarmCoordinator`
+    = note: SwarmCoordinator must be a future or must implement `IntoFuture` to be awaited
+    = note: required for `SwarmCoordinator` to implement `IntoFuture`
+
+error[E0282]: type annotations needed for `Arc<_>`
+   --> swarm/src/main.rs:101:9
+    |
+101 |     let coordinator = Arc::new(coordinator::SwarmCoordinator::new(pool).await?);
+    |         ^^^^^^^^^^^
+...
+112 |                     coordinator.set_max_agents(n).await;
+    |                                 -------------- type must be known at this point
+    |
+help: consider giving `coordinator` an explicit type, where the type for type parameter `T` is specified
+    |
+101 |     let coordinator: Arc<T> = Arc::new(coordinator::SwarmCoordinator::new(pool).await?);
+    |                    ++++++++
+
+Some errors have detailed explanations: E0277, E0282, E0432, E0599.
+For more information about an error, try `rustc --explain E0277`.
+warning: `ruv-swarm` (bin "ruv-swarm") generated 2 warnings
+error: could not compile `ruv-swarm` (bin "ruv-swarm") due to 15 previous errors; 2 warnings emitted

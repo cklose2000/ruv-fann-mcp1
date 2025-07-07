@@ -142,7 +142,8 @@ export class GCPPatternStorage {
       (query_type, table_size_gb, execution_time_ms, cost_usd, rows_returned, success, error_type)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
-        const result = stmt.run(pattern.query_type, pattern.table_size_gb, pattern.execution_time_ms, pattern.cost_usd, pattern.rows_returned, pattern.success, pattern.error_type);
+        const result = stmt.run(pattern.query_type, pattern.table_size_gb, pattern.execution_time_ms, pattern.cost_usd, pattern.rows_returned, pattern.success ? 1 : 0, // Convert boolean to number for SQLite
+        pattern.error_type);
         return result.lastInsertRowid;
     }
     async predictQueryCost(queryType, tableSizeGb) {
@@ -170,7 +171,8 @@ export class GCPPatternStorage {
       (token_age_minutes, operation_type, success, error_message)
       VALUES (?, ?, ?, ?)
     `);
-        const result = stmt.run(pattern.token_age_minutes, pattern.operation_type, pattern.success, pattern.error_message);
+        const result = stmt.run(pattern.token_age_minutes, pattern.operation_type, pattern.success ? 1 : 0, // Convert boolean to number for SQLite
+        pattern.error_message);
         return result.lastInsertRowid;
     }
     async predictAuthFailure(tokenAgeMinutes) {
@@ -197,7 +199,7 @@ export class GCPPatternStorage {
       (user_id, common_projects, frequent_datasets, typical_operations, error_patterns, last_updated)
       VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     `);
-        stmt.run(userId, updates.common_projects || '[]', updates.frequent_datasets || '[]', updates.typical_operations || '[]', updates.error_patterns || '[]');
+        stmt.run(userId, JSON.stringify(updates.common_projects || []), JSON.stringify(updates.frequent_datasets || []), JSON.stringify(updates.typical_operations || []), JSON.stringify(updates.error_patterns || []));
     }
     async getUserPatterns(userId) {
         const stmt = this.db.prepare(`
@@ -248,6 +250,38 @@ export class GCPPatternStorage {
         const result = stmt.run(daysToKeep);
         this.logger.info('Cleaned up old patterns', { deletedRows: result.changes });
         return result.changes;
+    }
+    // Analytics methods
+    async getAverageQueryDuration(queryType) {
+        const stmt = this.db.prepare(`
+      SELECT AVG(execution_time_ms) as avg_duration
+      FROM gcp_query_patterns 
+      WHERE query_type = ? AND success = 1
+    `);
+        const result = stmt.get(queryType);
+        return result?.avg_duration || 0;
+    }
+    async getQuerySuccessRate(queryType) {
+        const stmt = this.db.prepare(`
+      SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+      FROM gcp_query_patterns 
+      WHERE query_type = ?
+    `);
+        const result = stmt.get(queryType);
+        return result.total > 0 ? result.successes / result.total : 0;
+    }
+    async getAuthFailureRate(tokenAgeMinutes) {
+        const stmt = this.db.prepare(`
+      SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END) as failures
+      FROM gcp_auth_patterns 
+      WHERE token_age_minutes >= ?
+    `);
+        const result = stmt.get(tokenAgeMinutes);
+        return result.total > 0 ? result.failures / result.total : 0;
     }
     close() {
         this.db.close();

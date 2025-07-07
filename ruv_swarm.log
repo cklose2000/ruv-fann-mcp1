@@ -1,0 +1,2 @@
+[2m2025-07-06T21:17:53.615372Z[0m [32m INFO[0m [2mruv_swarm[0m[2m:[0m ruv-swarm coordinator listening on 0.0.0.0:3001 (max_agents: 5)
+[2m2025-07-06T21:23:25.215389Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 450ed7eb-b013-426d-8508-68c8d80e94ca solving: {"params":{"problem":"reverse this text"},"tool":"general"}

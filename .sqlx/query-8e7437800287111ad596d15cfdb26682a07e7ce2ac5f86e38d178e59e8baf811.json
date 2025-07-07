@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT AVG(duration) as avg_duration\n            FROM command_patterns \n            WHERE timestamp > datetime('now', '-1 hour')\n            AND duration IS NOT NULL\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "avg_duration",
+        "ordinal": 0,
+        "type_info": "Integer"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "8e7437800287111ad596d15cfdb26682a07e7ce2ac5f86e38d178e59e8baf811"
+}

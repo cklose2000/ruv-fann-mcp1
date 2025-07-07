@@ -1,0 +1,2 @@
+fn(axum::extract::State<Arc<SwarmCoordinator>>, axum::Json<Vec<std::string::String>>) -> impl std::future::Future<Output = Result<impl IntoResponse, axum::http::StatusCode>> {solve_batch}
+fn(axum::extract::State<Arc<SwarmCoordinator>>, axum::Json<Vec<std::string::String>>) -> impl std::future::Future<Output = Result<impl IntoResponse, axum::http::StatusCode>> {solve_batch}: Handler<_, _>

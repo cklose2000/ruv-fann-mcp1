@@ -1,0 +1,32 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT \n                strftime('%H', timestamp) as hour,\n                COUNT(*) as total,\n                SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes\n            FROM command_patterns \n            WHERE tool = ? AND timestamp > datetime('now', '-30 days')\n            GROUP BY strftime('%H', timestamp)\n            HAVING total >= 3\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "hour",
+        "ordinal": 0,
+        "type_info": "Null"
+      },
+      {
+        "name": "total",
+        "ordinal": 1,
+        "type_info": "Null"
+      },
+      {
+        "name": "successes",
+        "ordinal": 2,
+        "type_info": "Null"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      null,
+      null,
+      null
+    ]
+  },
+  "hash": "303ddd24c9d1cee96612dfa5366938262a64cec7ef819b24f6c4855b8800dfe5"
+}

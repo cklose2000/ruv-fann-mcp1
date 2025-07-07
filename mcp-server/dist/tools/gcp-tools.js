@@ -329,13 +329,20 @@ export const STORAGE_TOOLS = GCP_TOOLS.filter(tool => tool.name.startsWith('gcs-
 export const COMPUTE_TOOLS = GCP_TOOLS.filter(tool => tool.name.startsWith('compute-'));
 export const CLOUD_RUN_TOOLS = GCP_TOOLS.filter(tool => tool.name.startsWith('run-'));
 export const PROJECT_TOOLS = GCP_TOOLS.filter(tool => ['list-projects', 'gcloud-command'].includes(tool.name));
+// Helper function to normalize MCP tool names (remove mcp__gcp__ prefix)
+export function normalizeMCPToolName(toolName) {
+    return toolName.replace(/^mcp__gcp__/, '');
+}
 // Helper function to check if a tool is a GCP tool
 export function isGCPTool(toolName) {
-    return GCP_TOOLS.some(tool => tool.name === toolName);
+    // Handle both direct names and MCP-prefixed names
+    const normalizedName = normalizeMCPToolName(toolName);
+    return GCP_TOOLS.some(tool => tool.name === normalizedName);
 }
 // Helper function to get tool definition by name
 export function getGCPTool(toolName) {
-    return GCP_TOOLS.find(tool => tool.name === toolName);
+    const normalizedName = normalizeMCPToolName(toolName);
+    return GCP_TOOLS.find(tool => tool.name === normalizedName);
 }
 // Convert tool names between formats (kebab-case to snake_case for backend)
 export function convertToolNameForBackend(toolName) {

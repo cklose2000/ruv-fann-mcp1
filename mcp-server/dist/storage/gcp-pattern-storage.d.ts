@@ -69,6 +69,9 @@ export declare class GCPPatternStorage {
     getUserPatterns(userId: string): Promise<GCPUserPattern | null>;
     getPatternStatistics(): Promise<any>;
     cleanupOldPatterns(daysToKeep?: number): Promise<number>;
+    getAverageQueryDuration(queryType: string): Promise<number>;
+    getQuerySuccessRate(queryType: string): Promise<number>;
+    getAuthFailureRate(tokenAgeMinutes: number): Promise<number>;
     close(): void;
 }
 //# sourceMappingURL=gcp-pattern-storage.d.ts.map

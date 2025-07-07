@@ -1,0 +1,254 @@
+warning: unused doc comment
+  --> core/src/network.rs:15:1
+   |
+15 | /// Global network storage (in-memory for POC)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+   |
+   = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+   = note: `#[warn(unused_doc_comments)]` on by default
+
+warning: `ruv-fann-core` (bin "ruv-fann-core") generated 1 warning
+   Compiling ruv-swarm v0.1.0 (/home/cklose/ruv-fann-mcp1/swarm)
+error[E0425]: cannot find value `agent_status` in module `api`
+   --> swarm/src/main.rs:126:43
+    |
+126 |           .route("/api/agent/:id", get(api::agent_status))
+    |                                             ^^^^^^^^^^^^ help: a function with a similar name exists: `get_stats`
+    |
+   ::: swarm/src/api.rs:141:1
+    |
+141 | / async fn get_stats(
+142 | |     State(coordinator): State<Arc<SwarmCoordinator>>,
+143 | | ) -> Result<impl IntoResponse, StatusCode> {
+144 | |     let status = coordinator.get_status().await;
+145 | |     Ok(Json(status))
+146 | | }
+    | |_- similarly named function `get_stats` defined here
+
+error[E0425]: cannot find value `get_agent_result` in module `api`
+   --> swarm/src/main.rs:127:50
+    |
+127 |         .route("/api/agent/:id/result", get(api::get_agent_result))
+    |                                                  ^^^^^^^^^^^^^^^^ not found in `api`
+
+error[E0425]: cannot find value `swarm_stats` in module `api`
+   --> swarm/src/main.rs:130:39
+    |
+130 |         .route("/api/stats", get(api::swarm_stats))
+    |                                       ^^^^^^^^^^^ not found in `api`
+
+error[E0425]: cannot find value `demo_ephemeral_solve` in module `api`
+   --> swarm/src/main.rs:131:50
+    |
+131 |         .route("/demo/ephemeral-solve", get(api::demo_ephemeral_solve))
+    |                                                  ^^^^^^^^^^^^^^^^^^^^ not found in `api`
+
+error[E0603]: function `spawn_agent` is private
+   --> swarm/src/main.rs:124:40
+    |
+124 |         .route("/api/spawn", post(api::spawn_agent))
+    |                                        ^^^^^^^^^^^ private function
+    |
+note: the function `spawn_agent` is defined here
+   --> swarm/src/api.rs:46:1
+    |
+46  | / async fn spawn_agent(
+47  | |     State(coordinator): State<Arc<SwarmCoordinator>>,
+48  | |     Json(req): Json<SpawnAgentRequest>,
+49  | | ) -> Result<impl IntoResponse, StatusCode> {
+...   |
+78  | |     })))
+79  | | }
+    | |_^
+
+error[E0603]: function `list_agents` is private
+   --> swarm/src/main.rs:125:40
+    |
+125 |         .route("/api/agents", get(api::list_agents))
+    |                                        ^^^^^^^^^^^ private function
+    |
+note: the function `list_agents` is defined here
+   --> swarm/src/api.rs:81:1
+    |
+81  | / async fn list_agents(
+82  | |     State(coordinator): State<Arc<SwarmCoordinator>>,
+83  | | ) -> Result<impl IntoResponse, StatusCode> {
+84  | |     let status = coordinator.get_status().await;
+85  | |     Ok(Json(serde_json::json!({ "agents": status })))
+86  | | }
+    | |_^
+
+error[E0603]: function `spawn_agent` is private
+   --> swarm/src/main.rs:128:46
+    |
+128 |         .route("/api/agent/spawn", post(api::spawn_agent))
+    |                                              ^^^^^^^^^^^ private function
+    |
+note: the function `spawn_agent` is defined here
+   --> swarm/src/api.rs:46:1
+    |
+46  | / async fn spawn_agent(
+47  | |     State(coordinator): State<Arc<SwarmCoordinator>>,
+48  | |     Json(req): Json<SpawnAgentRequest>,
+49  | | ) -> Result<impl IntoResponse, StatusCode> {
+...   |
+78  | |     })))
+79  | | }
+    | |_^
+
+error[E0603]: function `solve_problem` is private
+   --> swarm/src/main.rs:129:40
+    |
+129 |         .route("/api/solve", post(api::solve_problem))
+    |                                        ^^^^^^^^^^^^^ private function
+    |
+note: the function `solve_problem` is defined here
+   --> swarm/src/api.rs:98:1
+    |
+98  | / async fn solve_problem(
+99  | |     State(coordinator): State<Arc<SwarmCoordinator>>,
+100 | |     Json(req): Json<SolveRequest>,
+101 | | ) -> Result<impl IntoResponse, StatusCode> {
+...   |
+115 | |     })))
+116 | | }
+    | |_^
+
+error[E0599]: no variant or associated item named `ErrorAnalyzer` found for enum `AgentType` in the current scope
+  --> swarm/src/coordinator.rs:64:24
+   |
+64 |             AgentType::ErrorAnalyzer,
+   |                        ^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+   |
+  ::: swarm/src/agent.rs:24:1
+   |
+24 | pub enum AgentType {
+   | ------------------ variant or associated item `ErrorAnalyzer` not found for this enum
+
+error[E0599]: no variant or associated item named `PerformanceAnalyzer` found for enum `AgentType` in the current scope
+  --> swarm/src/coordinator.rs:65:24
+   |
+65 |             AgentType::PerformanceAnalyzer,
+   |                        ^^^^^^^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+   |
+  ::: swarm/src/agent.rs:24:1
+   |
+24 | pub enum AgentType {
+   | ------------------ variant or associated item `PerformanceAnalyzer` not found for this enum
+
+error[E0061]: this function takes 1 argument but 2 arguments were supplied
+  --> swarm/src/coordinator.rs:73:29
+   |
+73 |                 let agent = EphemeralAgent::new(agent_type, 5000)
+   |                             ^^^^^^^^^^^^^^^^^^^             ---- unexpected argument #2 of type `{integer}`
+   |
+note: associated function defined here
+  --> swarm/src/agent.rs:44:12
+   |
+44 |     pub fn new(agent_type: AgentType) -> Self {
+   |            ^^^
+help: remove the extra argument
+   |
+73 -                 let agent = EphemeralAgent::new(agent_type, 5000)
+73 +                 let agent = EphemeralAgent::new(agent_type)
+   |
+
+error[E0599]: no method named `with_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:74:22
+   |
+73 |                   let agent = EphemeralAgent::new(agent_type, 5000)
+   |  _____________________________-
+74 | |                     .with_pool(self.pool.clone());
+   | |                     -^^^^^^^^^ method not found in `EphemeralAgent`
+   | |_____________________|
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |   pub struct EphemeralAgent {
+   |   ------------------------- method `with_pool` not found for this struct
+
+error[E0061]: this function takes 1 argument but 2 arguments were supplied
+  --> swarm/src/coordinator.rs:97:17
+   |
+97 |                 EphemeralAgent::new(agent_type, 5000)
+   |                 ^^^^^^^^^^^^^^^^^^^             ---- unexpected argument #2 of type `{integer}`
+   |
+note: associated function defined here
+  --> swarm/src/agent.rs:44:12
+   |
+44 |     pub fn new(agent_type: AgentType) -> Self {
+   |            ^^^
+help: remove the extra argument
+   |
+97 -                 EphemeralAgent::new(agent_type, 5000)
+97 +                 EphemeralAgent::new(agent_type)
+   |
+
+error[E0599]: no method named `with_pool` found for struct `EphemeralAgent` in the current scope
+  --> swarm/src/coordinator.rs:98:22
+   |
+97 | /                 EphemeralAgent::new(agent_type, 5000)
+98 | |                     .with_pool(self.pool.clone())
+   | |                     -^^^^^^^^^ method not found in `EphemeralAgent`
+   | |_____________________|
+   |
+   |
+  ::: swarm/src/agent.rs:9:1
+   |
+9  |   pub struct EphemeralAgent {
+   |   ------------------------- method `with_pool` not found for this struct
+
+error[E0599]: no method named `run` found for struct `EphemeralAgent` in the current scope
+   --> swarm/src/coordinator.rs:103:28
+    |
+103 |         let result = agent.run(task).await;
+    |                            ^^^ method not found in `EphemeralAgent`
+    |
+   ::: swarm/src/agent.rs:9:1
+    |
+9   | pub struct EphemeralAgent {
+    | ------------------------- method `run` not found for this struct
+
+error[E0599]: no variant or associated item named `Created` found for enum `AgentStatus` in the current scope
+   --> swarm/src/coordinator.rs:110:59
+    |
+110 |                 agent.status = crate::agent::AgentStatus::Created;
+    |                                                           ^^^^^^^ variant or associated item not found in `AgentStatus`
+    |
+   ::: swarm/src/agent.rs:35:1
+    |
+35  | pub enum AgentStatus {
+    | -------------------- variant or associated item `Created` not found for this enum
+
+error[E0599]: no variant or associated item named `ErrorAnalyzer` found for enum `AgentType` in the current scope
+   --> swarm/src/coordinator.rs:139:24
+    |
+139 |             AgentType::ErrorAnalyzer
+    |                        ^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+    |
+   ::: swarm/src/agent.rs:24:1
+    |
+24  | pub enum AgentType {
+    | ------------------ variant or associated item `ErrorAnalyzer` not found for this enum
+
+error[E0599]: no variant or associated item named `PerformanceAnalyzer` found for enum `AgentType` in the current scope
+   --> swarm/src/coordinator.rs:141:24
+    |
+141 |             AgentType::PerformanceAnalyzer
+    |                        ^^^^^^^^^^^^^^^^^^^ variant or associated item not found in `AgentType`
+    |
+   ::: swarm/src/agent.rs:24:1
+    |
+24  | pub enum AgentType {
+    | ------------------ variant or associated item `PerformanceAnalyzer` not found for this enum
+
+error[E0599]: no method named `set_max_agents` found for struct `Arc<SwarmCoordinator>` in the current scope
+   --> swarm/src/main.rs:112:33
+    |
+112 |                     coordinator.set_max_agents(n);
+    |                                 ^^^^^^^^^^^^^^ method not found in `Arc<SwarmCoordinator>`
+
+Some errors have detailed explanations: E0061, E0425, E0599, E0603.
+For more information about an error, try `rustc --explain E0061`.
+error: could not compile `ruv-swarm` (bin "ruv-swarm") due to 19 previous errors

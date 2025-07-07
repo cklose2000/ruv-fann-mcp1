@@ -1,0 +1,32 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT params, error, timestamp\n            FROM command_patterns \n            WHERE tool = ? AND success = 0 AND timestamp > datetime('now', '-30 days')\n            ORDER BY timestamp DESC\n            LIMIT 10\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "params",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "error",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "timestamp",
+        "ordinal": 2,
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      true,
+      false
+    ]
+  },
+  "hash": "8a068c11be4c47d27c8cddd2cec1a95216405dfcf47ac1a8f37af1a78fb248ab"
+}

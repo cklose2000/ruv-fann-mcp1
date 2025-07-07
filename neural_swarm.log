@@ -1,0 +1,24 @@
+[2m2025-07-06T23:16:54.763831Z[0m [32m INFO[0m [2mruv_swarm[0m[2m:[0m ruv-swarm coordinator listening on 0.0.0.0:3001 (max_agents: 20)
+[2m2025-07-06T23:27:33.460692Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent a062c693-a14c-4b16-9121-4a0ed3542aa5 solving: {"params":{"problem":"predict success for bq query operation"},"tool":"general"}
+[2m2025-07-06T23:27:33.464041Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Initialized neural network for prediction
+[2m2025-07-06T23:27:33.468926Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:27:49.154521Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 7e8af525-982b-49ab-a46e-2ac41c444d27 solving: {"params":{"problem":"{\"tool\":\"bq\",\"params\":{\"query\":\"SELECT * FROM dataset.table LIMIT 100\"}}"},"tool":"general"}
+[2m2025-07-06T23:27:49.194502Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:28:38.458306Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 4a6123fd-decd-48af-a0d4-1231a204842e solving: {"params":{"problem":"predict success rate for bq query SELECT * FROM users"},"tool":"general"}
+[2m2025-07-06T23:28:38.463833Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:28:56.787321Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 80f2224f-e2f0-40ae-a4ca-f8c31b97e8ce solving: {"params":{"problem":"find similar patterns for bq query operation"},"tool":"general"}
+[2m2025-07-06T23:28:56.791929Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:29:17.615919Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 14e8b999-4a0a-4d3a-bbc5-9da02f219d72 solving: {"params":{"problem":"{\"tool\":\"bq\",\"params\":{\"query\":\"SELECT COUNT(*) FROM users\"}}"},"tool":"general"}
+[2m2025-07-06T23:29:17.655145Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:29:44.190828Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent b460e4c3-0928-4689-9384-10b24365856c solving: {"params":{"problem":"find patterns for {\"tool\":\"bq\",\"params\":{\"query\":\"SELECT * FROM dataset.table\"}}"},"tool":"general"}
+[2m2025-07-06T23:29:44.212427Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:30:11.365707Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 88f3cb7f-9391-45e0-b092-b5d184b162e4 solving: {"params":{"problem":"analyze context for database operation timing"},"tool":"general"}
+[2m2025-07-06T23:30:11.416654Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:30:23.332855Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 361ca790-58bb-4ade-8ced-dd78aace3dc0 solving: {"params":{"problem":"evaluate context for this operation"},"tool":"general"}
+[2m2025-07-06T23:30:23.354674Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:36:18.750529Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 06ddecac-ac3d-4bba-b044-220ce31d79ae solving: {"params":{"problem":"{\"tool\":\"bq\",\"params\":{\"query\":\"SELECT COUNT(*) FROM broadway_prod_v4.etl_process_log LIMIT 1\",\"dataset\":\"broadway_prod_v4\",\"operation\":\"query\"}}"},"tool":"general"}
+[2m2025-07-06T23:36:18.800239Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:36:32.632546Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent 991ccbe1-3a49-4cf5-a16d-c60f75abdea3 solving: {"params":{"problem":"predict success for BigQuery operation: SELECT COUNT(*) FROM broadway_prod_v4.etl_process_log"},"tool":"general"}
+[2m2025-07-06T23:36:32.647239Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true
+[2m2025-07-06T23:39:32.184643Z[0m [32m INFO[0m [2mruv_swarm::agent[0m[2m:[0m Agent d9dc9899-4486-4975-8c7a-3778e2267ffa solving: {"params":{"problem":"predict success for BigQuery COUNT operation on etl_process_log table"},"tool":"general"}
+[2m2025-07-06T23:39:32.193093Z[0m [34mDEBUG[0m [2mruv_swarm::agent[0m[2m:[0m Neural network trained with outcome: true

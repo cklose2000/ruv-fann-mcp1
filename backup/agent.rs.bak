@@ -1,0 +1,1430 @@
+use chrono::{DateTime, Utc, Timelike, Datelike};
+use serde::{Deserialize, Serialize};
+use sqlx::SqlitePool;
+use std::time::Duration;
+use tokio::time::sleep;
+use uuid::Uuid;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EphemeralAgent {
+    pub id: Uuid,
+    pub agent_type: AgentType,
+    pub status: AgentStatus,
+    pub created_at: DateTime<Utc>,
+    pub started_at: Option<DateTime<Utc>>,
+    pub completed_at: Option<DateTime<Utc>>,
+    pub lifespan_ms: u64,
+    pub problem: Option<String>,
+    pub solution: Option<String>,
+    #[serde(skip)]
+    pub db_pool: Option<SqlitePool>,
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Hash, Eq, PartialEq)]
+pub enum AgentType {
+    Solver,
+    Analyzer,
+    Optimizer,
+    // Pattern analysis agents for MCP
+    PatternMatcher,
+    OutcomePredictor,
+    AlternativeGen,
+    ContextAnalyzer,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum AgentStatus {
+    Spawning,
+    Active,
+    Solving,
+    Completed,
+    Dissolving,
+}
+
+impl EphemeralAgent {
+    /// Create a new ephemeral agent
+    pub fn new(agent_type: AgentType) -> Self {
+        Self {
+            id: Uuid::new_v4(),
+            agent_type,
+            status: AgentStatus::Spawning,
+            created_at: Utc::now(),
+            started_at: None,
+            completed_at: None,
+            lifespan_ms: 0,
+            problem: None,
+            solution: None,
+            db_pool: None,
+        }
+    }
+
+    /// Create a new ephemeral agent with database pool
+    pub fn with_db_pool(agent_type: AgentType, db_pool: SqlitePool) -> Self {
+        let mut agent = Self::new(agent_type);
+        agent.db_pool = Some(db_pool);
+        agent
+    }
+
+    /// Spawn the agent (simulate initialization)
+    pub async fn spawn(&mut self) -> anyhow::Result<()> {
+        tracing::info!("Spawning agent {}", self.id);
+        
+        // Simulate spawn time (optimized for <100ms total latency)
+        sleep(Duration::from_millis(5)).await;
+        
+        self.status = AgentStatus::Active;
+        self.started_at = Some(Utc::now());
+        
+        tracing::info!("Agent {} spawned successfully", self.id);
+        Ok(())
+    }
+
+    /// Solve a problem (the main work)
+    pub async fn solve(&mut self, problem: String) -> anyhow::Result<String> {
+        tracing::info!("Agent {} solving: {}", self.id, problem);
+        
+        self.status = AgentStatus::Solving;
+        self.problem = Some(problem.clone());
+        
+        // Simulate problem solving based on agent type
+        let solution = match self.agent_type {
+            AgentType::Solver => {
+                // Simple solver: reverse the problem string as a demo
+                sleep(Duration::from_millis(30)).await;
+                format!("Solution: {}", problem.chars().rev().collect::<String>())
+            }
+            AgentType::Analyzer => {
+                // Analyzer: analyze the problem
+                sleep(Duration::from_millis(40)).await;
+                format!("Analysis: {} (length: {}, words: {})", 
+                    problem, 
+                    problem.len(),
+                    problem.split_whitespace().count()
+                )
+            }
+            AgentType::Optimizer => {
+                // Optimizer: optimize the problem
+                sleep(Duration::from_millis(35)).await;
+                format!("Optimized: {}", problem.to_uppercase())
+            }
+            AgentType::PatternMatcher => {
+                // Pattern matcher: find similar patterns using real database queries
+                if let Some(pool) = &self.db_pool {
+                    self.find_similar_patterns(&problem, pool).await?
+                } else {
+                    // Fallback for when no database is available
+                    tracing::warn!("Pattern matcher running without database connection");
+                    serde_json::to_string(&serde_json::json!({
+                        "patterns": [],
+                        "best_match": null,
+                        "error": "No database connection available"
+                    }))?
+                }
+            }
+            AgentType::OutcomePredictor => {
+                // Outcome predictor: predict success/failure using neural network and historical data
+                if let Some(pool) = &self.db_pool {
+                    self.predict_outcome(&problem, pool).await?
+                } else {
+                    // Fallback for when no database is available
+                    tracing::warn!("Outcome predictor running without database connection");
+                    serde_json::to_string(&serde_json::json!({
+                        "successRate": 0.5,
+                        "failureModes": [],
+                        "confidence": 0.1,
+                        "error": "No database connection available"
+                    }))?
+                }
+            }
+            AgentType::AlternativeGen => {
+                // Alternative generator: suggest alternatives using real failure pattern analysis
+                if let Some(pool) = &self.db_pool {
+                    self.generate_alternatives(&problem, pool).await?
+                } else {
+                    // Fallback for when no database is available
+                    tracing::warn!("Alternative generator running without database connection");
+                    serde_json::to_string(&serde_json::json!({
+                        "alternatives": [],
+                        "error": "No database connection available"
+                    }))?
+                }
+            }
+            AgentType::ContextAnalyzer => {
+                // Context analyzer: evaluate execution context using real temporal and system analysis
+                if let Some(pool) = &self.db_pool {
+                    self.analyze_execution_context(&problem, pool).await?
+                } else {
+                    // Fallback for when no database is available
+                    tracing::warn!("Context analyzer running without database connection");
+                    serde_json::to_string(&serde_json::json!({
+                        "riskFactor": 1.0,
+                        "contextFlags": [],
+                        "recommendation": "proceed",
+                        "error": "No database connection available"
+                    }))?
+                }
+            }
+        };
+        
+        self.solution = Some(solution.clone());
+        self.status = AgentStatus::Completed;
+        
+        tracing::info!("Agent {} completed solving", self.id);
+        Ok(solution)
+    }
+
+    /// Dissolve the agent (cleanup)
+    pub async fn dissolve(&mut self) -> anyhow::Result<()> {
+        tracing::info!("Dissolving agent {}", self.id);
+        
+        self.status = AgentStatus::Dissolving;
+        self.completed_at = Some(Utc::now());
+        
+        // Calculate lifespan
+        if let Some(started_at) = self.started_at {
+            let duration = self.completed_at.unwrap() - started_at;
+            self.lifespan_ms = duration.num_milliseconds() as u64;
+        }
+        
+        // Simulate cleanup
+        sleep(Duration::from_millis(10)).await;
+        
+        tracing::info!("Agent {} dissolved (lifespan: {}ms)", self.id, self.lifespan_ms);
+        Ok(())
+    }
+    
+    /// Reset agent for reuse in pool
+    pub async fn reset_for_reuse(&mut self) -> anyhow::Result<()> {
+        // Reset agent state
+        self.id = Uuid::new_v4();
+        self.status = AgentStatus::Active;
+        self.created_at = Utc::now();
+        self.started_at = Some(Utc::now());
+        self.completed_at = None;
+        self.lifespan_ms = 0;
+        self.problem = None;
+        self.solution = None;
+        
+        tracing::debug!("Reset agent {} for reuse", self.id);
+        Ok(())
+    }
+
+    /// Get agent metrics
+    pub fn metrics(&self) -> AgentMetrics {
+        AgentMetrics {
+            id: self.id,
+            agent_type: self.agent_type.clone(),
+            status: self.status.clone(),
+            lifespan_ms: self.lifespan_ms,
+            spawn_time_ms: 50, // Fixed for demo
+            solve_time_ms: match self.agent_type {
+                AgentType::Solver => 30,
+                AgentType::Analyzer => 40,
+                AgentType::Optimizer => 35,
+                AgentType::PatternMatcher => 25,
+                AgentType::OutcomePredictor => 30,
+                AgentType::AlternativeGen => 35,
+                AgentType::ContextAnalyzer => 28,
+            },
+            dissolve_time_ms: 10,
+        }
+    }
+
+    /// Find similar patterns in the database (real implementation for Pattern Matcher)
+    async fn find_similar_patterns(&self, problem: &str, pool: &SqlitePool) -> anyhow::Result<String> {
+        let start_time = std::time::Instant::now();
+
+        // Parse the problem JSON to extract tool and params
+        let task_data: serde_json::Value = serde_json::from_str(problem)
+            .unwrap_or_else(|_| serde_json::json!({"tool": "unknown", "params": {}}));
+        
+        let tool = task_data["tool"].as_str().unwrap_or("unknown");
+        let params = &task_data["params"];
+
+        // Query for similar commands from the pattern database
+        let similar_commands = sqlx::query!(
+            r#"
+            SELECT id, tool, params, context, outcome, success, duration, timestamp
+            FROM command_patterns 
+            WHERE tool = ?
+            ORDER BY timestamp DESC
+            LIMIT 20
+            "#,
+            tool
+        )
+        .fetch_all(pool)
+        .await?;
+
+        let mut patterns = Vec::new();
+        let mut best_match_id = None;
+        let mut best_confidence = 0.0;
+
+        // Calculate similarity scores for each command
+        for cmd in similar_commands {
+            let stored_params: serde_json::Value = serde_json::from_str(&cmd.params)
+                .unwrap_or_else(|_| serde_json::json!({}));
+            
+            let similarity = self.calculate_parameter_similarity(params, &stored_params);
+            let confidence = similarity * if cmd.success { 0.9 } else { 0.6 }; // Weight by success
+            
+            if confidence > 0.3 { // Only include reasonably similar patterns
+                let pattern = serde_json::json!({
+                    "id": cmd.id,
+                    "type": if cmd.success { "success_pattern" } else { "failure_pattern" },
+                    "confidence": confidence,
+                    "tool": cmd.tool,
+                    "outcome": if cmd.success { "success" } else { "failure" },
+                    "duration": cmd.duration,
+                    "age_days": (Utc::now().timestamp() - chrono::DateTime::parse_from_rfc3339(&cmd.timestamp)
+                        .unwrap_or_else(|_| Utc::now().into()).timestamp()) / 86400
+                });
+                
+                patterns.push(pattern);
+                
+                if confidence > best_confidence {
+                    best_confidence = confidence;
+                    best_match_id = Some(cmd.id.clone());
+                }
+            }
+        }
+
+        // Sort patterns by confidence
+        patterns.sort_by(|a, b| {
+            b["confidence"].as_f64().unwrap_or(0.0)
+                .partial_cmp(&a["confidence"].as_f64().unwrap_or(0.0))
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
+
+        // Limit to top 5 patterns
+        patterns.truncate(5);
+
+        let processing_time = start_time.elapsed().as_millis() as u64;
+        
+        Ok(serde_json::to_string(&serde_json::json!({
+            "patterns": patterns,
+            "best_match": best_match_id,
+            "total_found": patterns.len(),
+            "processing_time_ms": processing_time,
+            "query_tool": tool
+        }))?)
+    }
+
+    /// Calculate similarity between two parameter sets
+    fn calculate_parameter_similarity(&self, params1: &serde_json::Value, params2: &serde_json::Value) -> f64 {
+        match (params1, params2) {
+            (serde_json::Value::Object(obj1), serde_json::Value::Object(obj2)) => {
+                let keys1: std::collections::HashSet<_> = obj1.keys().collect();
+                let keys2: std::collections::HashSet<_> = obj2.keys().collect();
+                
+                if keys1.is_empty() && keys2.is_empty() {
+                    return 1.0;
+                }
+                
+                let common_keys: std::collections::HashSet<_> = keys1.intersection(&keys2).collect();
+                let all_keys: std::collections::HashSet<_> = keys1.union(&keys2).collect();
+                
+                if all_keys.is_empty() {
+                    return 0.0;
+                }
+                
+                let key_similarity = common_keys.len() as f64 / all_keys.len() as f64;
+                
+                // Calculate value similarity for common keys
+                let mut value_similarities = Vec::new();
+                for key in common_keys {
+                    let val1 = &obj1[*key];
+                    let val2 = &obj2[*key];
+                    value_similarities.push(self.calculate_value_similarity(val1, val2));
+                }
+                
+                let avg_value_similarity = if value_similarities.is_empty() {
+                    0.0
+                } else {
+                    value_similarities.iter().sum::<f64>() / value_similarities.len() as f64
+                };
+                
+                // Combine key and value similarity
+                key_similarity * 0.3 + avg_value_similarity * 0.7
+            }
+            _ => {
+                // For non-object types, use direct comparison
+                if params1 == params2 { 1.0 } else { 0.0 }
+            }
+        }
+    }
+
+    /// Calculate similarity between two values
+    fn calculate_value_similarity(&self, val1: &serde_json::Value, val2: &serde_json::Value) -> f64 {
+        match (val1, val2) {
+            (serde_json::Value::String(s1), serde_json::Value::String(s2)) => {
+                self.string_similarity(s1, s2)
+            }
+            (serde_json::Value::Number(n1), serde_json::Value::Number(n2)) => {
+                let f1 = n1.as_f64().unwrap_or(0.0);
+                let f2 = n2.as_f64().unwrap_or(0.0);
+                let diff = (f1 - f2).abs();
+                let avg = (f1 + f2) / 2.0;
+                if avg == 0.0 { 1.0 } else { 1.0 - (diff / avg).min(1.0) }
+            }
+            _ => {
+                if val1 == val2 { 1.0 } else { 0.0 }
+            }
+        }
+    }
+
+    /// Calculate string similarity using Levenshtein distance
+    fn string_similarity(&self, s1: &str, s2: &str) -> f64 {
+        if s1 == s2 {
+            return 1.0;
+        }
+        
+        let len1 = s1.chars().count();
+        let len2 = s2.chars().count();
+        
+        if len1 == 0 || len2 == 0 {
+            return 0.0;
+        }
+        
+        let max_len = len1.max(len2);
+        let distance = self.levenshtein_distance(s1, s2);
+        
+        1.0 - (distance as f64 / max_len as f64)
+    }
+
+    /// Calculate Levenshtein distance between two strings
+    fn levenshtein_distance(&self, s1: &str, s2: &str) -> usize {
+        let chars1: Vec<char> = s1.chars().collect();
+        let chars2: Vec<char> = s2.chars().collect();
+        let len1 = chars1.len();
+        let len2 = chars2.len();
+
+        let mut matrix = vec![vec![0; len2 + 1]; len1 + 1];
+
+        for i in 0..=len1 {
+            matrix[i][0] = i;
+        }
+        for j in 0..=len2 {
+            matrix[0][j] = j;
+        }
+
+        for i in 1..=len1 {
+            for j in 1..=len2 {
+                let cost = if chars1[i - 1] == chars2[j - 1] { 0 } else { 1 };
+                matrix[i][j] = std::cmp::min(
+                    std::cmp::min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1),
+                    matrix[i - 1][j - 1] + cost,
+                );
+            }
+        }
+
+        matrix[len1][len2]
+    }
+
+    /// Predict outcome using neural network and historical data (real implementation for Outcome Predictor)
+    async fn predict_outcome(&self, problem: &str, pool: &SqlitePool) -> anyhow::Result<String> {
+        let start_time = std::time::Instant::now();
+
+        // Parse the problem JSON to extract tool and params
+        let task_data: serde_json::Value = serde_json::from_str(problem)
+            .unwrap_or_else(|_| serde_json::json!({"tool": "unknown", "params": {}}));
+        
+        let tool = task_data["tool"].as_str().unwrap_or("unknown");
+        let params = &task_data["params"];
+
+        // Get historical success rates for similar commands
+        let historical_stats = sqlx::query!(
+            r#"
+            SELECT 
+                COUNT(*) as total_attempts,
+                SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successful_attempts,
+                AVG(duration) as avg_duration,
+                GROUP_CONCAT(CASE WHEN success = 0 THEN error END) as failure_errors
+            FROM command_patterns 
+            WHERE tool = ?
+            "#,
+            tool
+        )
+        .fetch_one(pool)
+        .await?;
+
+        let total_attempts = historical_stats.total_attempts;
+        let successful_attempts = historical_stats.successful_attempts.unwrap_or(0);
+        
+        // Calculate historical success rate
+        let historical_success_rate = if total_attempts > 0 {
+            successful_attempts as f64 / total_attempts as f64
+        } else {
+            0.5 // Neutral probability for unknown commands
+        };
+
+        // Get neural network prediction
+        let neural_prediction = self.get_neural_network_prediction(tool, params).await;
+        
+        // Combine historical and neural network predictions
+        let combined_success_rate = if neural_prediction.is_some() && total_attempts > 3 {
+            // Weight both equally if we have good historical data
+            (historical_success_rate + neural_prediction.unwrap_or(0.5)) / 2.0
+        } else if total_attempts > 10 {
+            // Trust historical data for well-known commands
+            historical_success_rate * 0.8 + neural_prediction.unwrap_or(0.5) * 0.2
+        } else if neural_prediction.is_some() {
+            // Trust neural network for new commands
+            neural_prediction.unwrap() * 0.7 + historical_success_rate * 0.3
+        } else {
+            // Fall back to historical data only
+            historical_success_rate
+        };
+
+        // Analyze failure modes from error messages
+        let failure_modes = self.analyze_failure_modes(
+            historical_stats.failure_errors.as_deref().unwrap_or("")
+        );
+
+        // Calculate confidence based on data quality
+        let confidence = self.calculate_prediction_confidence(
+            total_attempts,
+            neural_prediction.is_some(),
+            &failure_modes
+        );
+
+        // Estimate duration based on historical data
+        let estimated_duration = historical_stats.avg_duration.unwrap_or(1000.0) as u64;
+
+        let processing_time = start_time.elapsed().as_millis() as u64;
+
+        Ok(serde_json::to_string(&serde_json::json!({
+            "successRate": combined_success_rate,
+            "confidence": confidence,
+            "historicalAttempts": total_attempts,
+            "historicalSuccessRate": historical_success_rate,
+            "neuralPrediction": neural_prediction,
+            "failureModes": failure_modes,
+            "estimatedDuration": estimated_duration,
+            "processingTime": processing_time,
+            "tool": tool
+        }))?)
+    }
+
+    /// Get prediction from neural network service
+    async fn get_neural_network_prediction(&self, tool: &str, params: &serde_json::Value) -> Option<f64> {
+        // Create simple feature vector from tool and params
+        let features = self.encode_features(tool, params);
+        
+        // Try to connect to neural network service
+        let client = reqwest::Client::new();
+        let payload = serde_json::json!({
+            "inputs": [features]
+        });
+
+        match client
+            .post("http://127.0.0.1:3001/api/network/predict")
+            .json(&payload)
+            .timeout(std::time::Duration::from_millis(50)) // Quick timeout for ephemeral agents
+            .send()
+            .await
+        {
+            Ok(response) => {
+                if response.status().is_success() {
+                    if let Ok(prediction_result) = response.json::<serde_json::Value>().await {
+                        if let Some(outputs) = prediction_result["outputs"].as_array() {
+                            if let Some(first_output) = outputs.first() {
+                                if let Some(success_prob) = first_output.as_f64() {
+                                    // Clamp to valid probability range
+                                    return Some(success_prob.max(0.0).min(1.0));
+                                }
+                            }
+                        }
+                    }
+                }
+                None
+            }
+            Err(_) => {
+                tracing::debug!("Neural network service not available");
+                None
+            }
+        }
+    }
+
+    /// Encode tool and parameters into feature vector for neural network
+    fn encode_features(&self, tool: &str, params: &serde_json::Value) -> Vec<f32> {
+        let mut features = vec![0.0; 20]; // Expanded feature vector for better representation
+
+        // Encode tool type (first 8 features - one-hot encoding)
+        match tool.to_lowercase().as_str() {
+            "bash" | "shell" | "command" => features[0] = 1.0,
+            "read" | "file_read" => features[1] = 1.0,
+            "write" | "file_write" => features[2] = 1.0,
+            "edit" | "file_edit" => features[3] = 1.0,
+            "search" | "grep" | "find" => features[4] = 1.0,
+            "git" => features[5] = 1.0,
+            "pattern" | "match" => features[6] = 1.0,
+            "general" | "unknown" => features[7] = 1.0,
+            _ => features[7] = 1.0, // Default to unknown
+        }
+
+        // Encode parameter characteristics (features 8-19)
+        if let serde_json::Value::Object(param_obj) = params {
+            // Parameter count (normalized)
+            features[8] = (param_obj.len() as f32 / 5.0).min(1.0);
+            
+            // Analyze parameter content
+            for (key, value) in param_obj {
+                match key.as_str() {
+                    "query" | "command" | "code" => {
+                        if let serde_json::Value::String(s) = value {
+                            // Command/query complexity features
+                            features[9] = (s.len() as f32 / 200.0).min(1.0); // Length normalized
+                            features[10] = (s.split_whitespace().count() as f32 / 20.0).min(1.0); // Word count
+                            
+                            // Risk pattern detection
+                            if s.contains("rm ") || s.contains("delete") || s.contains("DROP") {
+                                features[11] = 1.0; // Destructive operations
+                            }
+                            if s.contains("sudo") || s.contains("root") || s.contains("admin") {
+                                features[12] = 1.0; // Elevated privileges
+                            }
+                            if s.contains("SELECT *") || s.contains("UPDATE") || s.contains("INSERT") {
+                                features[13] = 1.0; // Database operations
+                            }
+                        }
+                    }
+                    "file_path" | "path" => {
+                        if let serde_json::Value::String(s) = value {
+                            features[14] = (s.len() as f32 / 100.0).min(1.0); // Path length
+                            if s.contains(".") { features[15] = 1.0; } // Has file extension
+                            if s.starts_with("/") { features[16] = 1.0; } // Absolute path
+                            if s.contains("..") { features[17] = 1.0; } // Relative path traversal
+                        }
+                    }
+                    "timeout" | "limit" => {
+                        if let Some(timeout_val) = value.as_u64() {
+                            features[18] = (timeout_val as f32 / 10000.0).min(1.0); // Timeout value
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        } else if let serde_json::Value::String(param_str) = params {
+            // Handle string parameters
+            features[9] = (param_str.len() as f32 / 200.0).min(1.0);
+            features[10] = (param_str.split_whitespace().count() as f32 / 20.0).min(1.0);
+        }
+
+        // Add temporal features (feature 19)
+        let hour = chrono::Utc::now().hour();
+        features[19] = hour as f32 / 24.0; // Time of day (normalized)
+
+        features
+    }
+
+    /// Train neural network with actual outcome for incremental learning
+    async fn train_neural_network(&self, tool: &str, params: &serde_json::Value, actual_success: bool) -> anyhow::Result<()> {
+        // Create feature vector same as prediction
+        let features = self.encode_features(tool, params);
+        
+        // Create target vector (1.0 for success, 0.0 for failure)
+        let target = if actual_success { vec![1.0] } else { vec![0.0] };
+        
+        // Prepare training data
+        let client = reqwest::Client::new();
+        let payload = serde_json::json!({
+            "inputs": [features],
+            "targets": [target],
+            "epochs": 1, // Single epoch for incremental learning
+            "learning_rate": 0.01 // Small learning rate for stability
+        });
+
+        // Send training request to neural network service
+        match client
+            .post("http://127.0.0.1:3001/api/network/train")
+            .json(&payload)
+            .timeout(std::time::Duration::from_millis(200)) // Longer timeout for training
+            .send()
+            .await
+        {
+            Ok(response) => {
+                if response.status().is_success() {
+                    tracing::info!("Neural network training completed for tool: {}", tool);
+                    Ok(())
+                } else {
+                    tracing::warn!("Neural network training failed with status: {}", response.status());
+                    Err(anyhow::anyhow!("Training request failed"))
+                }
+            }
+            Err(e) => {
+                tracing::debug!("Neural network training service unavailable: {}", e);
+                Ok(()) // Don't fail the agent if training service is down
+            }
+        }
+    }
+
+    /// Analyze failure modes from error messages
+    fn analyze_failure_modes(&self, error_string: &str) -> Vec<String> {
+        let mut failure_modes = Vec::new();
+        
+        if error_string.is_empty() {
+            return failure_modes;
+        }
+
+        // Split by comma and analyze each error
+        let errors: Vec<&str> = error_string.split(',').collect();
+        let mut error_counts = std::collections::HashMap::new();
+
+        for error in errors {
+            if error.trim().is_empty() {
+                continue;
+            }
+
+            // Extract common error patterns
+            if error.contains("timeout") || error.contains("Timeout") {
+                *error_counts.entry("timeout".to_string()).or_insert(0) += 1;
+            } else if error.contains("permission") || error.contains("Permission") {
+                *error_counts.entry("permission_denied".to_string()).or_insert(0) += 1;
+            } else if error.contains("quota") || error.contains("Quota") {
+                *error_counts.entry("quota_exceeded".to_string()).or_insert(0) += 1;
+            } else if error.contains("not found") || error.contains("Not found") {
+                *error_counts.entry("resource_not_found".to_string()).or_insert(0) += 1;
+            } else if error.contains("syntax") || error.contains("Syntax") {
+                *error_counts.entry("syntax_error".to_string()).or_insert(0) += 1;
+            } else if error.contains("network") || error.contains("Network") {
+                *error_counts.entry("network_error".to_string()).or_insert(0) += 1;
+            } else {
+                *error_counts.entry("unknown_error".to_string()).or_insert(0) += 1;
+            }
+        }
+
+        // Return most common failure modes
+        let mut sorted_errors: Vec<_> = error_counts.into_iter().collect();
+        sorted_errors.sort_by(|a, b| b.1.cmp(&a.1));
+        
+        for (error_type, _count) in sorted_errors.into_iter().take(3) {
+            failure_modes.push(error_type);
+        }
+
+        failure_modes
+    }
+
+    /// Calculate confidence in the prediction
+    fn calculate_prediction_confidence(&self, total_attempts: i64, has_neural_prediction: bool, failure_modes: &[String]) -> f64 {
+        let mut confidence = 0.1; // Base confidence
+
+        // More historical data = higher confidence
+        confidence += (total_attempts as f64 * 0.05).min(0.4);
+
+        // Neural network availability increases confidence
+        if has_neural_prediction {
+            confidence += 0.2;
+        }
+
+        // Well-understood failure modes increase confidence
+        if !failure_modes.is_empty() && !failure_modes.contains(&"unknown_error".to_string()) {
+            confidence += 0.1;
+        }
+
+        // High agreement between sources increases confidence
+        if total_attempts > 5 && has_neural_prediction {
+            confidence += 0.1;
+        }
+
+        confidence.min(0.95) // Cap at 95%
+    }
+
+    /// Analyze execution context for risk assessment (real implementation for Context Analyzer)
+    async fn analyze_execution_context(&self, problem: &str, pool: &SqlitePool) -> anyhow::Result<String> {
+        let start_time = std::time::Instant::now();
+        let now = Utc::now();
+
+        // Parse the problem JSON to extract tool and params
+        let task_data: serde_json::Value = serde_json::from_str(problem)
+            .unwrap_or_else(|_| serde_json::json!({"tool": "unknown", "params": {}}));
+        
+        let tool = task_data["tool"].as_str().unwrap_or("unknown");
+
+        // Analyze temporal patterns
+        let hour = now.hour();
+        let day_of_week = now.weekday().number_from_monday();
+        let temporal_risk = self.calculate_temporal_risk(hour, day_of_week, tool, pool).await?;
+
+        // Analyze recent failure patterns (last 24 hours)
+        let recent_failure_risk = self.analyze_recent_failures(tool, pool).await?;
+
+        // Analyze system load indicators
+        let system_risk = self.analyze_system_indicators(tool, &task_data["params"], pool).await?;
+
+        // Calculate overall risk factor
+        let base_risk = 1.0;
+        let risk_factor = base_risk * temporal_risk * recent_failure_risk * system_risk;
+
+        // Generate context flags
+        let mut context_flags = Vec::new();
+        
+        // Time-based flags
+        if hour >= 9 && hour <= 17 {
+            context_flags.push("business_hours".to_string());
+        }
+        if hour >= 12 && hour <= 14 {
+            context_flags.push("lunch_peak".to_string());
+        }
+        if day_of_week >= 6 { // Weekend
+            context_flags.push("weekend".to_string());
+        }
+
+        // System load flags
+        if recent_failure_risk > 1.3 {
+            context_flags.push("high_recent_failures".to_string());
+        }
+        if system_risk > 1.2 {
+            context_flags.push("system_stress".to_string());
+        }
+
+        // Tool-specific flags
+        if tool == "bq" && hour >= 9 && hour <= 17 {
+            context_flags.push("bigquery_peak_hours".to_string());
+        }
+        if tool == "git" && (hour < 8 || hour > 20) {
+            context_flags.push("off_hours_git".to_string());
+        }
+
+        // Generate recommendation
+        let recommendation = if risk_factor > 1.5 {
+            "defer_execution"
+        } else if risk_factor > 1.2 {
+            "proceed_with_caution"
+        } else if risk_factor < 0.8 {
+            "optimal_timing"
+        } else {
+            "proceed"
+        };
+
+        // Get execution insights
+        let insights = self.generate_context_insights(
+            temporal_risk, 
+            recent_failure_risk, 
+            system_risk, 
+            &context_flags
+        );
+
+        let processing_time = start_time.elapsed().as_millis() as u64;
+
+        Ok(serde_json::to_string(&serde_json::json!({
+            "riskFactor": risk_factor,
+            "contextFlags": context_flags,
+            "recommendation": recommendation,
+            "temporalRisk": temporal_risk,
+            "recentFailureRisk": recent_failure_risk,
+            "systemRisk": system_risk,
+            "currentHour": hour,
+            "dayOfWeek": day_of_week,
+            "insights": insights,
+            "processingTime": processing_time,
+            "tool": tool
+        }))?)
+    }
+
+    /// Calculate temporal risk based on time patterns
+    async fn calculate_temporal_risk(&self, hour: u32, day_of_week: u32, tool: &str, pool: &SqlitePool) -> anyhow::Result<f64> {
+        // Get historical success rates by hour for this tool
+        let hourly_stats = sqlx::query!(
+            r#"
+            SELECT 
+                strftime('%H', timestamp) as hour,
+                COUNT(*) as total,
+                SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+            FROM command_patterns 
+            WHERE tool = ? AND timestamp > datetime('now', '-30 days')
+            GROUP BY strftime('%H', timestamp)
+            HAVING total >= 3
+            "#,
+            tool
+        )
+        .fetch_all(pool)
+        .await?;
+
+        let mut hour_success_rates = std::collections::HashMap::new();
+        let mut total_success_rate = 0.0;
+        
+        for stat in hourly_stats {
+            if let (Some(h), Some(total), Some(successes)) = (stat.hour, stat.total, stat.successes) {
+                let success_rate = successes as f64 / total as f64;
+                if let Ok(hour_num) = h.parse::<u32>() {
+                    hour_success_rates.insert(hour_num, success_rate);
+                    total_success_rate += success_rate;
+                }
+            }
+        }
+
+        if hour_success_rates.is_empty() {
+            return Ok(1.0); // Neutral risk if no data
+        }
+
+        let avg_success_rate = total_success_rate / hour_success_rates.len() as f64;
+        let current_hour_rate = hour_success_rates.get(&hour).unwrap_or(&avg_success_rate);
+
+        // Calculate risk factor (inverse of success rate)
+        let temporal_risk = if *current_hour_rate > 0.0 {
+            avg_success_rate / current_hour_rate
+        } else {
+            2.0 // High risk if no successes at this hour
+        };
+
+        // Weekend adjustment
+        let weekend_adjustment = if day_of_week >= 6 {
+            1.1 // Slightly higher risk on weekends
+        } else {
+            1.0
+        };
+
+        Ok(temporal_risk * weekend_adjustment)
+    }
+
+    /// Analyze recent failure patterns to detect system issues
+    async fn analyze_recent_failures(&self, tool: &str, pool: &SqlitePool) -> anyhow::Result<f64> {
+        // Get failure rates for the last 24 hours vs. last 7 days
+        let recent_stats = sqlx::query!(
+            r#"
+            SELECT 
+                SUM(CASE WHEN timestamp > datetime('now', '-1 day') AND success = 0 THEN 1 ELSE 0 END) as recent_failures,
+                SUM(CASE WHEN timestamp > datetime('now', '-1 day') THEN 1 ELSE 0 END) as recent_total,
+                SUM(CASE WHEN timestamp > datetime('now', '-7 days') AND success = 0 THEN 1 ELSE 0 END) as week_failures,
+                SUM(CASE WHEN timestamp > datetime('now', '-7 days') THEN 1 ELSE 0 END) as week_total
+            FROM command_patterns 
+            WHERE tool = ?
+            "#,
+            tool
+        )
+        .fetch_one(pool)
+        .await?;
+
+        let recent_failures = recent_stats.recent_failures.unwrap_or(0) as f64;
+        let recent_total = recent_stats.recent_total.unwrap_or(0) as f64;
+        let week_failures = recent_stats.week_failures.unwrap_or(0) as f64;
+        let week_total = recent_stats.week_total.unwrap_or(0) as f64;
+
+        if recent_total == 0.0 && week_total == 0.0 {
+            return Ok(1.0); // No data available
+        }
+
+        let recent_failure_rate = if recent_total > 0.0 {
+            recent_failures / recent_total
+        } else {
+            0.0
+        };
+
+        let week_failure_rate = if week_total > 0.0 {
+            week_failures / week_total
+        } else {
+            0.0
+        };
+
+        // Calculate risk based on how much worse recent performance is
+        let risk_factor = if week_failure_rate > 0.0 {
+            (recent_failure_rate / week_failure_rate).max(0.5).min(3.0)
+        } else if recent_failure_rate > 0.0 {
+            2.0 // High risk if recent failures but no historical baseline
+        } else {
+            0.8 // Lower risk if no recent failures
+        };
+
+        Ok(risk_factor)
+    }
+
+    /// Analyze system indicators for stress or resource constraints
+    async fn analyze_system_indicators(&self, tool: &str, params: &serde_json::Value, pool: &SqlitePool) -> anyhow::Result<f64> {
+        let mut risk_factors = Vec::new();
+
+        // Check for resource-intensive operations
+        if tool == "bq" {
+            if let serde_json::Value::Object(param_obj) = params {
+                if let Some(serde_json::Value::String(query)) = param_obj.get("query") {
+                    // Analyze query complexity
+                    if query.contains("SELECT *") {
+                        risk_factors.push(1.3); // Risky full table scan
+                    }
+                    if query.len() > 1000 {
+                        risk_factors.push(1.2); // Complex query
+                    }
+                    if query.to_lowercase().contains("join") && query.matches("join").count() > 2 {
+                        risk_factors.push(1.2); // Multiple joins
+                    }
+                }
+            }
+        }
+
+        // Check recent system-wide performance
+        let system_performance = sqlx::query!(
+            r#"
+            SELECT AVG(duration) as avg_duration
+            FROM command_patterns 
+            WHERE timestamp > datetime('now', '-1 hour')
+            AND duration IS NOT NULL
+            "#
+        )
+        .fetch_one(pool)
+        .await?;
+
+        if let Some(avg_duration) = system_performance.avg_duration {
+            let historical_avg = sqlx::query!(
+                r#"
+                SELECT AVG(duration) as avg_duration
+                FROM command_patterns 
+                WHERE timestamp > datetime('now', '-7 days')
+                AND duration IS NOT NULL
+                "#
+            )
+            .fetch_one(pool)
+            .await?;
+
+            if let Some(historical_avg_duration) = historical_avg.avg_duration {
+                if historical_avg_duration > 0.0 {
+                    let performance_ratio = avg_duration / historical_avg_duration;
+                    if performance_ratio > 1.5 {
+                        risk_factors.push(1.4); // System running slow
+                    }
+                }
+            }
+        }
+
+        // Calculate combined system risk
+        let system_risk: f32 = if risk_factors.is_empty() {
+            1.0
+        } else {
+            risk_factors.iter().fold(1.0, |acc, &factor| acc * factor)
+        };
+
+        Ok(system_risk.min(2.0) as f64) // Cap at 2x risk
+    }
+
+    /// Generate insights about the execution context
+    fn generate_context_insights(&self, temporal_risk: f64, recent_failure_risk: f64, system_risk: f64, context_flags: &[String]) -> Vec<String> {
+        let mut insights = Vec::new();
+
+        if temporal_risk > 1.2 {
+            insights.push("Current time shows higher than average failure rates for this tool".to_string());
+        } else if temporal_risk < 0.8 {
+            insights.push("Optimal timing - this tool typically performs well at this hour".to_string());
+        }
+
+        if recent_failure_risk > 1.3 {
+            insights.push("Elevated failure rate in the last 24 hours - system may be experiencing issues".to_string());
+        }
+
+        if system_risk > 1.2 {
+            insights.push("Resource-intensive operation detected - consider optimizing parameters".to_string());
+        }
+
+        if context_flags.contains(&"business_hours".to_string()) && context_flags.contains(&"bigquery_peak_hours".to_string()) {
+            insights.push("BigQuery usage during peak hours may experience increased latency".to_string());
+        }
+
+        if context_flags.contains(&"weekend".to_string()) {
+            insights.push("Weekend execution - reduced support availability if issues occur".to_string());
+        }
+
+        if insights.is_empty() {
+            insights.push("No significant risk factors detected - good conditions for execution".to_string());
+        }
+
+        insights
+    }
+
+    /// Generate alternatives using real failure pattern analysis (real implementation for Alternative Generator)
+    async fn generate_alternatives(&self, problem: &str, pool: &SqlitePool) -> anyhow::Result<String> {
+        let start_time = std::time::Instant::now();
+
+        // Parse the problem JSON to extract tool and params
+        let task_data: serde_json::Value = serde_json::from_str(problem)
+            .unwrap_or_else(|_| serde_json::json!({"tool": "unknown", "params": {}}));
+        
+        let tool = task_data["tool"].as_str().unwrap_or("unknown");
+        let params = &task_data["params"];
+
+        // Get failure patterns for this tool
+        let failure_patterns = self.analyze_failure_patterns(tool, params, pool).await?;
+        
+        // Generate alternatives based on failure analysis
+        let mut alternatives = Vec::new();
+
+        // Add tool-specific alternatives
+        match tool {
+            "bq" => {
+                alternatives.extend(self.generate_bigquery_alternatives(params, &failure_patterns).await);
+            }
+            "git" => {
+                alternatives.extend(self.generate_git_alternatives(params, &failure_patterns).await);
+            }
+            "bash" => {
+                alternatives.extend(self.generate_bash_alternatives(params, &failure_patterns).await);
+            }
+            "read" | "write" => {
+                alternatives.extend(self.generate_file_alternatives(params, &failure_patterns).await);
+            }
+            _ => {
+                // Generic alternatives for unknown tools
+                alternatives.extend(self.generate_generic_alternatives(tool, params, &failure_patterns).await);
+            }
+        }
+
+        // Get success probability estimates from historical data
+        for alternative in &mut alternatives {
+            if let Some(alt_params) = alternative.get_mut("params") {
+                alternative["successProbability"] = serde_json::Value::Number(
+                    serde_json::Number::from_f64(
+                        self.estimate_success_probability(tool, alt_params, pool).await.unwrap_or(0.7)
+                    ).unwrap_or(serde_json::Number::from_f64(0.7).unwrap())
+                );
+            }
+        }
+
+        // Sort alternatives by success probability
+        alternatives.sort_by(|a, b| {
+            b["successProbability"].as_f64().unwrap_or(0.0)
+                .partial_cmp(&a["successProbability"].as_f64().unwrap_or(0.0))
+                .unwrap_or(std::cmp::Ordering::Equal)
+        });
+
+        // Limit to top 5 alternatives
+        alternatives.truncate(5);
+
+        let processing_time = start_time.elapsed().as_millis() as u64;
+
+        Ok(serde_json::to_string(&serde_json::json!({
+            "alternatives": alternatives,
+            "failurePatterns": failure_patterns,
+            "processingTime": processing_time,
+            "tool": tool
+        }))?)
+    }
+
+    /// Analyze failure patterns for specific tool and parameters
+    async fn analyze_failure_patterns(&self, tool: &str, params: &serde_json::Value, pool: &SqlitePool) -> anyhow::Result<Vec<serde_json::Value>> {
+        // Get recent failures for this tool
+        let failures = sqlx::query!(
+            r#"
+            SELECT params, error, timestamp
+            FROM command_patterns 
+            WHERE tool = ? AND success = 0 AND timestamp > datetime('now', '-30 days')
+            ORDER BY timestamp DESC
+            LIMIT 10
+            "#,
+            tool
+        )
+        .fetch_all(pool)
+        .await?;
+
+        let mut patterns = Vec::new();
+        let mut error_counts = std::collections::HashMap::new();
+
+        for failure in failures {
+            let failure_params: serde_json::Value = serde_json::from_str(&failure.params)
+                .unwrap_or_else(|_| serde_json::json!({}));
+            
+            // Calculate parameter similarity to current request
+            let similarity = self.calculate_parameter_similarity(params, &failure_params);
+            
+            if similarity > 0.5 { // Only consider similar failures
+                if let Some(error) = failure.error {
+                    *error_counts.entry(error.clone()).or_insert(0) += 1;
+                    
+                    patterns.push(serde_json::json!({
+                        "params": failure_params,
+                        "error": error,
+                        "similarity": similarity,
+                        "timestamp": failure.timestamp
+                    }));
+                }
+            }
+        }
+
+        // Add error frequency information
+        for pattern in &mut patterns {
+            if let Some(error) = pattern["error"].as_str() {
+                let frequency = error_counts.get(error).unwrap_or(&0);
+                pattern["errorFrequency"] = serde_json::Value::Number((*frequency).into());
+            }
+        }
+
+        Ok(patterns)
+    }
+
+    /// Generate BigQuery-specific alternatives
+    async fn generate_bigquery_alternatives(&self, params: &serde_json::Value, failure_patterns: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        let mut alternatives = Vec::new();
+
+        if let Some(serde_json::Value::String(query)) = params.get("query") {
+            // Alternative 1: Add LIMIT if SELECT * is used
+            if query.contains("SELECT *") && !query.to_lowercase().contains("limit") {
+                let limited_query = format!("{} LIMIT 1000", query.trim_end_matches(';'));
+                alternatives.push(serde_json::json!({
+                    "tool": "bq",
+                    "params": {
+                        "query": limited_query,
+                        "dataset": params.get("dataset"),
+                        "project": params.get("project")
+                    },
+                    "rationale": "Add LIMIT to prevent expensive full table scan",
+                    "modification": "add_limit",
+                    "riskReduction": "high"
+                }));
+            }
+
+            // Alternative 2: Add WHERE clause if missing and table seems large
+            if !query.to_lowercase().contains("where") && query.to_lowercase().contains("select") {
+                let where_query = query.replace("SELECT", "SELECT").replace(" FROM", " FROM").replace("FROM", "WHERE DATE(_PARTITIONTIME) >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) FROM");
+                alternatives.push(serde_json::json!({
+                    "tool": "bq",
+                    "params": {
+                        "query": where_query,
+                        "dataset": params.get("dataset"),
+                        "project": params.get("project")
+                    },
+                    "rationale": "Add date filter to reduce data scanning costs",
+                    "modification": "add_where_clause",
+                    "riskReduction": "medium"
+                }));
+            }
+
+            // Alternative 3: Use specific columns instead of SELECT *
+            if query.contains("SELECT *") {
+                let column_query = query.replace("SELECT *", "SELECT id, name, created_at");
+                alternatives.push(serde_json::json!({
+                    "tool": "bq",
+                    "params": {
+                        "query": column_query,
+                        "dataset": params.get("dataset"),
+                        "project": params.get("project")
+                    },
+                    "rationale": "Select specific columns to reduce data transfer and costs",
+                    "modification": "specify_columns",
+                    "riskReduction": "medium"
+                }));
+            }
+        }
+
+        // Add alternatives based on common failure patterns
+        for pattern in failure_patterns {
+            if let Some(error) = pattern["error"].as_str() {
+                if error.contains("quota") || error.contains("Quota") {
+                    alternatives.push(serde_json::json!({
+                        "tool": "bq",
+                        "params": {
+                            "query": params.get("query"),
+                            "dataset": params.get("dataset"),
+                            "project": params.get("project"),
+                            "dryRun": true
+                        },
+                        "rationale": "Use dry run to check query cost before execution",
+                        "modification": "add_dry_run",
+                        "riskReduction": "high"
+                    }));
+                }
+            }
+        }
+
+        alternatives
+    }
+
+    /// Generate Git-specific alternatives
+    async fn generate_git_alternatives(&self, params: &serde_json::Value, _failure_patterns: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        let mut alternatives = Vec::new();
+
+        if let Some(serde_json::Value::String(command)) = params.get("command") {
+            // Alternative 1: Add --dry-run for risky operations
+            if command.contains("push") && !command.contains("--dry-run") {
+                alternatives.push(serde_json::json!({
+                    "tool": "git",
+                    "params": {
+                        "command": format!("{} --dry-run", command)
+                    },
+                    "rationale": "Use dry run to check what would be pushed before actual push",
+                    "modification": "add_dry_run",
+                    "riskReduction": "high"
+                }));
+            }
+
+            // Alternative 2: Pull before push
+            if command.contains("push") && !command.contains("pull") {
+                alternatives.push(serde_json::json!({
+                    "tool": "git",
+                    "params": {
+                        "command": "git pull && git push"
+                    },
+                    "rationale": "Pull latest changes before pushing to avoid conflicts",
+                    "modification": "pull_before_push", 
+                    "riskReduction": "high"
+                }));
+            }
+
+            // Alternative 3: Add --force-with-lease instead of --force
+            if command.contains("--force") && !command.contains("--force-with-lease") {
+                let safer_command = command.replace("--force", "--force-with-lease");
+                alternatives.push(serde_json::json!({
+                    "tool": "git",
+                    "params": {
+                        "command": safer_command
+                    },
+                    "rationale": "Use --force-with-lease for safer force push",
+                    "modification": "safer_force_push",
+                    "riskReduction": "medium"
+                }));
+            }
+        }
+
+        alternatives
+    }
+
+    /// Generate Bash-specific alternatives
+    async fn generate_bash_alternatives(&self, params: &serde_json::Value, _failure_patterns: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        let mut alternatives = Vec::new();
+
+        if let Some(serde_json::Value::String(command)) = params.get("command") {
+            // Alternative 1: Add error handling
+            if !command.contains("||") && !command.contains("&&") {
+                alternatives.push(serde_json::json!({
+                    "tool": "bash",
+                    "params": {
+                        "command": format!("{} || echo 'Command failed but continuing'", command)
+                    },
+                    "rationale": "Add error handling to prevent script termination",
+                    "modification": "add_error_handling",
+                    "riskReduction": "medium"
+                }));
+            }
+
+            // Alternative 2: Use timeout for potentially long-running commands
+            if !command.contains("timeout") && (command.contains("curl") || command.contains("wget") || command.contains("ssh")) {
+                alternatives.push(serde_json::json!({
+                    "tool": "bash", 
+                    "params": {
+                        "command": format!("timeout 30s {}", command)
+                    },
+                    "rationale": "Add timeout to prevent hanging on network operations",
+                    "modification": "add_timeout",
+                    "riskReduction": "high"
+                }));
+            }
+
+            // Alternative 3: Use verbose mode for debugging
+            if command.contains("rm") || command.contains("mv") || command.contains("cp") {
+                let verbose_command = if command.contains(" -") {
+                    command.replace(" -", " -v")
+                } else {
+                    format!("{} -v", command)
+                };
+                
+                alternatives.push(serde_json::json!({
+                    "tool": "bash",
+                    "params": {
+                        "command": verbose_command
+                    },
+                    "rationale": "Add verbose output to see what files are being affected",
+                    "modification": "add_verbose",
+                    "riskReduction": "low"
+                }));
+            }
+        }
+
+        alternatives
+    }
+
+    /// Generate file operation alternatives
+    async fn generate_file_alternatives(&self, params: &serde_json::Value, _failure_patterns: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        let mut alternatives = Vec::new();
+
+        if let Some(serde_json::Value::String(file_path)) = params.get("file_path") {
+            // Alternative 1: Check if file exists first
+            alternatives.push(serde_json::json!({
+                "tool": "bash",
+                "params": {
+                    "command": format!("test -f '{}' && echo 'File exists' || echo 'File not found'", file_path)
+                },
+                "rationale": "Check file existence before attempting operation",
+                "modification": "check_existence",
+                "riskReduction": "medium"
+            }));
+
+            // Alternative 2: Use absolute path if relative path failed
+            if !file_path.starts_with('/') {
+                alternatives.push(serde_json::json!({
+                    "tool": "read",
+                    "params": {
+                        "file_path": format!("/{}", file_path.trim_start_matches("./"))
+                    },
+                    "rationale": "Try absolute path if relative path failed",
+                    "modification": "use_absolute_path",
+                    "riskReduction": "medium"
+                }));
+            }
+        }
+
+        alternatives
+    }
+
+    /// Generate generic alternatives for unknown tools
+    async fn generate_generic_alternatives(&self, tool: &str, params: &serde_json::Value, _failure_patterns: &[serde_json::Value]) -> Vec<serde_json::Value> {
+        let mut alternatives = Vec::new();
+
+        // Generic alternative: Retry with smaller parameters
+        if let serde_json::Value::Object(param_obj) = params {
+            let mut smaller_params = param_obj.clone();
+            
+            // Reduce limits/sizes by half
+            for (key, value) in param_obj {
+                if key.contains("limit") || key.contains("size") || key.contains("count") {
+                    if let serde_json::Value::Number(n) = value {
+                        if let Some(num) = n.as_u64() {
+                            smaller_params.insert(key.clone(), serde_json::Value::Number((num / 2).into()));
+                        }
+                    }
+                }
+            }
+
+            if smaller_params != *param_obj {
+                alternatives.push(serde_json::json!({
+                    "tool": tool,
+                    "params": smaller_params,
+                    "rationale": "Reduce parameter values to avoid resource constraints",
+                    "modification": "reduce_parameters",
+                    "riskReduction": "medium"
+                }));
+            }
+        }
+
+        alternatives
+    }
+
+    /// Estimate success probability for alternative parameters
+    async fn estimate_success_probability(&self, tool: &str, params: &serde_json::Value, pool: &SqlitePool) -> anyhow::Result<f64> {
+        // Look for similar successful executions
+        let similar_successes = sqlx::query!(
+            r#"
+            SELECT COUNT(*) as total,
+                   SUM(CASE WHEN success = 1 THEN 1 ELSE 0 END) as successes
+            FROM command_patterns 
+            WHERE tool = ? AND timestamp > datetime('now', '-30 days')
+            "#,
+            tool
+        )
+        .fetch_one(pool)
+        .await?;
+
+        let total = similar_successes.total;
+        let successes = similar_successes.successes.unwrap_or(0);
+
+        if total > 0 {
+            Ok(successes as f64 / total as f64)
+        } else {
+            Ok(0.7) // Default probability if no historical data
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AgentMetrics {
+    pub id: Uuid,
+    pub agent_type: AgentType,
+    pub status: AgentStatus,
+    pub lifespan_ms: u64,
+    pub spawn_time_ms: u64,
+    pub solve_time_ms: u64,
+    pub dissolve_time_ms: u64,
+}

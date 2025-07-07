@@ -1,0 +1,62 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT id, tool, params, context, outcome, success, duration, timestamp\n            FROM command_patterns \n            WHERE tool = ?\n            ORDER BY timestamp DESC\n            LIMIT 20\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "tool",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "params",
+        "ordinal": 2,
+        "type_info": "Text"
+      },
+      {
+        "name": "context",
+        "ordinal": 3,
+        "type_info": "Text"
+      },
+      {
+        "name": "outcome",
+        "ordinal": 4,
+        "type_info": "Text"
+      },
+      {
+        "name": "success",
+        "ordinal": 5,
+        "type_info": "Bool"
+      },
+      {
+        "name": "duration",
+        "ordinal": 6,
+        "type_info": "Integer"
+      },
+      {
+        "name": "timestamp",
+        "ordinal": 7,
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "fd12467770761254fbf9bc12805376f766c6b57ddbb884dcf1e636303e9e0bf4"
+}
