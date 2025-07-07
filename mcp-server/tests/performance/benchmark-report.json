@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-07T10:53:17.362Z",
+  "timestamp": "2025-07-07T11:45:17.393Z",
   "environment": {
     "node": "v18.19.0",
     "platform": "linux",
@@ -9,108 +9,108 @@
     {
       "measurement": "db_write",
       "count": 100,
-      "avgDuration": 9.340735659999996,
-      "p50": 8.097029,
-      "p95": 11.606576,
-      "p99": 54.287697,
-      "minDuration": 6.38218,
-      "maxDuration": 54.287697
+      "avgDuration": 10.714825500000002,
+      "p50": 9.746166,
+      "p95": 15.795782,
+      "p99": 38.212024,
+      "minDuration": 7.58015,
+      "maxDuration": 38.212024
     },
     {
       "measurement": "db_read",
       "count": 100,
-      "avgDuration": 1.0918384600000002,
-      "p50": 0.979785,
-      "p95": 1.60181,
-      "p99": 1.953552,
-      "minDuration": 0.923787,
-      "maxDuration": 1.953552
+      "avgDuration": 1.0426227899999998,
+      "p50": 0.994889,
+      "p95": 1.309122,
+      "p99": 1.630834,
+      "minDuration": 0.94978,
+      "maxDuration": 1.630834
     },
     {
       "measurement": "pattern_matching_10",
       "count": 50,
-      "avgDuration": 1.00553186,
-      "p50": 0.914009,
-      "p95": 1.597181,
-      "p99": 1.827735,
-      "minDuration": 0.774273,
-      "maxDuration": 1.827735
+      "avgDuration": 1.0617961599999999,
+      "p50": 0.906954,
+      "p95": 1.955986,
+      "p99": 2.014184,
+      "minDuration": 0.827708,
+      "maxDuration": 2.014184
     },
     {
       "measurement": "pattern_matching_50",
       "count": 50,
-      "avgDuration": 1.1834325200000002,
-      "p50": 1.109184,
-      "p95": 1.65042,
-      "p99": 1.878255,
-      "minDuration": 0.960588,
-      "maxDuration": 1.878255
+      "avgDuration": 1.1396168,
+      "p50": 1.091444,
+      "p95": 1.341824,
+      "p99": 1.945883,
+      "minDuration": 1.064579,
+      "maxDuration": 1.945883
     },
     {
       "measurement": "pattern_matching_100",
       "count": 50,
-      "avgDuration": 1.4522885999999997,
-      "p50": 1.279012,
-      "p95": 2.316649,
-      "p99": 2.325977,
-      "minDuration": 1.196032,
-      "maxDuration": 2.325977
+      "avgDuration": 1.5056674799999996,
+      "p50": 1.453577,
+      "p95": 1.872913,
+      "p99": 2.000829,
+      "minDuration": 1.324004,
+      "maxDuration": 2.000829
     },
     {
       "measurement": "pattern_matching_500",
       "count": 50,
-      "avgDuration": 3.3634107,
-      "p50": 3.259095,
-      "p95": 4.032517,
-      "p99": 4.483173,
-      "minDuration": 2.865831,
-      "maxDuration": 4.483173
+      "avgDuration": 4.119024339999999,
+      "p50": 3.875889,
+      "p95": 6.123593,
+      "p99": 7.084173,
+      "minDuration": 3.453083,
+      "maxDuration": 7.084173
     },
     {
       "measurement": "scale_6700",
       "count": 20,
-      "avgDuration": 2.4016658499999997,
-      "p50": 2.361495,
-      "p95": 3.57289,
-      "p99": 3.57289,
-      "minDuration": 2.026917,
-      "maxDuration": 3.57289
+      "avgDuration": 2.27199815,
+      "p50": 2.224838,
+      "p95": 2.834004,
+      "p99": 2.834004,
+      "minDuration": 2.109304,
+      "maxDuration": 2.834004
     },
     {
       "measurement": "scale_6700",
       "count": 20,
-      "avgDuration": 2.3252295500000004,
-      "p50": 2.323331,
-      "p95": 3.115683,
-      "p99": 3.115683,
-      "minDuration": 2.031575,
-      "maxDuration": 3.115683
+      "avgDuration": 2.2662847,
+      "p50": 2.254569,
+      "p95": 2.518712,
+      "p99": 2.518712,
+      "minDuration": 2.158824,
+      "maxDuration": 2.518712
     },
     {
       "measurement": "scale_6700",
       "count": 20,
-      "avgDuration": 2.6448399999999994,
-      "p50": 2.496606,
-      "p95": 4.497542,
-      "p99": 4.497542,
-      "minDuration": 2.022675,
-      "maxDuration": 4.497542
+      "avgDuration": 2.2174759,
+      "p50": 2.196897,
+      "p95": 2.416042,
+      "p99": 2.416042,
+      "minDuration": 2.118036,
+      "maxDuration": 2.416042
     },
     {
       "measurement": "scale_10000",
       "count": 20,
-      "avgDuration": 3.2154082,
-      "p50": 3.236555,
-      "p95": 3.66894,
-      "p99": 3.66894,
-      "minDuration": 2.733521,
-      "maxDuration": 3.66894
+      "avgDuration": 3.1527187000000003,
+      "p50": 3.227209,
+      "p95": 3.809762,
+      "p99": 3.809762,
+      "minDuration": 2.767742,
+      "maxDuration": 3.809762
     }
   ],
   "summary": {
-    "avgPredictionLatency": 2.906206299999999,
-    "p95PredictionLatency": 11.606576,
-    "patternMatchingSpeed": 68.85683740821213,
+    "avgPredictionLatency": 3.263925511666667,
+    "p95PredictionLatency": 15.795782,
+    "patternMatchingSpeed": 66.41572679779205,
     "recommendedLimits": {
       "maxConcurrentPredictions": 20,
       "maxPatternsForRealtime": 10000,
